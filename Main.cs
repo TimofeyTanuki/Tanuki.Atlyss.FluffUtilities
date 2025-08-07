@@ -4,6 +4,7 @@ using Tanuki.Atlyss.FluffUtilities.Managers;
 namespace Tanuki.Atlyss.FluffUtilities;
 
 [BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.0")]
+[BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInProcess("ATLYSS.exe")]
 public class Main : Core.Plugins.Plugin
 {
@@ -21,7 +22,7 @@ public class Main : Core.Plugins.Plugin
     }
     protected override void Load()
     {
-        Logger.LogInfo("Tanuki.Atlyss by Timofey Tanuki / tanu.su");
+        Logger.LogInfo("Tanuki.Atlyss.FluffUtilities by Timofey Tanuki / tanu.su");
 
         if (Reloaded)
             Config.Reload();
