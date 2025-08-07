@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC8615A7-47A4-4321-BE79-11E36887B64A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Tanuki.Atlyss.FluffUtilities</RootNamespace>
+    <AssemblyName>Tanuki.Atlyss.FluffUtilities</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mirror">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Mirror.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Tanuki.Atlyss.API">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Tanuki.Atlyss\Tanuki.Atlyss.API.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Tanuki.Atlyss.Core">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Tanuki.Atlyss\Tanuki.Atlyss.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Tanuki.Atlyss.Game">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Tanuki.Atlyss\Tanuki.Atlyss.Game.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\FreeCamera.cs" />
+    <Compile Include="Commands\SteamProfile.cs" />
+    <Compile Include="Commands\NoSkillCooldown.cs" />
+    <Compile Include="Components\FreeCamera.cs" />
+    <Compile Include="Managers\FreeCamera.cs" />
+    <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
+    <Compile Include="Managers\Hotkey.cs" />
+    <Compile Include="Models\Configuration\Commands.cs" />
+    <Compile Include="Models\Configuration\FreeCamera.cs" />
+    <Compile Include="Models\Configuration\Hotkeys.cs" />
+    <Compile Include="Models\Configuration\PlayerAppearance.cs" />
+    <Compile Include="Models\Configuration\GlobalRaceDisplayParameters.cs" />
+    <Compile Include="Commands\AutoPickup.cs" />
+    <Compile Include="Commands\Currency.cs" />
+    <Compile Include="Commands\Disenchant.cs" />
+    <Compile Include="Commands\Enchant.cs" />
+    <Compile Include="Commands\Experience.cs" />
+    <Compile Include="Commands\Heal.cs" />
+    <Compile Include="Commands\Immortality.cs" />
+    <Compile Include="Commands\Item.cs" />
+    <Compile Include="Commands\ListItems.cs" />
+    <Compile Include="Commands\ListPlayers.cs" />
+    <Compile Include="Commands\MaxJumps.cs" />
+    <Compile Include="Commands\MoveSpeed.cs" />
+    <Compile Include="Commands\TeleportToPlayer.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Managers\PlayerAppearance.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

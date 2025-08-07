@@ -1,0 +1,85 @@
+﻿using UnityEngine;
+
+namespace Tanuki.Atlyss.FluffUtilities.Managers;
+
+internal class FreeCamera
+{
+    public static FreeCamera Instance;
+
+    private Components.FreeCamera Component;
+    public bool Status = false;
+    public bool CharacterControlsDisabled = false;
+    public KeyCode Forward, Right, Backward, Left, Up, Down;
+    public float Speed, ScrollSpeedStep;
+
+    private FreeCamera() =>
+        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+    public static void Initialize() =>
+        Instance ??= new();
+
+    public void Reload()
+    {
+        Forward = Configuration.Instance.Hotkeys.FreeCamera_Forward.Value;
+        Right = Configuration.Instance.Hotkeys.FreeCamera_Right.Value;
+        Backward = Configuration.Instance.Hotkeys.FreeCamera_Backward.Value;
+        Left = Configuration.Instance.Hotkeys.FreeCamera_Left.Value;
+        Up = Configuration.Instance.Hotkeys.FreeCamera_Up.Value;
+        Down = Configuration.Instance.Hotkeys.FreeCamera_Down.Value;
+
+        Speed = Configuration.Instance.FreeCamera.BaseSpeed.Value;
+        ScrollSpeedStep = Configuration.Instance.FreeCamera.ScrollSpeedStep.Value;
+    }
+
+    public void Enable(bool DisableCharacterControls)
+    {
+        if (Component is null)
+            Component ??= CameraFunction._current._mainCamera.gameObject.AddComponent<Components.FreeCamera>();
+
+        if (!Status)
+            Component.Speed = Speed;
+
+        Status = true;
+
+        CharacterControlsDisabled = DisableCharacterControls;
+        if (DisableCharacterControls)
+        {
+            Player._mainPlayer._pMove.enabled = false;
+            Player._mainPlayer._pCombat.enabled = false;
+            Player._mainPlayer._pCasting.enabled = false;
+        }
+
+        Component.Rotation = CameraFunction._current._mainCamera.transform.rotation.eulerAngles;
+        Component.enabled = true;
+
+        CameraFunction._current.enabled = false;
+        CameraCollision._current.enabled = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    public void Disable()
+    {
+        if (Component is null)
+            return;
+
+        Status = false;
+        Component.enabled = false;
+
+        Player._mainPlayer._pMove.enabled = true;
+        Player._mainPlayer._pCombat.enabled = true;
+        Player._mainPlayer._pCasting.enabled = true;
+
+        CameraFunction._current.enabled = true;
+        CameraCollision._current.enabled = true;
+
+        CameraFunction._current._mainCamera.transform.rotation = CameraFunction._current.transform.localRotation;
+        CameraFunction._current.CameraReset_Lerp();
+    }
+    private void OnStopClient_Prefix_OnInvoke()
+    {
+        if (!Status)
+            return;
+
+        Disable();
+    }
+}

@@ -1,0 +1,341 @@
+﻿using BepInEx;
+using Tanuki.Atlyss.FluffUtilities.Managers;
+
+namespace Tanuki.Atlyss.FluffUtilities;
+
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.0")]
+[BepInProcess("ATLYSS.exe")]
+public class Main : Core.Plugins.Plugin
+{
+    internal static Main Instance;
+    private bool Reloaded = false;
+    internal void Awake()
+    {
+        Instance = this;
+        Configuration.Initialize();
+
+        PlayerAppearance.Initialize();
+        GlobalRaceDisplayParameters.Initialize();
+        FreeCamera.Initialize();
+        Hotkey.Initialize();
+    }
+    protected override void Load()
+    {
+        Logger.LogInfo("Tanuki.Atlyss by Timofey Tanuki / tanu.su");
+
+        if (Reloaded)
+            Config.Reload();
+
+        Configuration.Instance.Load(Config);
+
+        Game.Main.Instance.Patch(
+            typeof(Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
+            typeof(Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix),
+            typeof(Game.Events.AtlyssNetworkManager.OnStopClient_Prefix),
+            typeof(Game.Events.Player.OnStartAuthority_Postfix)
+        );
+
+        PlayerAppearance.Instance.Load();
+        GlobalRaceDisplayParameters.Instance.Load();
+        FreeCamera.Instance.Reload();
+
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyHeadWidth(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyHeadWidth(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyMuzzleLength(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyMuzzleLength(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_Height.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyHeight(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Height.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Height.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_Height.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyHeight(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_Height.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Height.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_Width.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyWidth(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Width.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Width.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_Width.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyWidth(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_Width.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_Width.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyTorsoSize(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyTorsoSize(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBreastSize(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBreastSize(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyArmsSize(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyArmsSize(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBellySize(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBellySize(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBottomSize(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyBottomSize(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Increase.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyVoicePitch(
+                    Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Decrease.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                PlayerAppearance.Instance.ModifyVoicePitch(
+                    -Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Step.Value,
+                    Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.UpdateCharacterFile.Value
+                );
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.FreeCamera_Toggle_Default.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                if (FreeCamera.Instance.Status && FreeCamera.Instance.CharacterControlsDisabled)
+                    FreeCamera.Instance.Disable();
+                else
+                    FreeCamera.Instance.Enable(true);
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.FreeCamera_Toggle_WithControls.Value,
+            delegate
+            {
+                if (Player._mainPlayer is null)
+                    return;
+
+                if (FreeCamera.Instance.Status && !FreeCamera.Instance.CharacterControlsDisabled)
+                    FreeCamera.Instance.Disable();
+                else
+                    FreeCamera.Instance.Enable(false);
+            }
+        );
+
+        Hotkey.Instance.Reload();
+
+        HarmonyLib.Harmony.CreateAndPatchAll(Assembly);
+    }
+
+    protected override void Unload()
+    {
+        Reloaded = true;
+        PlayerAppearance.Instance.Unload();
+        GlobalRaceDisplayParameters.Instance.Unload();
+        Hotkey.Instance.Reset();
+    }
+}
