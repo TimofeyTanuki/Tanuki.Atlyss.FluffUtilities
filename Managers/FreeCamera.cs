@@ -33,7 +33,10 @@ internal class FreeCamera
     public void Enable(bool DisableCharacterControls)
     {
         if (Component is null)
+        {
+            Component = CameraFunction._current._mainCamera.gameObject.GetComponent<Components.FreeCamera>();
             Component ??= CameraFunction._current._mainCamera.gameObject.AddComponent<Components.FreeCamera>();
+        }
 
         if (!Status)
             Component.Speed = Speed;
@@ -59,9 +62,6 @@ internal class FreeCamera
     }
     public void Disable()
     {
-        if (Component is null)
-            return;
-
         Status = false;
         Component.enabled = false;
 
@@ -77,9 +77,10 @@ internal class FreeCamera
     }
     private void OnStopClient_Prefix_OnInvoke()
     {
-        if (!Status)
-            return;
+        if (Status)
+            Disable();
 
-        Disable();
+        Object.Destroy(Component);
+        Component = null;
     }
 }

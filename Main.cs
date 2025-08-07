@@ -44,7 +44,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyHeadWidth(
@@ -57,7 +57,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyHeadWidth(
@@ -70,7 +70,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyMuzzleLength(
@@ -83,7 +83,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyMuzzleLength(
@@ -96,7 +96,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_Height.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyHeight(
@@ -109,7 +109,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_Height.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyHeight(
@@ -122,7 +122,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_Width.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyWidth(
@@ -135,7 +135,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_Width.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyWidth(
@@ -148,7 +148,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyTorsoSize(
@@ -161,7 +161,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyTorsoSize(
@@ -174,7 +174,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBreastSize(
@@ -187,7 +187,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBreastSize(
@@ -200,7 +200,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyArmsSize(
@@ -213,7 +213,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyArmsSize(
@@ -226,7 +226,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBellySize(
@@ -239,7 +239,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBellySize(
@@ -252,7 +252,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBottomSize(
@@ -265,7 +265,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyBottomSize(
@@ -278,7 +278,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Increase.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyVoicePitch(
@@ -291,7 +291,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Decrease.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 PlayerAppearance.Instance.ModifyVoicePitch(
@@ -304,7 +304,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.FreeCamera_Toggle_Default.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 if (FreeCamera.Instance.Status && FreeCamera.Instance.CharacterControlsDisabled)
@@ -317,7 +317,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Hotkeys.FreeCamera_Toggle_WithControls.Value,
             delegate
             {
-                if (Player._mainPlayer is null)
+                if (!Player._mainPlayer)
                     return;
 
                 if (FreeCamera.Instance.Status && !FreeCamera.Instance.CharacterControlsDisabled)
@@ -328,8 +328,6 @@ public class Main : Core.Plugins.Plugin
         );
 
         Hotkey.Instance.Reload();
-
-        HarmonyLib.Harmony.CreateAndPatchAll(Assembly);
     }
 
     protected override void Unload()
