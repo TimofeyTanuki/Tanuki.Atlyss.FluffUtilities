@@ -1,6 +1,8 @@
-﻿namespace Tanuki.Atlyss.FluffUtilities.Commands;
+﻿using Tanuki.Atlyss.API.Commands;
 
-internal class Experience
+namespace Tanuki.Atlyss.FluffUtilities.Commands;
+
+internal class Experience : ICommand
 {
     public void Execute(string[] Arguments)
     {
@@ -50,5 +52,7 @@ internal class Experience
         }
         else
             Player._mainPlayer._pStats.Network_currentExp += Delta;
+
+        Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
     }
 }

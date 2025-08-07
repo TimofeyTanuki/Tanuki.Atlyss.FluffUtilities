@@ -24,7 +24,6 @@ internal class PlayerAppearance
     }
     private void Init_ParamsCheck_Prefix_OnInvoke(PlayerAppearance_Profile PlayerAppearance, ref bool ShouldAllow) =>
         ShouldAllow = false;
-
     private void ApplyPlayerAppearanceStruct(ref PlayerAppearanceStruct PlayerAppearanceStruct)
     {
         Player._mainPlayer._pVisual.Network_playerAppearanceStruct = PlayerAppearanceStruct;

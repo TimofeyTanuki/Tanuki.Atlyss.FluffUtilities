@@ -25,8 +25,8 @@ internal class SteamProfile : ICommand
             if (!Player._nickname.ToLower().Contains(Nickname))
                 continue;
 
-            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.SteamProfile", Player._steamID));
             Application.OpenURL(string.Format(Configuration.Instance.Commands.SteamProfile_LinkTemplate.Value, Player._steamID));
+            Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
             return;
         }
 

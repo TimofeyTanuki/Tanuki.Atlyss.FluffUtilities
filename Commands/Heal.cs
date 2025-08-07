@@ -28,5 +28,7 @@ internal class Heal : ICommand
             Player._mainPlayer._statusEntity.Subtract_Health(-Delta);
         else
             Player._mainPlayer._statusEntity.Add_Health(Delta);
+
+        Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
     }
 }

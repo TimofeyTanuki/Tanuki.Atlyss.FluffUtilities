@@ -62,9 +62,6 @@ internal class FreeCamera
     }
     public void Disable()
     {
-        Status = false;
-        Component.enabled = false;
-
         Player._mainPlayer._pMove.enabled = true;
         Player._mainPlayer._pCombat.enabled = true;
         Player._mainPlayer._pCasting.enabled = true;
@@ -74,6 +71,9 @@ internal class FreeCamera
 
         CameraFunction._current._mainCamera.transform.rotation = CameraFunction._current.transform.localRotation;
         CameraFunction._current.CameraReset_Lerp();
+
+        Status = false;
+        Component.enabled = false;
     }
     private void OnStopClient_Prefix_OnInvoke()
     {
