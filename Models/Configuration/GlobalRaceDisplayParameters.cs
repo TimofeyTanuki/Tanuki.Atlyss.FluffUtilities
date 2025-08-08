@@ -18,14 +18,14 @@ internal class GlobalRaceDisplayParameters(ref ConfigFile ConfigFile)
     public ConfigEntry<bool> Override = ConfigFile.Bind(Section, "Enabled", true);
 
     public RangeParameter
-        HeadWidth = new(ref ConfigFile, "HeadWidth", 0.1f, 4),
-        MuzzleLength = new(ref ConfigFile, "MuzzleLength", -100f, 300f),
+        HeadWidth = new(ref ConfigFile, "HeadWidth", 0, 4),
+        MuzzleLength = new(ref ConfigFile, "MuzzleLength", -500f, 1000f),
         Height = new(ref ConfigFile, "Height", 0, 5),
         Width = new(ref ConfigFile, "Width", 0, 5),
-        TorsoSize = new(ref ConfigFile, "TorsoSize", -100f, 600),
-        BreastSize = new(ref ConfigFile, "BreastSize", -100, 600),
-        ArmsSize = new(ref ConfigFile, "ArmsSize", -100, 600),
-        BellySize = new(ref ConfigFile, "BellySize", -100, 600),
-        BottomSize = new(ref ConfigFile, "BottomSize", -100, 600),
-        VoicePitch = new(ref ConfigFile, "VoicePitch", 0.01f, 3);
+        TorsoSize = new(ref ConfigFile, "TorsoSize", -100f, 1000),
+        BreastSize = new(ref ConfigFile, "BreastSize", -100, 1000),
+        ArmsSize = new(ref ConfigFile, "ArmsSize", -200, 1000),
+        BellySize = new(ref ConfigFile, "BellySize", -300, 1000),
+        BottomSize = new(ref ConfigFile, "BottomSize", -300, 1000),
+        VoicePitch = new(ref ConfigFile, "VoicePitch", 0.05f, 3);
 }

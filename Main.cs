@@ -1,5 +1,7 @@
 ﻿using BepInEx;
+using System.Collections;
 using Tanuki.Atlyss.FluffUtilities.Managers;
+using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
@@ -39,6 +41,9 @@ public class Main : Core.Plugins.Plugin
         PlayerAppearance.Instance.Load();
         GlobalRaceDisplayParameters.Instance.Load();
         FreeCamera.Instance.Reload();
+
+        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
 
         Hotkey.Instance.BindAction(
             Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Increase.Value,
@@ -329,10 +334,38 @@ public class Main : Core.Plugins.Plugin
 
         Hotkey.Instance.Reload();
     }
+    private bool UsageAnnounced = true;
+    private void Init_LoadScreenDisable_Postfix_OnInvoke()
+    {
+        if (UsageAnnounced)
+            return;
 
+        if (Player._mainPlayer._isHostPlayer)
+            return;
+
+        UsageAnnounced = true;
+
+        StartCoroutine(AnnounceUsage());
+    }
+
+    private void OnStartAuthority_Postfix_OnInvoke() =>
+        UsageAnnounced = false;
+    private IEnumerator AnnounceUsage()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
+        yield return new WaitForSeconds(0.2f);
+        Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
+        yield return new WaitForSeconds(0.2f);
+        Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
+    }
     protected override void Unload()
     {
         Reloaded = true;
+
+        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
+
         PlayerAppearance.Instance.Unload();
         GlobalRaceDisplayParameters.Instance.Unload();
         Hotkey.Instance.Reset();
