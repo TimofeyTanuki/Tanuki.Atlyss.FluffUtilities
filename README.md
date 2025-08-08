@@ -65,3 +65,5 @@ Plugin translation file:<br>
 `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translation.properties`
 ## Anything else?
 You can contact me on my [Discord](https://discord.gg/b9mjYqHxTM) server.
+
+![AttractiveFurryWoman](https://github.com/user-attachments/assets/09263e00-2b1c-41aa-842c-68f2bead85e9)
