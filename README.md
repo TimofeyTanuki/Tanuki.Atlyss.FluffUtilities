@@ -1,5 +1,7 @@
 # Tanuki.Atlyss.FluffUtilities
 A multifunctional plugin for the game Atlyss. Unlock character appearance sliders, auto-pickup, free camera, hotkeys, a bunch of auxiliary commands, and more.
+
+[Thunderstore](https://thunderstore.io/c/atlyss/p/Tanuki/Tanuki_Atlyss_FluffUtilities/)
 ## Features
 - Unlock character appearance sliders.
 - Disable limits on character appearance.
