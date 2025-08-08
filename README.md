@@ -14,7 +14,7 @@ A multifunctional plugin for the game Atlyss. Unlock character appearance slider
 - Free camera.
   - Toggle with the command or hotkey (`End` by default).
   - The speed is adjusted using the mouse wheel.
-  - The controls can be changed in the configuration (default `W`, `A`, `S`, `D`, `Shift`, `Space`). You can also add a hotkey to a free camera without locking the character controls.
+  - The controls can be changed in the configuration (default `W`, `A`, `S`, `D`, `Shift`, `Space`).
   - A hotkey without character control lock is also available.
   - Auto-pickup of items appearing within range.
 - ...
