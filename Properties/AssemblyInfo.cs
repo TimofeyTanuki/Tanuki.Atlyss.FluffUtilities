@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Tanuki.Atlyss.FluffUtilities")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A multifunctional plugin for the game Atlyss.")]
 [assembly: AssemblyCompany("Tanuki")]
 [assembly: AssemblyProduct("Tanuki.Atlyss.FluffUtilities")]
 [assembly: AssemblyCopyright("Copyright © Tanuki 2025")]
