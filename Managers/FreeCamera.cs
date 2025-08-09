@@ -48,7 +48,6 @@ internal class FreeCamera
         {
             Player._mainPlayer._pMove.enabled = false;
             Player._mainPlayer._pCombat.enabled = false;
-            Player._mainPlayer._pCasting.enabled = false;
         }
 
         Component.Rotation = CameraFunction._current._mainCamera.transform.rotation.eulerAngles;
@@ -62,9 +61,12 @@ internal class FreeCamera
     }
     public void Disable()
     {
-        Player._mainPlayer._pMove.enabled = true;
-        Player._mainPlayer._pCombat.enabled = true;
-        Player._mainPlayer._pCasting.enabled = true;
+        if (CharacterControlsDisabled)
+        {
+            Player._mainPlayer._pMove.enabled = true;
+            Player._mainPlayer._pCombat.enabled = true;
+            Player._mainPlayer._pCasting.Init_SkillLibrary();
+        }
 
         CameraFunction._current.enabled = true;
         CameraCollision._current.enabled = true;
