@@ -19,7 +19,7 @@ internal class Currency : ICommand
         }
 
         if (Delta < 0)
-            Player._mainPlayer._pInventory.Cmd_DropCurrency(-Delta);
+            Player._mainPlayer._pInventory.Cmd_SubtractCurrency(-Delta);
         else
             Player._mainPlayer._pInventory.Cmd_AddCurrency(Delta);
     }

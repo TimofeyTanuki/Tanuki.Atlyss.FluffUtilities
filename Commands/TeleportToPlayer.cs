@@ -39,6 +39,8 @@ internal class TeleportToPlayer : ICommand
                     if (Portal._scenePortal._portalCaptionTitle != Player._mapName)
                         continue;
 
+                    Managers.FreeCamera.Instance.Disable();
+
                     Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_After;
                     Player._mainPlayer.Cmd_SceneTransport(Portal._scenePortal._subScene, Portal._scenePortal._spawnPointTag, ZoneDifficulty.NORMAL);
                     return;

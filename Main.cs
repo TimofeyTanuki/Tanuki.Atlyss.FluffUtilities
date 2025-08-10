@@ -12,6 +12,8 @@ public class Main : Core.Plugins.Plugin
 {
     internal static Main Instance;
     private bool Reloaded = false;
+    private bool UsageAnnounced = true;
+
     internal void Awake()
     {
         Instance = this;
@@ -334,7 +336,6 @@ public class Main : Core.Plugins.Plugin
 
         Hotkey.Instance.Reload();
     }
-    private bool UsageAnnounced = true;
     private void Init_LoadScreenDisable_Postfix_OnInvoke()
     {
         if (UsageAnnounced)
@@ -347,7 +348,6 @@ public class Main : Core.Plugins.Plugin
 
         StartCoroutine(AnnounceUsage());
     }
-
     private void OnStartAuthority_Postfix_OnInvoke() =>
         UsageAnnounced = false;
     private IEnumerator AnnounceUsage()

@@ -61,6 +61,9 @@ internal class FreeCamera
     }
     public void Disable()
     {
+        if (!Status)
+            return;
+
         if (CharacterControlsDisabled)
         {
             Player._mainPlayer._pMove.enabled = true;
