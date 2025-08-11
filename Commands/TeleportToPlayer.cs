@@ -34,15 +34,15 @@ internal class TeleportToPlayer : ICommand
                     return;
                 }
 
-                foreach (Portal Portal in Object.FindObjectsOfType<Portal>())
+                foreach (ScriptableMapData ScriptableMapData in Game.Fields.GameManager.Instance.CachedScriptableMapDatas.Values)
                 {
-                    if (Portal._scenePortal._portalCaptionTitle != Player._mapName)
+                    if (ScriptableMapData._mapCaptionTitle != Player._mapName)
                         continue;
 
                     Managers.FreeCamera.Instance.Disable();
 
-                    Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_After;
-                    Player._mainPlayer.Cmd_SceneTransport(Portal._scenePortal._subScene, Portal._scenePortal._spawnPointTag, ZoneDifficulty.NORMAL);
+                    Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix;
+                    Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData._subScene, ScriptableMapData._spawnPointTag, ZoneDifficulty.NORMAL);
                     return;
                 }
 
@@ -58,9 +58,9 @@ internal class TeleportToPlayer : ICommand
         ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
     }
 
-    private void Init_LoadScreenDisable_After()
+    private void Init_LoadScreenDisable_Postfix()
     {
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_After;
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix;
         Player._mainPlayer._pMove.Teleport(LastPosition);
     }
 }
