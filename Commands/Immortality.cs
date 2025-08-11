@@ -18,12 +18,12 @@ internal class Immortality : ICommand, IDisposable
         Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke -= Subtract_Health_Before;
     }
 
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (!Player._mainPlayer._isHostPlayer)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Immortality.NotHost"));
-            return;
+            return false;
         }
 
         if (Status)
@@ -42,6 +42,7 @@ internal class Immortality : ICommand, IDisposable
         }
 
         Status = !Status;
+        return false;
     }
     private void Subtract_Health_Before(StatusEntity StatusEntity, ref int Value)
     {

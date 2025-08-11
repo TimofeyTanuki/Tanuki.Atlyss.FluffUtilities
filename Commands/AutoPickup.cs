@@ -10,7 +10,7 @@ internal class AutoPickup : ICommand, IDisposable
     private bool Status = false;
     public AutoPickup() =>
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length != 0)
         {
@@ -24,13 +24,13 @@ internal class AutoPickup : ICommand, IDisposable
                     Status = true;
                     ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.AutoPickup.Enabled", Distance));
                     Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
-                    return;
+                    return false;
                 }
             }
             else
             {
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.AutoPickup.DistanceNotFloat"));
-                return;
+                return false;
             }
         }
 
@@ -43,6 +43,8 @@ internal class AutoPickup : ICommand, IDisposable
         }
         else
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.AutoPickup.DistanceNotSpecified"));
+
+        return false;
     }
 
     private void OnStopClient_Prefix_OnInvoke()

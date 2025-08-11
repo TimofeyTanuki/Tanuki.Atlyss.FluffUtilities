@@ -7,12 +7,12 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class TeleportToPlayer : ICommand
 {
     private Vector3 LastPosition;
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length == 0)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.NicknameNotSpecified"));
-            return;
+            return false;
         }
 
         string Nickname = string.Join(" ", Arguments).ToLower();
@@ -31,7 +31,7 @@ internal class TeleportToPlayer : ICommand
                 if (string.IsNullOrEmpty(Player._mapName))
                 {
                     ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.EmptyMapName", Player._mapName));
-                    return;
+                    return false;
                 }
 
                 foreach (ScriptableMapData ScriptableMapData in Game.Fields.GameManager.Instance.CachedScriptableMapDatas.Values)
@@ -43,19 +43,21 @@ internal class TeleportToPlayer : ICommand
 
                     Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix;
                     Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData._subScene, ScriptableMapData._spawnPointTag, ZoneDifficulty.NORMAL);
-                    return;
+                    return false;
                 }
 
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.SubSceneNotFound", Player._mapName));
-                return;
+                return false;
             }
 
             Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
             Player._mainPlayer._pMove.Teleport(LastPosition);
-            return;
+            return false;
         }
 
         ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
+
+        return false;
     }
 
     private void Init_LoadScreenDisable_Postfix()

@@ -5,7 +5,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class MoveSpeed : ICommand
 {
     internal static bool Changed = false;
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length == 0)
         {
@@ -19,13 +19,13 @@ internal class MoveSpeed : ICommand
             else
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.MoveSpeed.SpeedNotSpecified"));
 
-            return;
+            return false;
         }
 
         if (!float.TryParse(Arguments[0], out float Speed))
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.MoveSpeed.SpeedNotFloat"));
-            return;
+            return false;
         }
 
         if (Speed < 0)
@@ -35,5 +35,7 @@ internal class MoveSpeed : ICommand
         Player._mainPlayer._pMove._movSpeed = Speed;
         ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.MoveSpeed.Enabled", Speed));
         Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockoutSound);
+
+        return false;
     }
 }

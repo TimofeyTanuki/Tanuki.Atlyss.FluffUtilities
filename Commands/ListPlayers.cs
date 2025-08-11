@@ -5,7 +5,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class ListPlayers : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         Player[] Players = UnityEngine.Object.FindObjectsOfType<Player>();
         StringBuilder StringBuilder = new(Main.Instance.Translate("Commands.ListPlayers.Header", Players.Length));
@@ -23,5 +23,7 @@ internal class ListPlayers : ICommand
             );
 
         ChatBehaviour._current.New_ChatMessage(StringBuilder.ToString());
+
+        return false;
     }
 }

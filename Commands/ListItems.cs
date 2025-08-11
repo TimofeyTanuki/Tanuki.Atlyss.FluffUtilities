@@ -6,12 +6,14 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class ListItems : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length > 0)
             DisplaySearch(string.Join(" ", Arguments));
         else
             DisplayAll();
+
+        return false;
     }
     private void DisplayAll() =>
         ChatBehaviour._current.New_ChatMessage(

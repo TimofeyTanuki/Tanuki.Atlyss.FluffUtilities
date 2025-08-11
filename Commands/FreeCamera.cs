@@ -4,7 +4,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class FreeCamera : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Managers.FreeCamera.Instance.Status)
         {
@@ -16,5 +16,7 @@ internal class FreeCamera : ICommand
             Managers.FreeCamera.Instance.Enable(true);
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
         }
+
+        return false;
     }
 }

@@ -4,12 +4,12 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class Item : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length == 0 || Arguments.Length > 2)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.InvalidParameters"));
-            return;
+            return false;
         }
 
         bool Given = false;
@@ -19,7 +19,7 @@ internal class Item : ICommand
             if (!int.TryParse(Arguments[1], out Quantity))
             {
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.UnparseableQuantity"));
-                return;
+                return false;
             }
 
             if (Quantity < 1)
@@ -31,7 +31,7 @@ internal class Item : ICommand
         if (ScriptableItem is null)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.ItemNotFound", Arguments[0]));
-            return;
+            return false;
         }
 
         while (Quantity > 0)
@@ -64,5 +64,7 @@ internal class Item : ICommand
 
         if (Given)
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._purchaseItemSound);
+
+        return false;
     }
 }

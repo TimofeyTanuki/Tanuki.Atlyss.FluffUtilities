@@ -6,7 +6,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class Enchant : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Arguments.Length != 0)
         {
@@ -15,7 +15,7 @@ internal class Enchant : ICommand
             if (ItemData is null)
             {
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Enchant.NoUsableWeapon"));
-                return;
+                return false;
             }
 
             if (Enum.TryParse(Arguments[0], true, out DamageType DamageType))
@@ -23,7 +23,7 @@ internal class Enchant : ICommand
                 ItemData._damageTypeOverride = DamageType;
                 ItemData._useDamageTypeOverride = true;
                 Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
-                return;
+                return false;
             }
         }
 
@@ -36,5 +36,7 @@ internal class Enchant : ICommand
                 )
             )
         );
+
+        return false;
     }
 }

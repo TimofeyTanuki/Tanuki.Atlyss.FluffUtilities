@@ -8,7 +8,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
     private bool Status = false;
     public NoSkillCooldown() =>
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (Status)
         {
@@ -25,6 +25,8 @@ internal class NoSkillCooldown : ICommand, IDisposable
         }
 
         Status = !Status;
+
+        return false;
     }
     private void New_CooldownSlot_Prefix_OnInvoke(PlayerCasting PlayerCasting, ref ScriptableSkill ScriptableSkill, ref bool ShouldAllow) =>
         ShouldAllow = !PlayerCasting.netIdentity.isLocalPlayer;

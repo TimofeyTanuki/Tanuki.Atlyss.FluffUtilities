@@ -4,24 +4,24 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 internal class Experience : ICommand
 {
-    public void Execute(string[] Arguments)
+    public bool Execute(string[] Arguments)
     {
         if (!Player._mainPlayer._isHostPlayer)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Experience.NotHost"));
-            return;
+            return false;
         }
 
         if (Arguments.Length == 0)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Experience.DeltaNotSpecified"));
-            return;
+            return false;
         }
 
         if (!int.TryParse(Arguments[0], out int Delta))
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Experience.DeltaNotInteger"));
-            return;
+            return false;
         }
 
         if (Delta < 0)
@@ -54,5 +54,7 @@ internal class Experience : ICommand
             Player._mainPlayer._pStats.Network_currentExp += Delta;
 
         Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
+
+        return false;
     }
 }
