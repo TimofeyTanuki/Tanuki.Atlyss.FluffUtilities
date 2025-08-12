@@ -19,7 +19,6 @@ internal class Hotkey : MonoBehaviour
 
     public static Hotkey Instance;
     private readonly SortedSet<HotkeyActionGroup> HotkeyActionGroups;
-    private IEnumerator<HotkeyActionGroup> HotkeyActionGroupsEnumerator;
     private readonly IInputSystem InputSystem;
 
     private Hotkey()
@@ -74,11 +73,6 @@ internal class Hotkey : MonoBehaviour
         if (HotkeyActionGroup.Actions.Count == 0)
             HotkeyActionGroups.Remove(HotkeyActionGroup);
     }
-    public void Reload()
-    {
-        HotkeyActionGroupsEnumerator = HotkeyActionGroups.GetEnumerator();
-        enabled = HotkeyActionGroups.Count > 0;
-    }
     public void Reset()
     {
         enabled = false;
@@ -90,15 +84,14 @@ internal class Hotkey : MonoBehaviour
         enabled = false;
     private void Update()
     {
-        while (HotkeyActionGroupsEnumerator.MoveNext())
+        foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)
         {
-            if (!InputSystem.GetKeyDown(HotkeyActionGroupsEnumerator.Current.KeyCode))
+            if (!InputSystem.GetKeyDown(HotkeyActionGroup.KeyCode))
                 continue;
 
-            foreach (Action Action in HotkeyActionGroupsEnumerator.Current.Actions)
+            foreach (Action Action in HotkeyActionGroup.Actions)
                 Action.Invoke();
         }
-        HotkeyActionGroupsEnumerator.Reset();
     }
 #pragma warning restore IDE0051
 }

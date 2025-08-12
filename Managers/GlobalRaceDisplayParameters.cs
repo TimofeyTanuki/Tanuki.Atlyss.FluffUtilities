@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Tanuki.Atlyss.FluffUtilities.Managers;
+﻿namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
 internal class GlobalRaceDisplayParameters
 {
@@ -36,11 +34,10 @@ internal class GlobalRaceDisplayParameters
     }
     public void Override()
     {
-        IEnumerator<ScriptablePlayerRace> ScriptablePlayerRaces = Game.Fields.GameManager.Instance.CachedScriptableRaces.Values.GetEnumerator();
         CharacterParamsGroup CharacterParamsGroup;
-        while (ScriptablePlayerRaces.MoveNext())
+        foreach (ScriptablePlayerRace ScriptablePlayerRace in Game.Fields.GameManager.Instance.CachedScriptableRaces.Values)
         {
-            CharacterParamsGroup = ScriptablePlayerRaces.Current._raceDisplayParams;
+            CharacterParamsGroup = ScriptablePlayerRace._raceDisplayParams;
             CharacterParamsGroup._headWidthRange = Configuration.Instance.GlobalRaceDisplayParameters.HeadWidth.AsVector2;
             CharacterParamsGroup._headModRange = Configuration.Instance.GlobalRaceDisplayParameters.MuzzleLength.AsVector2;
             CharacterParamsGroup._heightRange = Configuration.Instance.GlobalRaceDisplayParameters.Height.AsVector2;

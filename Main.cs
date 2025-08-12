@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.4")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.5")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 [BepInProcess("ATLYSS.exe")]
@@ -343,8 +343,6 @@ public class Main : Core.Plugins.Plugin
                     FreeCamera.Instance.Enable(false);
             }
         );
-
-        Hotkey.Instance.Reload();
     }
     private void Init_LoadScreenDisable_Postfix_OnInvoke()
     {
