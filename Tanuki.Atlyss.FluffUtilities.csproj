@@ -40,6 +40,11 @@
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\core\BepInEx.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="EasySettings, Version=1.1.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\EasySettings.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mirror">
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Mirror.dll</HintPath>
@@ -87,6 +92,7 @@
     <Compile Include="Managers\FreeCamera.cs" />
     <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
     <Compile Include="Managers\Hotkey.cs" />
+    <Compile Include="Managers\NessieEasySettings.cs" />
     <Compile Include="Models\Configuration\Commands.cs" />
     <Compile Include="Models\Configuration\FreeCamera.cs" />
     <Compile Include="Models\Configuration\Hotkeys.cs" />

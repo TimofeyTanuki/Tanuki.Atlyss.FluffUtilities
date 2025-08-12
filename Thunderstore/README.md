@@ -25,15 +25,12 @@ You can change the language in the Tanuki.Atlyss bootloader configuration:<br>
 `BepInEx\config\9c00d52e-10b8-413f-9ee4-bfde81762442.cfg`<br>
 To apply the changes, you need to restart the game or simply perform a full reload of Tanuki.Atlyss and all its plugins with the command 
 `/reload`.
-
-Want to help translate the plugin into other languages? You can make your own package with translations or contact me to add them officially.
 ## Commands
 ### Commands for the Tanuki.Atlyss framework.
 - `/reload Tanuki.Atlyss.FluffUtilities` - Reload this plugin.
 - `/help Tanuki.Atlyss.FluffUtilities` - Display a list of commands for this plugin.
 
 It is not necessary to write the full name of the plugin; you can simply use `fluffutilities` or something even shorter.
-
 ### Plugin commands.
 - `/freecamera` - Free camera mode.
 - `/steamprofile <nickname>` - Open the player's Steam profile.

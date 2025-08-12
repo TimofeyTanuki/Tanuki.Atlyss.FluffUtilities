@@ -22,6 +22,11 @@ internal class PlayerAppearance
         if (DisableParameterCheck)
             Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke -= Init_ParamsCheck_Prefix_OnInvoke;
     }
+    public void Reload()
+    {
+        Unload();
+        Load();
+    }
     private void Init_ParamsCheck_Prefix_OnInvoke(PlayerAppearance_Profile PlayerAppearance, ref bool ShouldAllow) =>
         ShouldAllow = false;
     private void ApplyPlayerAppearanceStruct(ref PlayerAppearanceStruct PlayerAppearanceStruct)

@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.3")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.4")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 [BepInProcess("ATLYSS.exe")]
 public class Main : Core.Plugins.Plugin
 {
@@ -18,20 +19,23 @@ public class Main : Core.Plugins.Plugin
     {
         Instance = this;
         Configuration.Initialize();
+        Configuration.Instance.Load(Config);
 
         PlayerAppearance.Initialize();
         GlobalRaceDisplayParameters.Initialize();
         FreeCamera.Initialize();
         Hotkey.Initialize();
+        NessieEasySettings.Initialize();
     }
     protected override void Load()
     {
         Logger.LogInfo("Tanuki.Atlyss.FluffUtilities by Timofey Tanuki / tanu.su");
 
         if (Reloaded)
+        {
             Config.Reload();
-
-        Configuration.Instance.Load(Config);
+            Configuration.Instance.Load(Config);
+        }
 
         Game.Main.Instance.Patch(
             typeof(Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
@@ -46,6 +50,12 @@ public class Main : Core.Plugins.Plugin
 
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
         Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
+
+        ReloadHotkeys();
+    }
+    internal void ReloadHotkeys()
+    {
+        Hotkey.Instance.Reset();
 
         Hotkey.Instance.BindAction(
             Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Increase.Value,
