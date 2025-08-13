@@ -416,3 +416,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Thunderstore
+Thunderstore/BepInEx/config/*.cfg
+Thunderstore/BepInEx/plugins
