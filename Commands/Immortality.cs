@@ -28,7 +28,7 @@ internal class Immortality : ICommand, IDisposable
 
         if (Status)
         {
-            Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke += Subtract_Health_Before;
+            Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke -= Subtract_Health_Before;
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockoutSound);
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Immortality.Disabled"));
         }
@@ -36,7 +36,7 @@ internal class Immortality : ICommand, IDisposable
         {
             Game.Main.Instance.Patch(typeof(Game.Events.StatusEntity.Subtract_Health_Prefix));
 
-            Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke -= Subtract_Health_Before;
+            Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke += Subtract_Health_Before;
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Immortality.Enabled"));
         }
