@@ -130,5 +130,13 @@
     ],
     "Help": "Добавить или снять опыт.",
     "Syntax": "<изменение>"
+  },
+  "NoSkillTimer": {
+    "Names": [
+      "noskilltimer",
+      "nst"
+    ],
+    "Help": "Переключение таймера навыков.",
+    "Syntax": null
   }
 }

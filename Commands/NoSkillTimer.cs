@@ -3,10 +3,10 @@ using Tanuki.Atlyss.API.Commands;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
-internal class NoSkillCooldown : ICommand, IDisposable
+internal class NoSkillTimer : ICommand, IDisposable
 {
     private bool Status = false;
-    public NoSkillCooldown() =>
+    public NoSkillTimer() =>
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
     public bool Execute(string[] Arguments)
     {
@@ -29,23 +29,32 @@ internal class NoSkillCooldown : ICommand, IDisposable
             return;
 
         Status = true;
-        Game.Main.Instance.Patch(typeof(Game.Events.PlayerCasting.New_CooldownSlot_Prefix));
-        Game.Events.PlayerCasting.New_CooldownSlot_Prefix.OnInvoke += New_CooldownSlot_Prefix_OnInvoke;
+        Game.Main.Instance.Patch(typeof(Game.Events.PlayerCasting.Cmd_InitSkill_Postfix));
+        Game.Events.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke += Cmd_InitSkill_Postfix_OnInvoke;
     }
+
+    private void Cmd_InitSkill_Postfix_OnInvoke(PlayerCasting PlayerCasting)
+    {
+        if (!PlayerCasting.isLocalPlayer)
+            return;
+
+        if (!PlayerCasting._currentCastSkill)
+            return;
+
+        PlayerCasting._cooldownTimer = 0;
+        PlayerCasting._castTimer = float.MaxValue;
+
+        if (!Player._mainPlayer._isHostPlayer)
+            PlayerCasting.Cmd_CastInit();
+    }
+
     private void Disable()
     {
         if (!Status)
             return;
 
         Status = false;
-        Game.Events.PlayerCasting.New_CooldownSlot_Prefix.OnInvoke -= New_CooldownSlot_Prefix_OnInvoke;
-    }
-    private void New_CooldownSlot_Prefix_OnInvoke(PlayerCasting PlayerCasting, ref ScriptableSkill ScriptableSkill, ref bool ShouldAllow)
-    {
-        if (!PlayerCasting.isLocalPlayer)
-            return;
-
-        ShouldAllow = false;
+        Game.Events.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke -= Cmd_InitSkill_Postfix_OnInvoke;
     }
     public void Dispose()
     {

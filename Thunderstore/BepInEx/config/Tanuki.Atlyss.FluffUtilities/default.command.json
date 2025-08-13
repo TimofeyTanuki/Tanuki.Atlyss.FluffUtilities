@@ -130,5 +130,13 @@
     ],
     "Help": "Add or remove experience.",
     "Syntax": "<delta>"
+  },
+  "NoSkillTimer": {
+    "Names": [
+      "noskilltimer",
+      "nst"
+    ],
+    "Help": "Toggle the skill timer.",
+    "Syntax": null
   }
 }

@@ -86,8 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\FreeCamera.cs" />
-    <Compile Include="Commands\SteamProfile.cs" />
     <Compile Include="Commands\NoSkillCooldown.cs" />
+    <Compile Include="Commands\SteamProfile.cs" />
+    <Compile Include="Commands\NoSkillTimer.cs" />
     <Compile Include="Components\FreeCamera.cs" />
     <Compile Include="Managers\FreeCamera.cs" />
     <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
