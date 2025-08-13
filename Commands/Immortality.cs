@@ -7,8 +7,10 @@ internal class Immortality : ICommand, IDisposable
 {
 
     private bool Status = false;
-    public Immortality() =>
+    public Immortality()
+    {
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+    }
 
     public bool Execute(string[] Arguments)
     {
@@ -35,13 +37,12 @@ internal class Immortality : ICommand, IDisposable
     }
     private void Enable()
     {
-        if (!Status)
-        {
-            Game.Main.Instance.Patch(typeof(Game.Events.StatusEntity.Subtract_Health_Prefix));
-            Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke += Subtract_Health_Before;
-        }
+        if (Status)
+            return;
 
         Status = true;
+        Game.Main.Instance.Patch(typeof(Game.Events.StatusEntity.Take_Damage_Prefix));
+        Game.Events.StatusEntity.Take_Damage_Prefix.OnInvoke += Subtract_Health_Before;
     }
     private void Disable()
     {
@@ -49,15 +50,15 @@ internal class Immortality : ICommand, IDisposable
             return;
 
         Status = false;
-        Game.Events.StatusEntity.Subtract_Health_Prefix.OnInvoke -= Subtract_Health_Before;
+        Game.Events.StatusEntity.Take_Damage_Prefix.OnInvoke -= Subtract_Health_Before;
     }
-    private void Subtract_Health_Before(StatusEntity StatusEntity, ref int Value)
+    private void Subtract_Health_Before(StatusEntity StatusEntity, ref DamageStruct DamageStruct, ref bool ShouldAllow)
     {
         if (!StatusEntity.isLocalPlayer)
             return;
 
-        if (Status)
-            Value = 0;
+        ShouldAllow = false;
+        StatusEntity.Rpc_DisplayBlockHitEffect(StatusEntity, 1, false, DamageStruct._damageType == DamageType.Mind, DamageStruct._colliderHitPoint);
     }
     public void Dispose()
     {
