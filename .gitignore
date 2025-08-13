@@ -420,3 +420,4 @@ FodyWeavers.xsd
 # Thunderstore
 Thunderstore/BepInEx/config/*.cfg
 Thunderstore/BepInEx/plugins
+Thunderstore/*.zip
