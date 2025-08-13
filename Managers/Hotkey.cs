@@ -47,6 +47,7 @@ internal class Hotkey : MonoBehaviour
         }
 
         HotkeyActionGroup.Actions.Add(Action);
+        enabled = true;
     }
     public void UnbindAction(Action Action)
     {

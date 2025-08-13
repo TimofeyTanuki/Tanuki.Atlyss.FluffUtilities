@@ -1,12 +1,18 @@
-﻿using Tanuki.Atlyss.API.Commands;
+﻿using System;
+using System.Collections.Generic;
+using Tanuki.Atlyss.API.Commands;
 using Tanuki.Atlyss.Game.Extensions;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
-internal class TeleportToPlayer : ICommand
+internal class TeleportToPlayer : ICommand, IDisposable
 {
-    private Vector3 LastPosition;
+    private Vector3 Target;
+    private bool TeleportingBetweenScenes = false;
+    public TeleportToPlayer() =>
+        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += ResetTeleportationBetweenScenes;
+
     public bool Execute(string[] Arguments)
     {
         if (Arguments.Length == 0)
@@ -17,15 +23,16 @@ internal class TeleportToPlayer : ICommand
 
         string Nickname = string.Join(" ", Arguments).ToLower();
 
-        foreach (Player Player in Object.FindObjectsOfType<Player>())
+        foreach (Player Player in UnityEngine.Object.FindObjectsOfType<Player>())
         {
-            if (Player.netIdentity.isLocalPlayer)
+            if (Player.isLocalPlayer)
                 continue;
 
             if (!Player._nickname.ToLower().Contains(Nickname))
                 continue;
 
-            LastPosition = Player.transform.position;
+            Target = Player.transform.position;
+
             if (Player._mainPlayer._mapName != Player._mapName)
             {
                 if (string.IsNullOrEmpty(Player._mapName))
@@ -34,35 +41,56 @@ internal class TeleportToPlayer : ICommand
                     return false;
                 }
 
-                foreach (ScriptableMapData ScriptableMapData in Game.Fields.GameManager.Instance.CachedScriptableMapDatas.Values)
+                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Fields.GameManager.Instance.CachedScriptableMapDatas)
                 {
-                    if (ScriptableMapData._mapCaptionTitle != Player._mapName)
+                    if (ScriptableMapData.Value._mapCaptionTitle != Player._mapName)
+                        continue;
+
+                    if (!Player._mainPlayer._waypointAttunements.Contains(ScriptableMapData.Key))
                         continue;
 
                     Managers.FreeCamera.Instance.Disable();
 
-                    Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix;
-                    Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData._subScene, ScriptableMapData._spawnPointTag, ZoneDifficulty.NORMAL);
+                    Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Teleport;
+                    TeleportingBetweenScenes = true;
+                    Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData.Value._subScene, ScriptableMapData.Value._spawnPointTag, ZoneDifficulty.NORMAL);
                     return false;
                 }
 
                 ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.SubSceneNotFound", Player._mapName));
-                return false;
             }
+            else
+                Teleport();
 
-            Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
-            Player._mainPlayer._pMove.Teleport(LastPosition);
             return false;
         }
 
         ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
-
         return false;
     }
 
-    private void Init_LoadScreenDisable_Postfix()
+    private void ResetTeleportationBetweenScenes()
     {
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix;
-        Player._mainPlayer._pMove.Teleport(LastPosition);
+        if (!TeleportingBetweenScenes)
+            return;
+
+        TeleportingBetweenScenes = false;
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
+    }
+    private void Teleport()
+    {
+        if (TeleportingBetweenScenes)
+        {
+            TeleportingBetweenScenes = false;
+            Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
+        }
+
+        Player._mainPlayer._pMove.Teleport(Target);
+        Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
+    }
+    public void Dispose()
+    {
+        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= ResetTeleportationBetweenScenes;
+        ResetTeleportationBetweenScenes();
     }
 }

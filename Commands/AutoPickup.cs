@@ -9,7 +9,8 @@ internal class AutoPickup : ICommand, IDisposable
     private float Distance = 0;
     private bool Status = false;
     public AutoPickup() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+
     public bool Execute(string[] Arguments)
     {
         if (Arguments.Length != 0)
@@ -18,10 +19,7 @@ internal class AutoPickup : ICommand, IDisposable
             {
                 if (Distance > 0)
                 {
-                    if (!Status)
-                        Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke += Enable_GroundCheckToVelocityZero;
-
-                    Status = true;
+                    Enable();
                     ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.AutoPickup.Enabled", Distance));
                     Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
                     return false;
@@ -36,8 +34,7 @@ internal class AutoPickup : ICommand, IDisposable
 
         if (Status)
         {
-            Status = false;
-            Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke -= Enable_GroundCheckToVelocityZero;
+            Disable();
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.AutoPickup.Disabled"));
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockoutSound);
         }
@@ -46,8 +43,15 @@ internal class AutoPickup : ICommand, IDisposable
 
         return false;
     }
+    private void Enable()
+    {
+        if (Status)
+            return;
 
-    private void OnStopClient_Prefix_OnInvoke()
+        Status = true;
+        Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke += Enable_GroundCheckToVelocityZero;
+    }
+    private void Disable()
     {
         if (!Status)
             return;
@@ -55,7 +59,6 @@ internal class AutoPickup : ICommand, IDisposable
         Status = false;
         Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke -= Enable_GroundCheckToVelocityZero;
     }
-
     private void Enable_GroundCheckToVelocityZero(ItemObject ItemObject)
     {
         if (ItemObject._isPickedUp)
@@ -71,11 +74,7 @@ internal class AutoPickup : ICommand, IDisposable
     }
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= OnStopClient_Prefix_OnInvoke;
-
-        if (!Status)
-            return;
-
-        Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke -= Enable_GroundCheckToVelocityZero;
+        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
+        Disable();
     }
 }
