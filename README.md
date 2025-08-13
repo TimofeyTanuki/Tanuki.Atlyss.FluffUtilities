@@ -50,6 +50,7 @@ It is not necessary to write the full name of the plugin; you can simply use `fl
 - `/movespeed [speed]` - Change the movement speed.
 - `/teleporttoplayer <nickname>` - Teleport to a player.
 - `/experience <delta>` - Add or remove experience.
+- `/noskilltimer` - Toggle the skill timer.
 - ...
 Many commands have shortcuts and aliases. View them with the `/help` command.
 ### Configuration
