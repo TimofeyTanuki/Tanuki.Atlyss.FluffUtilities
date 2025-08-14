@@ -37,17 +37,17 @@ It is not necessary to write the full name of the plugin; you can simply use `fl
 - `/freecamera` - Free camera mode.
 - `/steamprofile <nickname>` - Open the player's Steam profile.
 - `/noskillcooldown` - Toggle the skill cooldown timer.
-- `/autopickup [radius]` - Automatic item pickup.
+- `/autopickup [radius]` - Automatic item pickup. Do not specify parameters to disable.
 - `/currency <delta>` - Add or remove currency.
-- `/disenchant` - Remove enchantment from a weapon in the paws.
-- `/enchant <damage type>` - Enchant weapons in the paws.
+- `/disenchant` - Remove the enchantment from the item in the first (top left) slot on the equipment tab.
+- `/enchant [damage type] [modifier ID]` - Enchant the item in the first (top left) slot on the equipment tab. Example: `/enchant 99 99` (Use invalid parameters to get a hint)
 - `/heal <delta>` - Add or remove health.
 - `/immortality` - Immortality mode.
-- `/item <name> [quantity]` - Give an item.
+- `/item <name> [quantity]` - Give an item. Example: `/item "Deadwood Axe" 1`
 - `/list-items [case-sensitive search]` - Display a list of items.
 - `/list-players` - Display a list of players.
 - `/maxjumps <count>` - Change the maximum number of jumps.
-- `/movespeed [speed]` - Change the movement speed.
+- `/movespeed [speed]` - Change the movement speed. Do not specify parameters to reset.
 - `/teleporttoplayer <nickname>` - Teleport to a player.
 - `/experience <delta>` - Add or remove experience.
 - `/noskilltimer` - Toggle the skill timer.

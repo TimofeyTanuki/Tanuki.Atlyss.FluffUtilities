@@ -47,7 +47,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
                         continue;
 
                     if (!Player._mainPlayer._waypointAttunements.Contains(ScriptableMapData.Key))
-                        continue;
+                        break;
 
                     Managers.FreeCamera.Instance.Disable();
 

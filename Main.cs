@@ -1,14 +1,14 @@
 ﻿using BepInEx;
+using Steamworks;
 using System.Collections;
 using Tanuki.Atlyss.FluffUtilities.Managers;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.6")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.7")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
-[BepInProcess("ATLYSS.exe")]
 public class Main : Core.Plugins.Plugin
 {
     internal static Main Instance;
@@ -358,13 +358,20 @@ public class Main : Core.Plugins.Plugin
     }
     private void OnStartAuthority_Postfix_OnInvoke() =>
         UsageAnnounced = false;
+    /*
+     * For now, I don't want to add this (Issue #2, #5).
+     * It's just pointless.
+     * In fact, there is no problem, and this request comes from one person (maybe more, but in any case, it's not enough and looks more like unfounded hate or ego) with insufficient and unconfirmed arguments.
+     * 
+     * bool CoolLobby = Player._mainPlayer._isHostPlayer || SteamMatchmaking.GetLobbyData(new(SteamLobby._current._currentLobbyID), "name").Contains("(M)");
+     */
     private IEnumerator AnnounceUsage()
     {
-        yield return new WaitForSeconds(0.1f);
-        Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
         yield return new WaitForSeconds(0.2f);
         Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
+        Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
+        yield return new WaitForSeconds(0.3f);
         Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
     }
     protected override void Unload()
