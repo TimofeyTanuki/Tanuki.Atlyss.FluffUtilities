@@ -46,7 +46,7 @@ It is not necessary to write the full name of the plugin; you can simply use `fl
 - `/item <name> [quantity]` - Give an item. Example: `/item "Deadwood Axe" 1`
 - `/list-items [case-sensitive search]` - Display a list of items.
 - `/list-players` - Display a list of players.
-- `/maxjumps <count>` - Change the maximum number of jumps.
+- `/infinitejumps` - Infinite jumps.
 - `/movespeed [speed]` - Change the movement speed. Do not specify parameters to reset.
 - `/teleporttoplayer <nickname>` - Teleport to a player.
 - `/experience <delta>` - Add or remove experience.

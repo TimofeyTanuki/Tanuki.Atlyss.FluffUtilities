@@ -113,7 +113,7 @@
     <Compile Include="Commands\Item.cs" />
     <Compile Include="Commands\ListItems.cs" />
     <Compile Include="Commands\ListPlayers.cs" />
-    <Compile Include="Commands\MaxJumps.cs" />
+    <Compile Include="Commands\InfiniteJumps.cs" />
     <Compile Include="Commands\MoveSpeed.cs" />
     <Compile Include="Commands\TeleportToPlayer.cs" />
     <Compile Include="Configuration.cs" />

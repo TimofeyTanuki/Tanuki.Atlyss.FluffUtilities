@@ -95,14 +95,14 @@
     "Help": "Display a list of players.",
     "Syntax": null
   },
-  "MaxJumps": {
+  "InfiniteJumps": {
     "Names": [
-      "maxjumps",
-      "mj",
+      "infinitejumps",
+      "ij",
       "jumps"
     ],
-    "Help": "Change the maximum number of jumps.",
-    "Syntax": "<count>"
+    "Help": "Infinite jumps.",
+    "Syntax": null
   },
   "MoveSpeed": {
     "Names": [

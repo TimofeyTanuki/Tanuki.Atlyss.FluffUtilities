@@ -95,14 +95,14 @@
     "Help": "Отобразить список игроков.",
     "Syntax": null
   },
-  "MaxJumps": {
+  "InfiniteJumps": {
     "Names": [
-      "maxjumps",
-      "mj",
+      "infinitejumps",
+      "ij",
       "jumps"
     ],
-    "Help": "Изменить максимальное количество прыжков.",
-    "Syntax": "<количество>"
+    "Help": "Бесконечные прыжки.",
+    "Syntax": null
   },
   "MoveSpeed": {
     "Names": [
