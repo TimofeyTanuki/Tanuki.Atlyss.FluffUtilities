@@ -98,6 +98,7 @@
     <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
     <Compile Include="Managers\Hotkey.cs" />
     <Compile Include="Managers\NessieEasySettings.cs" />
+    <Compile Include="Models\Configuration\General.cs" />
     <Compile Include="Models\Configuration\Commands.cs" />
     <Compile Include="Models\Configuration\FreeCamera.cs" />
     <Compile Include="Models\Configuration\Hotkeys.cs" />

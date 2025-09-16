@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.8")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.9")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 public class Main : Core.Plugins.Plugin
@@ -352,6 +352,9 @@ public class Main : Core.Plugins.Plugin
             return;
 
         UsageAnnounced = true;
+
+        if (!Configuration.Instance.General.Plugin_PresenceMessageOnJoinLobby.Value)
+            return;
 
         StartCoroutine(AnnounceUsage());
     }

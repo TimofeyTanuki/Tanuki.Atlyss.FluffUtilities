@@ -18,6 +18,7 @@ internal class Configuration
     public GlobalRaceDisplayParameters GlobalRaceDisplayParameters;
     public FreeCamera FreeCamera;
     public Hotkeys Hotkeys;
+    public General General;
 
     public void Load(ConfigFile ConfigFile)
     {
@@ -26,5 +27,6 @@ internal class Configuration
         GlobalRaceDisplayParameters = new(ref ConfigFile);
         FreeCamera = new(ref ConfigFile);
         Hotkeys = new(ref ConfigFile);
+        General = new(ref ConfigFile);
     }
 }
