@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Steamworks;
+using System.Text;
 using Tanuki.Atlyss.API.Commands;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -11,6 +12,8 @@ internal class ListPlayers : ICommand
         StringBuilder StringBuilder = new(Main.Instance.Translate("Commands.ListPlayers.Header", Players.Length));
 
         foreach (Player Player in Players)
+        {
+            string LobbyMemberDataKey_Version = SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbyID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
             StringBuilder.Append(
                 Main.Instance.Translate(
                     "Commands.ListPlayers.Entry",
@@ -18,9 +21,11 @@ internal class ListPlayers : ICommand
                     Player._nickname,
                     Player._nickname != Player._globalNickname && !string.IsNullOrEmpty(Player._globalNickname) ? Main.Instance.Translate("Commands.ListPlayers.GlobalNickname", Player._globalNickname) : string.Empty,
                     Player._steamID,
-                    string.IsNullOrEmpty(Player._mapName) ? Main.Instance.Translate("Commands.ListPlayers.NoMap") : Player._mapName
+                    string.IsNullOrEmpty(Player._mapName) ? Main.Instance.Translate("Commands.ListPlayers.NoMap") : Player._mapName,
+                    string.IsNullOrEmpty(LobbyMemberDataKey_Version) ? string.Empty : Main.Instance.Translate("Commands.ListPlayers.FluffUtilities", LobbyMemberDataKey_Version)
                 )
             );
+        }
 
         ChatBehaviour._current.New_ChatMessage(StringBuilder.ToString());
 

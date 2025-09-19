@@ -15,6 +15,7 @@ A multifunctional plugin for the game Atlyss. Unlock character appearance slider
   - The controls can be changed in the configuration (default `W`, `A`, `S`, `D`, `Shift`, `Space`).
   - A hotkey without character control lock is also available.
 - Auto-pickup of items appearing within range.
+- See other players using this plugin.
 - ...
 ## Translations
 The following languages are available for this plugin:

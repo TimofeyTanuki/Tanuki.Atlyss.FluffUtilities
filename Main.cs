@@ -11,6 +11,7 @@ namespace Tanuki.Atlyss.FluffUtilities;
 public class Main : Core.Plugins.Plugin
 {
     internal static Main Instance;
+
     private bool Reloaded = false;
     private bool UsageAnnounced = true;
 
@@ -20,6 +21,7 @@ public class Main : Core.Plugins.Plugin
         Configuration.Initialize();
         Configuration.Instance.Load(Config);
 
+        Lobby.Initialize();
         PlayerAppearance.Initialize();
         GlobalRaceDisplayParameters.Initialize();
         FreeCamera.Initialize();
@@ -45,6 +47,7 @@ public class Main : Core.Plugins.Plugin
 
         PlayerAppearance.Instance.Load();
         GlobalRaceDisplayParameters.Instance.Load();
+        Lobby.Instance.Load();
         FreeCamera.Instance.Reload();
 
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
@@ -353,23 +356,14 @@ public class Main : Core.Plugins.Plugin
 
         UsageAnnounced = true;
 
-        if (!Configuration.Instance.General.Plugin_PresenceMessageOnJoinLobby.Value)
-            return;
-
-        StartCoroutine(AnnounceUsage());
+        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
+            StartCoroutine(Plugin_ShowUsagePresenceOnJoinLobby_Effects());
     }
     private void OnStartAuthority_Postfix_OnInvoke() =>
         UsageAnnounced = false;
-    /*
-     * For now, I don't want to add this (Issue #2, #5).
-     * It's just pointless.
-     * In fact, there is no problem, and this request comes from one person (maybe more, but in any case, it's not enough and looks more like unfounded hate or ego) with insufficient and unconfirmed arguments.
-     * 
-     * bool CoolLobby = Player._mainPlayer._isHostPlayer || SteamMatchmaking.GetLobbyData(new(SteamLobby._current._currentLobbyID), "name").Contains("(M)");
-     */
-    private IEnumerator AnnounceUsage()
+    private IEnumerator Plugin_ShowUsagePresenceOnJoinLobby_Effects()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.25f);
         Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
         yield return new WaitForSeconds(0.3f);
         Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
@@ -383,6 +377,8 @@ public class Main : Core.Plugins.Plugin
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
         Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
 
+        StopAllCoroutines();
+        Lobby.Instance.Unload();
         PlayerAppearance.Instance.Unload();
         GlobalRaceDisplayParameters.Instance.Unload();
         Hotkey.Instance.Reset();
