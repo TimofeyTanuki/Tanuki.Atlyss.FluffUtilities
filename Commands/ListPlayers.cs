@@ -13,7 +13,10 @@ internal class ListPlayers : ICommand
 
         foreach (Player Player in Players)
         {
-            string LobbyMemberDataKey_Version = SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbyID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
+            if (!Player)
+                continue;
+
+            string LobbyMemberDataKey_Version = Player.isLocalPlayer ? PluginInfo.Version : SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbyID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
             StringBuilder.Append(
                 Main.Instance.Translate(
                     "Commands.ListPlayers.Entry",

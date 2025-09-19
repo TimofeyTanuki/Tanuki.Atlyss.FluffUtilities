@@ -1,6 +1,6 @@
-﻿using Mirror;
-using Steamworks;
+﻿using Steamworks;
 using System.Collections;
+using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
@@ -11,12 +11,10 @@ internal class Lobby
     public CSteamID PlayerID = CSteamID.Nil;
 
     public const string LobbyMemberDataKey_Version = $"{PluginInfo.ID}.ver";
-
     private Lobby()
     {
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
-
     }
     public static void Initialize()
     {
@@ -31,28 +29,39 @@ internal class Lobby
             return;
 
         Game.Main.Instance.Patch(
-            typeof(Game.Events.Player.DeserializeSyncVars_Postfix)
+            typeof(Game.Events.Player.Awake_Postfix),
+            typeof(Game.Events.ChatBehaviour.OnServerMessage_Postfix)
         );
 
-        Game.Events.Player.DeserializeSyncVars_Postfix.OnInvoke += DeserializeSyncVars_Postfix_OnInvoke;
+        Game.Events.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
     }
 
-    private void DeserializeSyncVars_Postfix_OnInvoke(Player Player, NetworkReader NetworkReader, bool InitialState)
+
+    private void Awake_Postfix_OnInvoke(Player Player)
     {
-        if (!InitialState)
-            return;
-
-        if (Player._mainPlayer is null)
-            return;
-
-        if (Player._mainPlayer.netIdentity.netId >= Player.netIdentity.netId)
+        if (!Player._mainPlayer)
             return;
 
         Main.Instance.StartCoroutine(CheckPlayerPlugin(Player));
     }
+
     private IEnumerator CheckPlayerPlugin(Player Player)
     {
-        string Version = SteamMatchmaking.GetLobbyMemberData(new(ulong.Parse(Player._steamID)), LobbyID, LobbyMemberDataKey_Version);
+        while (Player)
+        {
+            if (Player._currentPlayerCondition != PlayerCondition.CONNECTING)
+                break;
+
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        if (!Player)
+            yield break;
+
+        if (Player.isLocalPlayer)
+            yield break;
+
+        string Version = SteamMatchmaking.GetLobbyMemberData(LobbyID, new(ulong.Parse(Player._steamID)), LobbyMemberDataKey_Version);
 
         if (string.IsNullOrEmpty(Version))
             yield break;
@@ -72,7 +81,7 @@ internal class Lobby
         if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
             return;
 
-        Game.Events.Player.DeserializeSyncVars_Postfix.OnInvoke -= DeserializeSyncVars_Postfix_OnInvoke;
+        Game.Events.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
     }
     private void OnStartAuthority_Postfix_OnInvoke()
     {
@@ -80,7 +89,7 @@ internal class Lobby
             return;
 
         LobbyID = new CSteamID(SteamLobby._current._currentLobbyID);
-        PlayerID = new CSteamID(ulong.Parse(Player._mainPlayer._steamID));
+        PlayerID = Player._mainPlayer._isHostPlayer ? SteamMatchmaking.GetLobbyOwner(LobbyID) : new CSteamID(ulong.Parse(Player._mainPlayer._steamID));
 
         SteamMatchmaking.SetLobbyMemberData(LobbyID, LobbyMemberDataKey_Version, PluginInfo.Version);
     }
