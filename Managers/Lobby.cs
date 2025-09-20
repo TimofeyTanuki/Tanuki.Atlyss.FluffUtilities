@@ -68,7 +68,7 @@ internal class Lobby
                 "General.OtherPluginUserMessage",
                 Player.netId,
                 Player._nickname,
-                string.IsNullOrEmpty(Player._globalNickname) ? Main.Instance.Translate("General.OtherPluginUserMessage.GlobalNickname", Player._globalNickname) : string.Empty,
+                string.IsNullOrEmpty(Player._globalNickname) ? string.Empty : Main.Instance.Translate("General.OtherPluginUserMessage.GlobalNickname", Player._globalNickname),
                 Version
             )
         );
