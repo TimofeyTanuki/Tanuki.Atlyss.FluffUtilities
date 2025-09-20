@@ -364,11 +364,11 @@ public class Main : Core.Plugins.Plugin
     private IEnumerator Plugin_ShowUsagePresenceOnJoinLobby_Effects()
     {
         yield return new WaitForSeconds(0.25f);
-        Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
+        Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
         yield return new WaitForSeconds(0.3f);
         Player._mainPlayer._pVisual.Cmd_PoofSmokeEffect();
         yield return new WaitForSeconds(0.3f);
-        Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
+        Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
     }
     protected override void Unload()
     {

@@ -58,7 +58,10 @@ internal class Lobby
         if (Player.isLocalPlayer)
             yield break;
 
-        string Version = SteamMatchmaking.GetLobbyMemberData(LobbyID, new(ulong.Parse(Player._steamID)), LobbyMemberDataKey_Version);
+        if (!ulong.TryParse(Player._steamID, out ulong SteamID))
+            yield break;
+
+        string Version = SteamMatchmaking.GetLobbyMemberData(LobbyID, new(SteamID), LobbyMemberDataKey_Version);
 
         if (string.IsNullOrEmpty(Version))
             yield break;
@@ -72,6 +75,8 @@ internal class Lobby
                 Version
             )
         );
+
+        yield break;
     }
     public void Unload()
     {

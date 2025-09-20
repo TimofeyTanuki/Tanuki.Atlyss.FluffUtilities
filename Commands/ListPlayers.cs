@@ -1,4 +1,5 @@
 ﻿using Steamworks;
+using System.Collections;
 using System.Text;
 using Tanuki.Atlyss.API.Commands;
 
@@ -7,6 +8,11 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class ListPlayers : ICommand
 {
     public bool Execute(string[] Arguments)
+    {
+        Main.Instance.StartCoroutine(ListPlayersTask());
+        return false;
+    }
+    private IEnumerator ListPlayersTask()
     {
         Player[] Players = UnityEngine.Object.FindObjectsOfType<Player>();
         StringBuilder StringBuilder = new(Main.Instance.Translate("Commands.ListPlayers.Header", Players.Length));
@@ -32,6 +38,6 @@ internal class ListPlayers : ICommand
 
         ChatBehaviour._current.New_ChatMessage(StringBuilder.ToString());
 
-        return false;
+        yield break;
     }
 }
