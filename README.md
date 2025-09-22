@@ -16,7 +16,7 @@ A multifunctional plugin for the game Atlyss. Unlock character appearance slider
   - The speed is adjusted using the mouse wheel.
   - The controls can be changed in the configuration (default `W`, `A`, `S`, `D`, `Shift`, `Space`).
   - A hotkey without character control lock is also available.
-- NoClip.
+- No clip.
   - Toggle with the command or hotkey (`Delete` by default).
   - Switch to an alternative speed by holding down a hotkey. (`Left Shift` by default).
 - Auto-pickup of items appearing within range.
@@ -55,6 +55,7 @@ It is not necessary to write the full name of the plugin; you can simply use `fl
 - `/teleporttoplayer <nickname>` - Teleport to a player.
 - `/experience <delta>` - Add or remove experience.
 - `/noskilltimer` - Toggle the skill timer.
+- `/noclip` - No clip mode.
 - ...
 Many commands have shortcuts and aliases. View them with the `/help` command.
 ### Configuration
