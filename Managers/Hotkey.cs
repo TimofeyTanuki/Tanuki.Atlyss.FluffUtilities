@@ -26,6 +26,7 @@ internal class Hotkey : MonoBehaviour
         HotkeyActionGroups = [];
         InputSystem = UnityInput.Current;
     }
+
     public static void Initialize()
     {
         if (Instance is not null)
@@ -81,8 +82,7 @@ internal class Hotkey : MonoBehaviour
     }
 
 #pragma warning disable IDE0051
-    private void Awake() =>
-        enabled = false;
+    private void Awake() => enabled = false;
     private void Update()
     {
         foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)

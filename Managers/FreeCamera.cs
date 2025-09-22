@@ -5,18 +5,16 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class FreeCamera
 {
     public static FreeCamera Instance;
-
     private Components.FreeCamera Component;
     public bool Status = false;
     public bool CharacterControlsDisabled = false;
     public KeyCode Forward, Right, Backward, Left, Up, Down;
-    public float Speed, ScrollSpeedStep;
+    public float Speed, ScrollSpeedAdjustmentStep;
 
     private FreeCamera() =>
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
-    public static void Initialize() =>
-        Instance ??= new();
 
+    public static void Initialize() => Instance ??= new();
     public void Reload()
     {
         Forward = Configuration.Instance.Hotkeys.FreeCamera_Forward.Value;
@@ -26,17 +24,14 @@ internal class FreeCamera
         Up = Configuration.Instance.Hotkeys.FreeCamera_Up.Value;
         Down = Configuration.Instance.Hotkeys.FreeCamera_Down.Value;
 
-        Speed = Configuration.Instance.FreeCamera.BaseSpeed.Value;
-        ScrollSpeedStep = Configuration.Instance.FreeCamera.ScrollSpeedStep.Value;
+        Speed = Configuration.Instance.FreeCamera.Speed.Value;
+        ScrollSpeedAdjustmentStep = Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value;
     }
-
     public void Enable(bool DisableCharacterControls)
     {
-        if (Component is null)
-        {
-            Component = CameraFunction._current._mainCamera.gameObject.GetComponent<Components.FreeCamera>();
-            Component ??= CameraFunction._current._mainCamera.gameObject.AddComponent<Components.FreeCamera>();
-        }
+        NoClip.Instance.Disable();
+
+        Component ??= CameraFunction._current._mainCamera.gameObject.AddComponent<Components.FreeCamera>();
 
         if (!Status)
             Component.Speed = Speed;
@@ -84,6 +79,9 @@ internal class FreeCamera
     {
         if (Status)
             Disable();
+
+        if (!Component)
+            return;
 
         Object.Destroy(Component);
         Component = null;

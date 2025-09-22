@@ -3,11 +3,14 @@
 internal class GlobalRaceDisplayParameters
 {
     public static GlobalRaceDisplayParameters Instance;
-    private GlobalRaceDisplayParameters() { }
-    public static void Initialize() =>
-        Instance ??= new();
+    private bool
+        Enabled = false,
+        Reloaded = false;
 
-    private bool Enabled, Reloaded = false;
+    private GlobalRaceDisplayParameters() { }
+
+    public static void Initialize() => Instance ??= new();
+
     public void Load()
     {
         Enabled = Configuration.Instance.PlayerAppearance.DisableParametersCheck.Value;

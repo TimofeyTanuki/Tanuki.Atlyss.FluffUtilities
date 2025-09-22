@@ -89,16 +89,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\NoClip.cs" />
     <Compile Include="Commands\FreeCamera.cs" />
     <Compile Include="Commands\NoSkillCooldown.cs" />
     <Compile Include="Commands\SteamProfile.cs" />
     <Compile Include="Commands\NoSkillTimer.cs" />
     <Compile Include="Components\FreeCamera.cs" />
+    <Compile Include="Components\NoClip.cs" />
     <Compile Include="Managers\FreeCamera.cs" />
     <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
     <Compile Include="Managers\Hotkey.cs" />
     <Compile Include="Managers\Lobby.cs" />
     <Compile Include="Managers\NessieEasySettings.cs" />
+    <Compile Include="Managers\NoClip.cs" />
+    <Compile Include="Models\Configuration\NoClip.cs" />
     <Compile Include="Models\Configuration\General.cs" />
     <Compile Include="Models\Configuration\Commands.cs" />
     <Compile Include="Models\Configuration\FreeCamera.cs" />

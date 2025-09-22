@@ -37,4 +37,14 @@ internal class Hotkeys(ref ConfigFile ConfigFile)
         FreeCamera_Left = ConfigFile.Bind(Section, "FreeCamera_Left", KeyCode.A),
         FreeCamera_Up = ConfigFile.Bind(Section, "FreeCamera_Up", KeyCode.Space),
         FreeCamera_Down = ConfigFile.Bind(Section, "FreeCamera_Down", KeyCode.LeftShift);
+
+    public ConfigEntry<KeyCode>
+        NoClip_Toggle = ConfigFile.Bind(Section, "NoClip_Toggle", KeyCode.Delete),
+        NoClip_AlternativeSpeedKey = ConfigFile.Bind(Section, "NoClip_AlternativeSpeedKey", KeyCode.LeftShift),
+        NoClip_Forward = ConfigFile.Bind(Section, "NoClip_Forward", KeyCode.W),
+        NoClip_Right = ConfigFile.Bind(Section, "NoClip_Right", KeyCode.D),
+        NoClip_Backward = ConfigFile.Bind(Section, "NoClip_Backward", KeyCode.S),
+        NoClip_Left = ConfigFile.Bind(Section, "NoClip_Left", KeyCode.A),
+        NoClip_Up = ConfigFile.Bind(Section, "NoClip_Up", KeyCode.Space),
+        NoClip_Down = ConfigFile.Bind(Section, "NoClip_Down", KeyCode.LeftControl);
 }

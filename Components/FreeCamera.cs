@@ -5,7 +5,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Components;
 
 internal class FreeCamera : MonoBehaviour
 {
-    public float Speed;
+    public float Speed = 0;
     public Vector3 Rotation;
     private Vector3 PositionShift;
     private IInputSystem InputSystem;
@@ -23,25 +23,25 @@ internal class FreeCamera : MonoBehaviour
         Rotation.x = Mathf.Clamp(Rotation.x, -89.99f, 89.99f);
         transform.rotation = Quaternion.Euler(Rotation);
 
-        Speed += InputSystem.mouseScrollDelta.y * Managers.FreeCamera.Instance.ScrollSpeedStep;
+        Speed += InputSystem.mouseScrollDelta.y * Managers.FreeCamera.Instance.ScrollSpeedAdjustmentStep;
         if (Speed < 0)
             Speed = 0;
 
         PositionShift = Vector3.zero;
 
-        if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Left))
+        if (InputSystem.GetKey(Managers.FreeCamera.Instance.Left))
             PositionShift -= transform.right * Speed * Time.deltaTime;
-        else if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Right))
+        else if (InputSystem.GetKey(Managers.FreeCamera.Instance.Right))
             PositionShift += transform.right * Speed * Time.deltaTime;
 
-        if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Forward))
+        if (InputSystem.GetKey(Managers.FreeCamera.Instance.Forward))
             PositionShift += transform.forward * Speed * Time.deltaTime;
-        else if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Backward))
+        else if (InputSystem.GetKey(Managers.FreeCamera.Instance.Backward))
             PositionShift -= transform.forward * Speed * Time.deltaTime;
 
-        if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Up))
+        if (InputSystem.GetKey(Managers.FreeCamera.Instance.Up))
             PositionShift += Vector3.up * Speed * Time.deltaTime;
-        else if (UnityInput.Current.GetKey(Managers.FreeCamera.Instance.Down))
+        else if (InputSystem.GetKey(Managers.FreeCamera.Instance.Down))
             PositionShift += Vector3.down * Speed * Time.deltaTime;
 
         transform.position += PositionShift;

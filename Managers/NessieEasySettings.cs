@@ -6,11 +6,13 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class NessieEasySettings
 {
     internal static NessieEasySettings Instance;
+
     private NessieEasySettings()
     {
         Settings.OnInitialized.AddListener(NessieEasySettings_OnInitialize);
         Settings.OnApplySettings.AddListener(NessieEasySettings_OnApplySettings);
     }
+
     public static void Initialize() => Instance ??= new();
     private void NessieEasySettings_OnInitialize()
     {
@@ -30,22 +32,51 @@ internal class NessieEasySettings
         SettingsTab.AddKeyButton("Free camera • Left", Configuration.Instance.Hotkeys.FreeCamera_Left);
         SettingsTab.AddKeyButton("Free camera • Up", Configuration.Instance.Hotkeys.FreeCamera_Up);
         SettingsTab.AddKeyButton("Free camera • Down", Configuration.Instance.Hotkeys.FreeCamera_Down);
-        SettingsTab.AddAdvancedSlider("Free camera • Base Speed", Configuration.Instance.FreeCamera.BaseSpeed.Value, 0.01f, 100, true).OnValueChanged.AddListener(
+        SettingsTab.AddAdvancedSlider("Free camera • Base Speed", Configuration.Instance.FreeCamera.Speed.Value, 0.01f, 100, true).OnValueChanged.AddListener(
             delegate (float Value)
             {
-                if (Configuration.Instance.FreeCamera.BaseSpeed.Value >= Value)
+                if (Configuration.Instance.FreeCamera.Speed.Value >= Value)
                     return;
 
-                Configuration.Instance.FreeCamera.BaseSpeed.Value = Value;
+                Configuration.Instance.FreeCamera.Speed.Value = Value;
             }
         );
-        SettingsTab.AddAdvancedSlider("Free camera • Scroll Speed Step", Configuration.Instance.FreeCamera.ScrollSpeedStep.Value, 0.01f, 25, true).OnValueChanged.AddListener(
+        SettingsTab.AddAdvancedSlider("Free camera • Scroll Speed Step", Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value, 0.01f, 25, true).OnValueChanged.AddListener(
             delegate (float Value)
             {
-                if (Configuration.Instance.FreeCamera.ScrollSpeedStep.Value >= Value)
+                if (Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value >= Value)
                     return;
 
-                Configuration.Instance.FreeCamera.ScrollSpeedStep.Value = Value;
+                Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value = Value;
+            }
+        );
+
+        SettingsTab.AddSpace();
+
+        SettingsTab.AddKeyButton("NoClip", Configuration.Instance.Hotkeys.NoClip_Toggle);
+        SettingsTab.AddKeyButton("NoClip • Alternative Speed Key", Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey);
+        SettingsTab.AddKeyButton("NoClip • Forward", Configuration.Instance.Hotkeys.NoClip_Forward);
+        SettingsTab.AddKeyButton("NoClip • Right", Configuration.Instance.Hotkeys.NoClip_Right);
+        SettingsTab.AddKeyButton("NoClip • Backward", Configuration.Instance.Hotkeys.NoClip_Backward);
+        SettingsTab.AddKeyButton("NoClip • Left", Configuration.Instance.Hotkeys.NoClip_Left);
+        SettingsTab.AddKeyButton("NoClip • Up", Configuration.Instance.Hotkeys.NoClip_Up);
+        SettingsTab.AddKeyButton("NoClip • Down", Configuration.Instance.Hotkeys.NoClip_Down);
+        SettingsTab.AddAdvancedSlider("NoClip • Base Speed", Configuration.Instance.NoClip.Speed.Value, 0.01f, 250, true).OnValueChanged.AddListener(
+            delegate (float Value)
+            {
+                if (Configuration.Instance.NoClip.Speed.Value >= Value)
+                    return;
+
+                Configuration.Instance.NoClip.Speed.Value = Value;
+            }
+        );
+        SettingsTab.AddAdvancedSlider("NoClip • Alternative Speed", Configuration.Instance.NoClip.AlternativeSpeed.Value, 0.01f, 1000, true).OnValueChanged.AddListener(
+            delegate (float Value)
+            {
+                if (Configuration.Instance.NoClip.AlternativeSpeed.Value >= Value)
+                    return;
+
+                Configuration.Instance.NoClip.AlternativeSpeed.Value = Value;
             }
         );
 
@@ -255,6 +286,7 @@ internal class NessieEasySettings
 
         PlayerAppearance.Instance.Reload();
         FreeCamera.Instance.Reload();
+        NoClip.Instance.Reload();
         Main.Instance.ReloadHotkeys();
     }
 }

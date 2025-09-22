@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.10")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.11")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 public class Main : Core.Plugins.Plugin
@@ -25,6 +25,7 @@ public class Main : Core.Plugins.Plugin
         PlayerAppearance.Initialize();
         GlobalRaceDisplayParameters.Initialize();
         FreeCamera.Initialize();
+        NoClip.Initialize();
         Hotkey.Initialize();
         NessieEasySettings.Initialize();
     }
@@ -48,6 +49,7 @@ public class Main : Core.Plugins.Plugin
         PlayerAppearance.Instance.Load();
         GlobalRaceDisplayParameters.Instance.Load();
         Lobby.Instance.Load();
+        NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
 
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
@@ -343,6 +345,19 @@ public class Main : Core.Plugins.Plugin
                     FreeCamera.Instance.Disable();
                 else
                     FreeCamera.Instance.Enable(false);
+            }
+        );
+        Hotkey.Instance.BindAction(
+            Configuration.Instance.Hotkeys.NoClip_Toggle.Value,
+            delegate
+            {
+                if (!Player._mainPlayer)
+                    return;
+
+                if (NoClip.Instance.Status)
+                    NoClip.Instance.Disable();
+                else
+                    NoClip.Instance.Enable();
             }
         );
     }

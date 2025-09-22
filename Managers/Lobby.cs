@@ -9,13 +9,14 @@ internal class Lobby
     public static Lobby Instance;
     public CSteamID LobbyID = CSteamID.Nil;
     public CSteamID PlayerID = CSteamID.Nil;
-
     public const string LobbyMemberDataKey_Version = $"{PluginInfo.ID}.ver";
+
     private Lobby()
     {
         Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
         Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
     }
+
     public static void Initialize()
     {
         if (Instance is not null)
@@ -32,8 +33,13 @@ internal class Lobby
 
         Game.Events.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
     }
+    public void Unload()
+    {
+        if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
+            return;
 
-
+        Game.Events.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
+    }
     private void Awake_Postfix_OnInvoke(Player Player)
     {
         if (!Player._mainPlayer)
@@ -41,7 +47,6 @@ internal class Lobby
 
         Main.Instance.StartCoroutine(CheckPlayerPlugin(Player));
     }
-
     private IEnumerator CheckPlayerPlugin(Player Player)
     {
         while (Player)
@@ -78,13 +83,6 @@ internal class Lobby
 
         yield break;
     }
-    public void Unload()
-    {
-        if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
-            return;
-
-        Game.Events.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
-    }
     private void OnStartAuthority_Postfix_OnInvoke()
     {
         if (AtlyssNetworkManager._current._soloMode)
@@ -95,6 +93,5 @@ internal class Lobby
 
         SteamMatchmaking.SetLobbyMemberData(LobbyID, LobbyMemberDataKey_Version, PluginInfo.Version);
     }
-    private void OnStopClient_Prefix_OnInvoke() =>
-        LobbyID = CSteamID.Nil;
+    private void OnStopClient_Prefix_OnInvoke() => LobbyID = CSteamID.Nil;
 }

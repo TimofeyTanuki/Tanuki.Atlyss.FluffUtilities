@@ -17,6 +17,7 @@ internal class Configuration
     public PlayerAppearance PlayerAppearance;
     public GlobalRaceDisplayParameters GlobalRaceDisplayParameters;
     public FreeCamera FreeCamera;
+    public NoClip NoClip;
     public Hotkeys Hotkeys;
     public General General;
 
@@ -26,6 +27,7 @@ internal class Configuration
         PlayerAppearance = new(ref ConfigFile);
         GlobalRaceDisplayParameters = new(ref ConfigFile);
         FreeCamera = new(ref ConfigFile);
+        NoClip = new(ref ConfigFile);
         Hotkeys = new(ref ConfigFile);
         General = new(ref ConfigFile);
     }
