@@ -54,6 +54,7 @@ internal class NoClip
 
         Player._mainPlayer._pMove.enabled = true;
         CameraCollision._current.enabled = true;
+        Player._mainPlayer._pCasting.Init_SkillLibrary();
 
         Status = false;
         Component.enabled = false;
