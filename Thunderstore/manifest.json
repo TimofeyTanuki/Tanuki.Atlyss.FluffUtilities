@@ -1,6 +1,6 @@
 {
     "name": "Tanuki_Atlyss_FluffUtilities",
-    "version_number": "1.0.11",
+    "version_number": "1.0.12",
     "website_url": "https://github.com/TimofeyTanuki/Tanuki.Atlyss.FluffUtilities",
     "description": "A multifunctional plugin for the game Atlyss. Unlock character appearance sliders, auto-pickup, free camera, noclip, hotkeys, a bunch of auxiliary commands, and more.",
     "dependencies": [
