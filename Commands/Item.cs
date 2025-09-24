@@ -28,7 +28,7 @@ internal class Item : ICommand
 
         ScriptableItem ScriptableItem = GameManager._current.Locate_Item(Arguments[0]);
 
-        if (ScriptableItem is null)
+        if (!ScriptableItem)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.ItemNotFound", Arguments[0]));
             return false;

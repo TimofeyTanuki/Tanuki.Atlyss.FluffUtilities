@@ -19,6 +19,12 @@ internal class Enchant : ICommand
         ScriptableItem ScriptableItem = GameManager._current.Locate_Item(ItemData._itemName);
         ScriptableEquipment ScriptableEquipment = (ScriptableEquipment)ScriptableItem;
 
+        if (!ScriptableEquipment._statModifierTable)
+        {
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Enchant.NotEnchantableItem", ItemData._itemName));
+            return false;
+        }
+
         byte ModifierArgument = (byte)(ScriptableEquipment.GetType() == typeof(ScriptableWeapon) ? 1 : 0);
 
         if (Arguments.Length == 0)
@@ -72,7 +78,7 @@ internal class Enchant : ICommand
                 break;
             }
 
-            if (ScriptableStatModifier is null)
+            if (!ScriptableStatModifier)
             {
                 DisplayModifiers(ScriptableEquipment._statModifierTable);
                 return false;
