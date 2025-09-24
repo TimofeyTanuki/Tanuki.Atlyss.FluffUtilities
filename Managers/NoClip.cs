@@ -24,6 +24,7 @@ internal class NoClip
         Up = Configuration.Instance.Hotkeys.NoClip_Up.Value;
         Down = Configuration.Instance.Hotkeys.NoClip_Down.Value;
 
+        Speed = Configuration.Instance.NoClip.Speed.Value;
         AlternativeSpeedKey = Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey.Value;
         AlternativeSpeed = Configuration.Instance.NoClip.AlternativeSpeed.Value;
     }
