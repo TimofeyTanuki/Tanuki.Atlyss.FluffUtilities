@@ -23,15 +23,8 @@ internal class NoClip
         Left = Configuration.Instance.Hotkeys.NoClip_Left.Value;
         Up = Configuration.Instance.Hotkeys.NoClip_Up.Value;
         Down = Configuration.Instance.Hotkeys.NoClip_Down.Value;
-        AlternativeSpeedKey = Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey.Value;
 
-        Forward = Configuration.Instance.Hotkeys.FreeCamera_Forward.Value;
-        Right = Configuration.Instance.Hotkeys.FreeCamera_Right.Value;
-        Backward = Configuration.Instance.Hotkeys.FreeCamera_Backward.Value;
-        Left = Configuration.Instance.Hotkeys.FreeCamera_Left.Value;
-        Up = Configuration.Instance.Hotkeys.FreeCamera_Up.Value;
-        Down = Configuration.Instance.Hotkeys.FreeCamera_Down.Value;
-        Speed = Configuration.Instance.NoClip.Speed.Value;
+        AlternativeSpeedKey = Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey.Value;
         AlternativeSpeed = Configuration.Instance.NoClip.AlternativeSpeed.Value;
     }
     public void Enable()
