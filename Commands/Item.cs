@@ -1,4 +1,5 @@
-﻿using Tanuki.Atlyss.API.Commands;
+﻿using System.Collections.Generic;
+using Tanuki.Atlyss.API.Commands;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
@@ -6,31 +7,47 @@ internal class Item : ICommand
 {
     public bool Execute(string[] Arguments)
     {
-        if (Arguments.Length == 0 || Arguments.Length > 2)
+        if (Arguments.Length == 0)
         {
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.InvalidParameters"));
             return false;
         }
 
-        bool Given = false;
         int Quantity = 1;
-        if (Arguments.Length == 2)
+        int ItemNameParts = Arguments.Length;
+        if (Arguments.Length > 1)
         {
-            if (!int.TryParse(Arguments[1], out Quantity))
+            if (ushort.TryParse(Arguments[Arguments.Length - 1], out ushort ParsedQuantity))
             {
-                ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.UnparseableQuantity"));
-                return false;
+                if (ParsedQuantity > 0)
+                {
+                    Quantity = ParsedQuantity;
+                    ItemNameParts -= 1;
+                }
             }
-
-            if (Quantity < 1)
-                Quantity = 1;
         }
 
-        ScriptableItem ScriptableItem = GameManager._current.Locate_Item(Arguments[0]);
+        string ItemName = string.Join(" ", Arguments, 0, ItemNameParts);
+        bool Given = false;
+
+        ScriptableItem ScriptableItem = GameManager._current.Locate_Item(ItemName);
 
         if (!ScriptableItem)
         {
-            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.ItemNotFound", Arguments[0]));
+            string ItemNameSearch = ItemName.ToLower();
+            foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Fields.GameManager.Instance.CachedScriptableItems)
+            {
+                if (!CachedScriptableItem.Key.ToLower().Contains(ItemNameSearch))
+                    continue;
+
+                ScriptableItem = CachedScriptableItem.Value;
+                break;
+            }
+        }
+
+        if (!ScriptableItem)
+        {
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.Item.ItemNotFound", ItemName));
             return false;
         }
 

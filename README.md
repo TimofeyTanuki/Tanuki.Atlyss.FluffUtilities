@@ -1,10 +1,10 @@
 # Tanuki.Atlyss.FluffUtilities
-A multifunctional plugin for the game Atlyss. Unlock character appearance sliders, auto-pickup, free camera, hotkeys, a bunch of auxiliary commands, and more.
+Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pickup, free camera, no clip, hotkeys, a bunch of auxiliary commands, and more.
 
 [Thunderstore](https://thunderstore.io/c/atlyss/p/Tanuki/Tanuki_Atlyss_FluffUtilities/)
 ## Features
-- Unlock character appearance sliders.
-- Disable limits on character appearance.
+- Change the range of character appearance sliders.
+- Allow appearance parameters beyond the limits.
 - Change character appearance with hotkeys.
   - `Keypad7`/`Keypad9` - Head width.
   - `Keypad4`/`Keypad6` - Brease size.
@@ -12,31 +12,31 @@ A multifunctional plugin for the game Atlyss. Unlock character appearance slider
   - `Keypad1`/`Keypad3` - Bottom size.
   - Other parameters are also available in the configuration: torso size, voice pitch, muzzle length, body width and height.
 - Free camera.
-  - Toggle with the command or hotkey (`End` by default).
-  - The speed is adjusted using the mouse wheel.
-  - The controls can be changed in the configuration (default `W`, `A`, `S`, `D`, `Shift`, `Space`).
-  - A hotkey without character control lock is also available.
+  - Toggle with a command or hotkey (`End` by default).
+  - Speed can be adjusted using the mouse wheel.
+  - Changeable movement controls.
+  - Switchable character controls lock.
+  - Switchable look smoothing mode.
 - No clip.
-  - Toggle with the command or hotkey (`Delete` by default).
-  - Switch to an alternative speed by holding down a hotkey. (`Left Shift` by default).
+  - Toggle with a command or hotkey (`Delete` by default).
+  - Changeable movement controls.
 - Auto-pickup of items appearing within range.
 - See other players using this plugin in chat when they join a lobby or with the `/list-players` command.
+- Settings can be changed in-game on the mod tab.
 - ...
 ## Translations
 The following languages are available for this plugin:
 - `default` - English (default).
 - `russian` - Russian.
 
-You can change the language in the Tanuki.Atlyss bootloader configuration:<br>
+The language can be changed in the Tanuki.Atlyss.Bootloader configuration:<br>
 `BepInEx\config\9c00d52e-10b8-413f-9ee4-bfde81762442.cfg`<br>
-To apply the changes, you need to restart the game or simply perform a full reload of Tanuki.Atlyss and all its plugins with the command 
-`/reload`.
+The changes will take effect after restarting the game or reloading Tanuki.Atlyss using the `/reload` command.
 ## Commands
 ### Commands for the Tanuki.Atlyss framework.
 - `/reload Tanuki.Atlyss.FluffUtilities` - Reload this plugin.
 - `/help Tanuki.Atlyss.FluffUtilities` - Display a list of commands for this plugin.
 
-It is not necessary to write the full name of the plugin; you can simply use `fluffutilities` or something even shorter.
 ### Plugin commands.
 - `/freecamera` - Free camera mode.
 - `/steamprofile <nickname>` - Open the player's Steam profile.
@@ -44,10 +44,10 @@ It is not necessary to write the full name of the plugin; you can simply use `fl
 - `/autopickup [radius]` - Automatic item pickup. Do not specify parameters to disable.
 - `/currency <delta>` - Add or remove currency.
 - `/disenchant` - Remove the enchantment from the item in the first (top left) slot on the equipment tab.
-- `/enchant [damage type] [modifier ID]` - Enchant the item in the first (top left) slot on the equipment tab. Example: `/enchant 99 99` (Use invalid parameters to get a hint)
+- `/enchant [damage type] [modifier ID]` - Enchant the item in the first (top left) slot on the equipment tab. Example: `/enchant 99 99` (Use invalid parameters to get a hint).
 - `/heal <delta>` - Add or remove health.
 - `/immortality` - Immortality mode.
-- `/item <name> [quantity]` - Give an item. Example: `/item "Deadwood Axe" 1`
+- `/item <name> [quantity]` - Give an item. Example: `/item "Deadwood Axe" 1`. If there is no exact match, the first item with a similar name will be given.
 - `/list-items [case-sensitive search]` - Display a list of items.
 - `/list-players` - Display a list of players.
 - `/infinitejumps` - Infinite jumps.

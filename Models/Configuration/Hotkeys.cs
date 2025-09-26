@@ -7,30 +7,28 @@ internal class Hotkeys(ref ConfigFile ConfigFile)
 {
     private const string Section = "Hotkeys";
 
-    public class PlayerAppearanceHotkey(ref ConfigFile ConfigFile, string Name, float Step, bool UpdateCharacterFile, KeyCode Decrease, KeyCode Increase)
+    public class PlayerAppearanceHotkey(ref ConfigFile ConfigFile, string Name, float Step, KeyCode Decrease, KeyCode Increase)
     {
         public ConfigEntry<float> Step = ConfigFile.Bind(Section, $"{Name}_Step", Step);
-        public ConfigEntry<bool> UpdateCharacterFile = ConfigFile.Bind(Section, $"{Name}_UpdateCharacterFile", UpdateCharacterFile);
         public ConfigEntry<KeyCode>
             Increase = ConfigFile.Bind(Section, $"{Name}_Increase", Increase),
             Decrease = ConfigFile.Bind(Section, $"{Name}_Decrease", Decrease);
     }
 
     public PlayerAppearanceHotkey
-        PlayerAppearance_HeadWidth = new(ref ConfigFile, "HeadWidth", 0.25f, true, KeyCode.Keypad7, KeyCode.Keypad9),
-        PlayerAppearance_MuzzleLength = new(ref ConfigFile, "MuzzleLength", 25, true, KeyCode.None, KeyCode.None),
-        PlayerAppearance_Height = new(ref ConfigFile, "Height", 0.1f, true, KeyCode.None, KeyCode.None),
-        PlayerAppearance_Width = new(ref ConfigFile, "Width", 0.1f, true, KeyCode.None, KeyCode.None),
-        PlayerAppearance_TorsoSize = new(ref ConfigFile, "TorsoSize", 25, true, KeyCode.None, KeyCode.None),
-        PlayerAppearance_BreastSize = new(ref ConfigFile, "BreastSize", 25, true, KeyCode.Keypad4, KeyCode.Keypad6),
-        PlayerAppearance_ArmsSize = new(ref ConfigFile, "ArmsSize", 25, true, KeyCode.None, KeyCode.None),
-        PlayerAppearance_BellySize = new(ref ConfigFile, "BellySize", 25, true, KeyCode.Keypad2, KeyCode.Keypad5),
-        PlayerAppearance_BottomSize = new(ref ConfigFile, "BottomSize", 25, true, KeyCode.Keypad1, KeyCode.Keypad3),
-        PlayerAppearance_VoicePitch = new(ref ConfigFile, "VoicePitch", 0.01f, true, KeyCode.None, KeyCode.None);
+        PlayerAppearance_ModifyHeadWidth = new(ref ConfigFile, "HeadWidth", 0.25f, KeyCode.Keypad7, KeyCode.Keypad9),
+        PlayerAppearance_ModifyMuzzleLength = new(ref ConfigFile, "MuzzleLength", 25, KeyCode.None, KeyCode.None),
+        PlayerAppearance_ModifyHeight = new(ref ConfigFile, "Height", 0.1f, KeyCode.None, KeyCode.None),
+        PlayerAppearance_ModifyWidth = new(ref ConfigFile, "Width", 0.1f, KeyCode.None, KeyCode.None),
+        PlayerAppearance_ModifyTorsoSize = new(ref ConfigFile, "TorsoSize", 25, KeyCode.None, KeyCode.None),
+        PlayerAppearance_ModifyBreastSize = new(ref ConfigFile, "BreastSize", 25, KeyCode.Keypad4, KeyCode.Keypad6),
+        PlayerAppearance_ModifyArmsSize = new(ref ConfigFile, "ArmsSize", 25, KeyCode.None, KeyCode.None),
+        PlayerAppearance_ModifyBellySize = new(ref ConfigFile, "BellySize", 25, KeyCode.Keypad2, KeyCode.Keypad5),
+        PlayerAppearance_ModifyBottomSize = new(ref ConfigFile, "BottomSize", 25, KeyCode.Keypad1, KeyCode.Keypad3),
+        PlayerAppearance_ModifyVoicePitch = new(ref ConfigFile, "VoicePitch", 0.01f, KeyCode.None, KeyCode.None);
 
     public ConfigEntry<KeyCode>
-        FreeCamera_Toggle_Default = ConfigFile.Bind(Section, "FreeCamera_Toggle_Default", KeyCode.End),
-        FreeCamera_Toggle_WithControls = ConfigFile.Bind(Section, "FreeCamera_Toggle_WithControls", KeyCode.None),
+        FreeCamera = ConfigFile.Bind(Section, "FreeCamera", KeyCode.End),
         FreeCamera_Forward = ConfigFile.Bind(Section, "FreeCamera_Forward", KeyCode.W),
         FreeCamera_Right = ConfigFile.Bind(Section, "FreeCamera_Right", KeyCode.D),
         FreeCamera_Backward = ConfigFile.Bind(Section, "FreeCamera_Backward", KeyCode.S),

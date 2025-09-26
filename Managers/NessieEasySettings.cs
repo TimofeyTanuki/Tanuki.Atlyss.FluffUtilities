@@ -18,267 +18,228 @@ internal class NessieEasySettings
     {
         SettingsTab SettingsTab = Settings.ModTab;
 
-        SettingsTab.AddHeader("Tanuki.Atlyss.FluffUtilities");
+        SettingsTab.AddHeader("- Tanuki Atlyss FluffUtilities -");
 
-        SettingsTab.AddToggle("Disable player appearance parameters check", Configuration.Instance.PlayerAppearance.DisableParametersCheck);
+        SettingsTab.AddHeader("Free camera");
 
-        SettingsTab.AddSpace();
-
-        SettingsTab.AddKeyButton("Free camera", Configuration.Instance.Hotkeys.FreeCamera_Toggle_Default);
-        SettingsTab.AddKeyButton("Free camera (with controls)", Configuration.Instance.Hotkeys.FreeCamera_Toggle_WithControls);
-        SettingsTab.AddKeyButton("Free camera • Forward", Configuration.Instance.Hotkeys.FreeCamera_Forward);
-        SettingsTab.AddKeyButton("Free camera • Right", Configuration.Instance.Hotkeys.FreeCamera_Right);
-        SettingsTab.AddKeyButton("Free camera • Backward", Configuration.Instance.Hotkeys.FreeCamera_Backward);
-        SettingsTab.AddKeyButton("Free camera • Left", Configuration.Instance.Hotkeys.FreeCamera_Left);
-        SettingsTab.AddKeyButton("Free camera • Up", Configuration.Instance.Hotkeys.FreeCamera_Up);
-        SettingsTab.AddKeyButton("Free camera • Down", Configuration.Instance.Hotkeys.FreeCamera_Down);
-        SettingsTab.AddAdvancedSlider("Free camera • Base Speed", Configuration.Instance.FreeCamera.Speed.Value, 0.01f, 100, true).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.FreeCamera.Speed.Value >= Value)
-                    return;
-
-                Configuration.Instance.FreeCamera.Speed.Value = Value;
-            }
+        SettingsTab.AddKeyButton("Toggle", Configuration.Instance.Hotkeys.FreeCamera);
+        SettingsTab.AddKeyButton("Movement • Forward", Configuration.Instance.Hotkeys.FreeCamera_Forward);
+        SettingsTab.AddKeyButton("Movement • Right", Configuration.Instance.Hotkeys.FreeCamera_Right);
+        SettingsTab.AddKeyButton("Movement • Backward", Configuration.Instance.Hotkeys.FreeCamera_Backward);
+        SettingsTab.AddKeyButton("Movement • Left", Configuration.Instance.Hotkeys.FreeCamera_Left);
+        SettingsTab.AddKeyButton("Movement • Up", Configuration.Instance.Hotkeys.FreeCamera_Up);
+        SettingsTab.AddKeyButton("Movement • Down", Configuration.Instance.Hotkeys.FreeCamera_Down);
+        SettingsTab.AddToggle(
+            "Lock character controls",
+            Configuration.Instance.FreeCamera.LockCharacterControls
         );
-        SettingsTab.AddAdvancedSlider("Free camera • Scroll Speed Step", Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value, 0.01f, 25, true).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value >= Value)
-                    return;
-
-                Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value = Value;
-            }
-        );
-
-        SettingsTab.AddSpace();
-
-        SettingsTab.AddKeyButton("NoClip", Configuration.Instance.Hotkeys.NoClip_Toggle);
-        SettingsTab.AddKeyButton("NoClip • Alternative Speed Key", Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey);
-        SettingsTab.AddKeyButton("NoClip • Forward", Configuration.Instance.Hotkeys.NoClip_Forward);
-        SettingsTab.AddKeyButton("NoClip • Right", Configuration.Instance.Hotkeys.NoClip_Right);
-        SettingsTab.AddKeyButton("NoClip • Backward", Configuration.Instance.Hotkeys.NoClip_Backward);
-        SettingsTab.AddKeyButton("NoClip • Left", Configuration.Instance.Hotkeys.NoClip_Left);
-        SettingsTab.AddKeyButton("NoClip • Up", Configuration.Instance.Hotkeys.NoClip_Up);
-        SettingsTab.AddKeyButton("NoClip • Down", Configuration.Instance.Hotkeys.NoClip_Down);
-        SettingsTab.AddAdvancedSlider("NoClip • Base Speed", Configuration.Instance.NoClip.Speed.Value, 0.01f, 250, true).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.NoClip.Speed.Value >= Value)
-                    return;
-
-                Configuration.Instance.NoClip.Speed.Value = Value;
-            }
-        );
-        SettingsTab.AddAdvancedSlider("NoClip • Alternative Speed", Configuration.Instance.NoClip.AlternativeSpeed.Value, 0.01f, 1000, true).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.NoClip.AlternativeSpeed.Value >= Value)
-                    return;
-
-                Configuration.Instance.NoClip.AlternativeSpeed.Value = Value;
-            }
-        );
-
-        SettingsTab.AddSpace();
-
-        SettingsTab.AddKeyButton("Head Width • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Decrease);
-        SettingsTab.AddKeyButton("Head Width • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Increase);
-        SettingsTab.AddToggle("Head Width • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.UpdateCharacterFile);
         SettingsTab.AddAdvancedSlider(
-            "Head Width • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Step.Value,
+            "Speed",
+            Configuration.Instance.FreeCamera.Speed.Value,
+            1f,
+            100,
+            true
+        ).OnValueChanged.AddListener(
+            Value => Configuration.Instance.FreeCamera.Speed.Value = (float)Math.Round(Value, 2)
+        );
+        SettingsTab.AddAdvancedSlider(
+            "Speed • Scroll adjustment step",
+            Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value,
+            1f,
+            25,
+            false
+        ).OnValueChanged.AddListener(
+            Value => Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value = (float)Math.Round(Value, 2)
+        );
+        SettingsTab.AddToggle(
+            "Smooth mode",
+            Configuration.Instance.FreeCamera.SmoothLookMode
+        );
+        SettingsTab.AddAdvancedSlider(
+            "Smooth mode • Interpolation",
+            Configuration.Instance.FreeCamera.SmoothLookModeInterpolation.Value,
+            1f,
+            10,
+            false
+        ).OnValueChanged.AddListener(
+            Value => Configuration.Instance.FreeCamera.SmoothLookModeInterpolation.Value = (float)Math.Round(Value, 2)
+        );
+
+        SettingsTab.AddSpace();
+
+        SettingsTab.AddHeader("No clip");
+
+        SettingsTab.AddKeyButton("Toggle", Configuration.Instance.Hotkeys.NoClip_Toggle);
+        SettingsTab.AddKeyButton("Movement • Forward", Configuration.Instance.Hotkeys.NoClip_Forward);
+        SettingsTab.AddKeyButton("Movement • Right", Configuration.Instance.Hotkeys.NoClip_Right);
+        SettingsTab.AddKeyButton("Movement • Backward", Configuration.Instance.Hotkeys.NoClip_Backward);
+        SettingsTab.AddKeyButton("Movement • Left", Configuration.Instance.Hotkeys.NoClip_Left);
+        SettingsTab.AddKeyButton("Movement • Up", Configuration.Instance.Hotkeys.NoClip_Up);
+        SettingsTab.AddKeyButton("Movement • Down", Configuration.Instance.Hotkeys.NoClip_Down);
+        SettingsTab.AddKeyButton("Movement • Alternative Speed", Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey);
+        SettingsTab.AddAdvancedSlider(
+            "Speed",
+            Configuration.Instance.NoClip.Speed.Value,
+            0.01f,
+            250,
+            false
+        ).OnValueChanged.AddListener(
+            Value => Configuration.Instance.NoClip.Speed.Value = (float)Math.Round(Value, 2)
+        );
+        SettingsTab.AddAdvancedSlider(
+            "Alternative speed",
+            Configuration.Instance.NoClip.AlternativeSpeed.Value,
+            0.01f,
+            1000,
+            false
+        ).OnValueChanged.AddListener(
+            Value => Configuration.Instance.NoClip.AlternativeSpeed.Value = (float)Math.Round(Value, 2)
+        );
+
+        SettingsTab.AddSpace();
+
+        SettingsTab.AddHeader("Player Appearance");
+
+        SettingsTab.AddToggle("Allow parameters beyond limits", Configuration.Instance.PlayerAppearance.AllowParametersBeyondLimits);
+        SettingsTab.AddToggle("Hotkeys update character save", Configuration.Instance.PlayerAppearance.HotkeysUpdateCharacterSave);
+
+        SettingsTab.AddSpace();
+
+        SettingsTab.AddKeyButton("Head width • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeadWidth.Decrease);
+        SettingsTab.AddKeyButton("Head width • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeadWidth.Increase);
+        SettingsTab.AddAdvancedSlider(
+            "Head width • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeadWidth.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.HeadWidth.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_HeadWidth.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeadWidth.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Muzzle Length • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Decrease);
-        SettingsTab.AddKeyButton("Muzzle Length • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Increase);
-        SettingsTab.AddToggle("Muzzle Length • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Muzzle length • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyMuzzleLength.Decrease);
+        SettingsTab.AddKeyButton("Muzzle length • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyMuzzleLength.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Muzzle Length • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Step.Value,
+            "Muzzle length • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyMuzzleLength.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.MuzzleLength.Maximum.Value
         ).OnValueChanged.AddListener(
             delegate (float Value)
             {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_MuzzleLength.Step.Value = (float)Math.Round(Value);
+                Configuration.Instance.Hotkeys.PlayerAppearance_ModifyMuzzleLength.Step.Value = (float)Math.Round(Value, 2);
             }
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Height • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_Height.Decrease);
-        SettingsTab.AddKeyButton("Height • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_Height.Increase);
-        SettingsTab.AddToggle("Height • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_Height.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Height • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeight.Decrease);
+        SettingsTab.AddKeyButton("Height • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeight.Increase);
         SettingsTab.AddAdvancedSlider(
             "Height • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_Height.Step.Value,
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeight.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.Height.Maximum.Value
         ).OnValueChanged.AddListener(
             delegate (float Value)
             {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_Height.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_Height.Step.Value = (float)Math.Round(Value);
+                Configuration.Instance.Hotkeys.PlayerAppearance_ModifyHeight.Step.Value = (float)Math.Round(Value, 2);
             }
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Width • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_Width.Decrease);
-        SettingsTab.AddKeyButton("Width • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_Width.Increase);
-        SettingsTab.AddToggle("Width • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_Width.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Width • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyWidth.Decrease);
+        SettingsTab.AddKeyButton("Width • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyWidth.Increase);
         SettingsTab.AddAdvancedSlider(
             "Width • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_Width.Step.Value,
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyWidth.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.Width.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_Width.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_Width.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyWidth.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Torso Size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Decrease);
-        SettingsTab.AddKeyButton("Torso Size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Increase);
-        SettingsTab.AddToggle("Torso Size • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Torso size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyTorsoSize.Decrease);
+        SettingsTab.AddKeyButton("Torso size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyTorsoSize.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Torso Size • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Step.Value,
+            "Torso size • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyTorsoSize.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.TorsoSize.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_TorsoSize.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyTorsoSize.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Breast Size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Decrease);
-        SettingsTab.AddKeyButton("Breast Size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Increase);
-        SettingsTab.AddToggle("Breast Size • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Breast size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBreastSize.Decrease);
+        SettingsTab.AddKeyButton("Breast size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBreastSize.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Breast Size • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Step.Value,
+            "Breast size • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBreastSize.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.BreastSize.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_BreastSize.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBreastSize.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Arms Size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Decrease);
-        SettingsTab.AddKeyButton("Arms Size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Increase);
-        SettingsTab.AddToggle("Arms Size • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Arms size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyArmsSize.Decrease);
+        SettingsTab.AddKeyButton("Arms size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyArmsSize.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Arms Size • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Step.Value,
+            "Arms size • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyArmsSize.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.ArmsSize.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_ArmsSize.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyArmsSize.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Belly Size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Decrease);
-        SettingsTab.AddKeyButton("Belly Size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Increase);
-        SettingsTab.AddToggle("Belly Size • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Belly size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBellySize.Decrease);
+        SettingsTab.AddKeyButton("Belly size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBellySize.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Belly Size • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Step.Value,
+            "Belly size • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBellySize.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.BellySize.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_BellySize.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBellySize.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Bottom Size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Decrease);
-        SettingsTab.AddKeyButton("Bottom Size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Increase);
-        SettingsTab.AddToggle("Bottom Size • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Bottom size • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBottomSize.Decrease);
+        SettingsTab.AddKeyButton("Bottom size • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBottomSize.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Bottom Size • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Step.Value,
+            "Bottom size • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBottomSize.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.BottomSize.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_BottomSize.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyBottomSize.Step.Value = (float)Math.Round(Value, 2)
         );
 
         SettingsTab.AddSpace();
 
-        SettingsTab.AddKeyButton("Voice Pitch • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Decrease);
-        SettingsTab.AddKeyButton("Voice Pitch • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Increase);
-        SettingsTab.AddToggle("Voice Pitch • Update Character File", Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.UpdateCharacterFile);
+        SettingsTab.AddKeyButton("Voice pitch • Decrease", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyVoicePitch.Decrease);
+        SettingsTab.AddKeyButton("Voice pitch • Increase", Configuration.Instance.Hotkeys.PlayerAppearance_ModifyVoicePitch.Increase);
         SettingsTab.AddAdvancedSlider(
-            "Voice Pitch • Step",
-            Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Step.Value,
+            "Voice pitch • Step",
+            Configuration.Instance.Hotkeys.PlayerAppearance_ModifyVoicePitch.Step.Value,
             0,
             Configuration.Instance.GlobalRaceDisplayParameters.VoicePitch.Maximum.Value
         ).OnValueChanged.AddListener(
-            delegate (float Value)
-            {
-                if (Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Step.Value >= Value)
-                    return;
-
-                Configuration.Instance.Hotkeys.PlayerAppearance_VoicePitch.Step.Value = (float)Math.Round(Value);
-            }
+            Value => Configuration.Instance.Hotkeys.PlayerAppearance_ModifyVoicePitch.Step.Value = (float)Math.Round(Value, 2)
         );
+
+        SettingsTab.AddSpace();
     }
     private void NessieEasySettings_OnApplySettings()
     {

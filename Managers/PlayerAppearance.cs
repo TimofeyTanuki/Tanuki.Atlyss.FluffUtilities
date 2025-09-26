@@ -10,16 +10,16 @@ internal class PlayerAppearance
     public static void Initialize() =>
         Instance ??= new();
 
-    private bool DisableParameterCheck;
+    private bool AllowParametersBeyondLimits;
     private bool PendingNewPlayerAppearanceCommand;
     public void Load()
     {
         Game.Main.Instance.Patch(typeof(Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
 
-        DisableParameterCheck = Configuration.Instance.PlayerAppearance.DisableParametersCheck.Value;
+        AllowParametersBeyondLimits = Configuration.Instance.PlayerAppearance.AllowParametersBeyondLimits.Value;
         PendingNewPlayerAppearanceCommand = false;
 
-        if (DisableParameterCheck)
+        if (AllowParametersBeyondLimits)
         {
             Game.Main.Instance.Patch(typeof(Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix));
             Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke += Init_ParamsCheck_Prefix_OnInvoke;
@@ -110,7 +110,7 @@ internal class PlayerAppearance
     }
     public void Unload()
     {
-        if (DisableParameterCheck)
+        if (AllowParametersBeyondLimits)
             Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke -= Init_ParamsCheck_Prefix_OnInvoke;
 
 

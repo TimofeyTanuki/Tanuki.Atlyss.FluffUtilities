@@ -13,7 +13,7 @@ internal class GlobalRaceDisplayParameters
 
     public void Load()
     {
-        Enabled = Configuration.Instance.PlayerAppearance.DisableParametersCheck.Value;
+        Enabled = Configuration.Instance.PlayerAppearance.AllowParametersBeyondLimits.Value;
         if (!Enabled)
             return;
 

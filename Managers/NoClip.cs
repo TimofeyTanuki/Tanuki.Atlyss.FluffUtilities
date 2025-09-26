@@ -30,7 +30,11 @@ internal class NoClip
     }
     public void Enable()
     {
-        FreeCamera.Instance.Disable();
+        if (FreeCamera.Instance.Status)
+        {
+            CameraCollision._current.transform.localPosition = CameraCollision._current.dollyDir * CameraCollision._current.distance;
+            FreeCamera.Instance.Disable();
+        }
 
         Component ??= Player._mainPlayer._pMove.transform.gameObject.AddComponent<Components.NoClip>();
 

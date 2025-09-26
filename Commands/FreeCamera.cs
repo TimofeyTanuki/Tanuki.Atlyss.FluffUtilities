@@ -13,7 +13,10 @@ internal class FreeCamera : ICommand
         }
         else
         {
-            Managers.FreeCamera.Instance.Enable(true);
+            Managers.FreeCamera.Instance.Enable(
+                Configuration.Instance.FreeCamera.LockCharacterControls.Value,
+                Configuration.Instance.FreeCamera.SmoothLookMode.Value
+            );
             Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
         }
 
