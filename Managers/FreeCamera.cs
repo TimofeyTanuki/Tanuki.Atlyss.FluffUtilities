@@ -42,17 +42,13 @@ internal class FreeCamera
 
         this.LockCharacterControls = LockCharacterControls;
         if (LockCharacterControls)
-        {
-            Player._mainPlayer._pMove.enabled = false;
-            Player._mainPlayer._pCombat.enabled = false;
-        }
+            Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
 
         Component.SmoothLookMode = SmoothLook;
         if (SmoothLook)
             Component.SmoothLookModeInterpolation = Configuration.Instance.FreeCamera.SmoothLookModeInterpolation.Value;
 
         Component.enabled = true;
-
 
         CameraFunction._current.enabled = false;
         CameraCollision._current.enabled = false;
@@ -67,9 +63,7 @@ internal class FreeCamera
 
         if (LockCharacterControls)
         {
-            Player._mainPlayer._pMove.enabled = true;
-            Player._mainPlayer._pCombat.enabled = true;
-            Player._mainPlayer._pCasting.Init_SkillLibrary();
+            Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
         }
 
         CameraFunction._current.enabled = true;
@@ -78,10 +72,16 @@ internal class FreeCamera
         Status = false;
         Component.enabled = false;
     }
+    private void Client_LocalPlayerControl_Prefix_OnInvoke(PlayerMove PlayerMove, ref bool ShouldAllow)
+    {
+        if (!PlayerMove.isLocalPlayer)
+            return;
+
+        ShouldAllow = false;
+    }
     private void OnStopClient_Prefix_OnInvoke()
     {
-        if (Status)
-            Disable();
+        Disable();
 
         if (!Component)
             return;

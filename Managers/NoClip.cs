@@ -40,7 +40,8 @@ internal class NoClip
 
         Status = true;
 
-        Player._mainPlayer._pMove.enabled = false;
+        Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
+        Player._mainPlayer._pMove._playerController.enabled = false;
         CameraCollision._current.enabled = false;
 
         Component.enabled = true;
@@ -50,17 +51,24 @@ internal class NoClip
         if (!Status)
             return;
 
-        Player._mainPlayer._pMove.enabled = true;
+        Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
+        Player._mainPlayer._pMove._playerController.enabled = true;
         CameraCollision._current.enabled = true;
-        Player._mainPlayer._pCasting.Init_SkillLibrary();
+        //Player._mainPlayer._pCasting.Init_SkillLibrary();
 
         Status = false;
         Component.enabled = false;
     }
+    private void Client_LocalPlayerControl_Prefix_OnInvoke(PlayerMove PlayerMove, ref bool ShouldAllow)
+    {
+        if (!PlayerMove.isLocalPlayer)
+            return;
+
+        ShouldAllow = false;
+    }
     private void OnStopClient_Prefix_OnInvoke()
     {
-        if (Status)
-            Disable();
+        Disable();
 
         if (!Component)
             return;

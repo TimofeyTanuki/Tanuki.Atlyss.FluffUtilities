@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.14")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.15")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 public class Main : Core.Plugins.Plugin
@@ -43,7 +43,8 @@ public class Main : Core.Plugins.Plugin
             typeof(Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
             typeof(Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix),
             typeof(Game.Events.AtlyssNetworkManager.OnStopClient_Prefix),
-            typeof(Game.Events.Player.OnStartAuthority_Postfix)
+            typeof(Game.Events.Player.OnStartAuthority_Postfix),
+            typeof(Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix)
         );
 
         PlayerAppearance.Instance.Load();
