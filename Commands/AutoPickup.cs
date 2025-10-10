@@ -61,6 +61,9 @@ internal class AutoPickup : ICommand, IDisposable
     }
     private void Enable_GroundCheckToVelocityZero(ItemObject ItemObject)
     {
+        if (!ItemObject.isActiveAndEnabled)
+            return;
+
         if (ItemObject._isPickedUp)
             return;
 
