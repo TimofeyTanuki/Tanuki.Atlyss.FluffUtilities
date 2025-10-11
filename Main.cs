@@ -13,7 +13,6 @@ public class Main : Core.Plugins.Plugin
     internal static Main Instance;
 
     private bool Reloaded = false;
-    private bool UsageAnnounced = true;
 
     internal void Awake()
     {
@@ -53,8 +52,8 @@ public class Main : Core.Plugins.Plugin
         NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
+        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
+            Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
         ReloadHotkeys();
     }
@@ -357,19 +356,20 @@ public class Main : Core.Plugins.Plugin
     }
     private void Init_LoadScreenDisable_Postfix_OnInvoke()
     {
-        if (UsageAnnounced)
-            return;
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
 
         if (Player._mainPlayer._isHostPlayer)
             return;
 
-        UsageAnnounced = true;
-
-        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
-            StartCoroutine(Plugin_ShowUsagePresenceOnJoinLobby_Effects());
+        StartCoroutine(Plugin_ShowUsagePresenceOnJoinLobby_Effects());
     }
-    private void OnStartAuthority_Postfix_OnInvoke() =>
-        UsageAnnounced = false;
+    private void OnStartAuthority_Postfix_OnInvoke()
+    {
+        if (Player._mainPlayer._isHostPlayer)
+            return;
+
+        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
+    }
     private IEnumerator Plugin_ShowUsagePresenceOnJoinLobby_Effects()
     {
         yield return new WaitForSeconds(0.25f);
@@ -383,8 +383,11 @@ public class Main : Core.Plugins.Plugin
     {
         Reloaded = true;
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
+        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
+        {
+            Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
+            Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
+        }
 
         StopAllCoroutines();
         Lobby.Instance.Unload();
