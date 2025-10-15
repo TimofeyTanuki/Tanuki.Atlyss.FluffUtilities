@@ -14,14 +14,14 @@ internal class PlayerAppearance
     private bool PendingNewPlayerAppearanceCommand;
     public void Load()
     {
-        Game.Main.Instance.Patch(typeof(Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
 
         AllowParametersBeyondLimits = Configuration.Instance.PlayerAppearance.AllowParametersBeyondLimits.Value;
         PendingNewPlayerAppearanceCommand = false;
 
         if (AllowParametersBeyondLimits)
         {
-            Game.Main.Instance.Patch(typeof(Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix));
+            Main.Instance.Patcher.Use(typeof(Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix));
             Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke += Init_ParamsCheck_Prefix_OnInvoke;
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.16")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.17")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 public class Main : Core.Plugins.Plugin
@@ -13,6 +13,7 @@ public class Main : Core.Plugins.Plugin
     internal static Main Instance;
 
     private bool Reloaded = false;
+    internal Patching.Patcher Patcher = new();
 
     internal void Awake()
     {
@@ -38,7 +39,7 @@ public class Main : Core.Plugins.Plugin
             Configuration.Instance.Load(Config);
         }
 
-        Game.Main.Instance.Patch(
+        Patcher.Use(
             typeof(Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
             typeof(Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix),
             typeof(Game.Events.AtlyssNetworkManager.OnStopClient_Prefix),
@@ -394,5 +395,7 @@ public class Main : Core.Plugins.Plugin
         PlayerAppearance.Instance.Unload();
         GlobalRaceDisplayParameters.Instance.Unload();
         Hotkey.Instance.Reset();
+
+        Patcher.UnuseAll();
     }
 }

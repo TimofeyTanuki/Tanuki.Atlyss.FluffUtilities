@@ -28,7 +28,7 @@ internal class InfiniteJumps : ICommand, IDisposable
         if (Status)
             return;
 
-        Game.Main.Instance.Patch(typeof(Game.Events.PlayerMove.Init_Jump_Postfix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerMove.Init_Jump_Postfix));
         Game.Events.PlayerMove.Init_Jump_Postfix.OnInvoke += Init_Jump_Postfix_OnInvoke;
 
         Status = true;

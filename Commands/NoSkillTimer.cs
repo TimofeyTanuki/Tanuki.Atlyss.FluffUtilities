@@ -29,7 +29,7 @@ internal class NoSkillTimer : ICommand, IDisposable
             return;
 
         Status = true;
-        Game.Main.Instance.Patch(typeof(Game.Events.PlayerCasting.Cmd_InitSkill_Postfix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerCasting.Cmd_InitSkill_Postfix));
         Game.Events.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke += Cmd_InitSkill_Postfix_OnInvoke;
     }
 

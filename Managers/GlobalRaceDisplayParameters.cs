@@ -23,7 +23,7 @@ internal class GlobalRaceDisplayParameters
             return;
         }
 
-        Game.Main.Instance.Patch(typeof(Game.Events.GameManager.Cache_ScriptableAssets_Postfix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.GameManager.Cache_ScriptableAssets_Postfix));
         Game.Events.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke += Override;
     }
     public void Unload()

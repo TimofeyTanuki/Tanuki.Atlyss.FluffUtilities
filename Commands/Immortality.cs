@@ -41,7 +41,7 @@ internal class Immortality : ICommand, IDisposable
             return;
 
         Status = true;
-        Game.Main.Instance.Patch(typeof(Game.Events.StatusEntity.Take_Damage_Prefix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.StatusEntity.Take_Damage_Prefix));
         Game.Events.StatusEntity.Take_Damage_Prefix.OnInvoke += Subtract_Health_Before;
     }
     private void Disable()

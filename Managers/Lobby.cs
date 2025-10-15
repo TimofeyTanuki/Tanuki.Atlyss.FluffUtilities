@@ -29,7 +29,7 @@ internal class Lobby
         if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
             return;
 
-        Game.Main.Instance.Patch(typeof(Game.Events.Player.Awake_Postfix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.Player.Awake_Postfix));
 
         Game.Events.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
     }

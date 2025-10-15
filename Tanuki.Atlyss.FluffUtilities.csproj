@@ -67,6 +67,10 @@
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Tanuki.Atlyss\Tanuki.Atlyss.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Tanuki.Atlyss.Patching">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Tanuki.Atlyss\Tanuki.Atlyss.Patching.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>

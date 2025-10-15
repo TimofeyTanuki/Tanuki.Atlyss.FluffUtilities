@@ -29,7 +29,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
             return;
 
         Status = true;
-        Game.Main.Instance.Patch(typeof(Game.Events.PlayerCasting.New_CooldownSlot_Prefix));
+        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerCasting.New_CooldownSlot_Prefix));
         Game.Events.PlayerCasting.New_CooldownSlot_Prefix.OnInvoke += New_CooldownSlot_Prefix_OnInvoke;
     }
     private void Disable()

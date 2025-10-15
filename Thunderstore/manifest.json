@@ -1,11 +1,11 @@
 {
     "name": "Tanuki_Atlyss_FluffUtilities",
-    "version_number": "1.0.16",
+    "version_number": "1.0.17",
     "website_url": "https://github.com/TimofeyTanuki/Tanuki.Atlyss.FluffUtilities",
     "description": "Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pickup, free camera, no clip, hotkeys, a bunch of auxiliary commands, and more.",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100",
-        "Tanuki-Tanuki_Atlyss-2.0.11",
+        "Tanuki-Tanuki_Atlyss-2.1.0",
         "Nessie-EasySettings-1.2.0"
     ]
 }
