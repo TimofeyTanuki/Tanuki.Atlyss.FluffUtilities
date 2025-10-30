@@ -7,9 +7,12 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class Lobby
 {
     public static Lobby Instance;
-    public CSteamID LobbyID = CSteamID.Nil;
-    public CSteamID PlayerID = CSteamID.Nil;
+    public CSteamID LobbySteamID = CSteamID.Nil;
+    public CSteamID LobbyOwnerSteamID = CSteamID.Nil;
+    public CSteamID PlayerSteamID = CSteamID.Nil;
     public const string LobbyMemberDataKey_Version = $"{PluginInfo.ID}.ver";
+
+    public bool PluginDataSent = false;
 
     private Lobby()
     {
@@ -26,7 +29,7 @@ internal class Lobby
     }
     public void Load()
     {
-        if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
+        if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
         Main.Instance.Patcher.Use(typeof(Game.Events.Player.Awake_Postfix));
@@ -35,10 +38,23 @@ internal class Lobby
     }
     public void Unload()
     {
-        if (!Configuration.Instance.General.Plugin_ShowOtherPluginUserMessageOnJoin.Value)
+        if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
         Game.Events.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
+    }
+    public void Reload()
+    {
+        Unload();
+        Load();
+
+        if (!Player._mainPlayer)
+            return;
+
+        if (AtlyssNetworkManager._current._soloMode)
+            return;
+
+        ApplySteamLobbyPluginData();
     }
     private void Awake_Postfix_OnInvoke(Player Player)
     {
@@ -46,6 +62,34 @@ internal class Lobby
             return;
 
         Main.Instance.StartCoroutine(CheckPlayerPlugin(Player));
+    }
+    private string GetUserPluginVersion(CSteamID SteamID) =>
+        SteamMatchmaking.GetLobbyMemberData(LobbySteamID, SteamID, LobbyMemberDataKey_Version);
+    private void ApplySteamLobbyPluginData()
+    {
+        if (Configuration.Instance.General.HideUsagePresenceFromNonUserHosts.Value)
+        {
+            if (!CheckPluginUserHost())
+            {
+                if (PluginDataSent)
+                {
+                    SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, string.Empty);
+                    PluginDataSent = false;
+                }
+
+                return;
+            }
+        }
+
+        SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, PluginInfo.Version);
+        PluginDataSent = true;
+    }
+    private bool CheckPluginUserHost()
+    {
+        if (LobbyOwnerSteamID == PlayerSteamID)
+            return true;
+
+        return !string.IsNullOrEmpty(GetUserPluginVersion(LobbyOwnerSteamID));
     }
     private IEnumerator CheckPlayerPlugin(Player Player)
     {
@@ -66,7 +110,7 @@ internal class Lobby
         if (!ulong.TryParse(Player._steamID, out ulong SteamID))
             yield break;
 
-        string Version = SteamMatchmaking.GetLobbyMemberData(LobbyID, new(SteamID), LobbyMemberDataKey_Version);
+        string Version = GetUserPluginVersion(new(SteamID));
 
         if (string.IsNullOrEmpty(Version))
             yield break;
@@ -88,10 +132,15 @@ internal class Lobby
         if (AtlyssNetworkManager._current._soloMode)
             return;
 
-        LobbyID = new CSteamID(SteamLobby._current._currentLobbyID);
-        PlayerID = Player._mainPlayer._isHostPlayer ? SteamMatchmaking.GetLobbyOwner(LobbyID) : new CSteamID(ulong.Parse(Player._mainPlayer._steamID));
+        LobbySteamID = new CSteamID(SteamLobby._current._currentLobbyID);
+        LobbyOwnerSteamID = SteamMatchmaking.GetLobbyOwner(LobbySteamID);
+        PlayerSteamID = Player._mainPlayer._isHostPlayer ? LobbyOwnerSteamID : new CSteamID(ulong.Parse(Player._mainPlayer._steamID));
 
-        SteamMatchmaking.SetLobbyMemberData(LobbyID, LobbyMemberDataKey_Version, PluginInfo.Version);
+        ApplySteamLobbyPluginData();
     }
-    private void OnStopClient_Prefix_OnInvoke() => LobbyID = CSteamID.Nil;
+    private void OnStopClient_Prefix_OnInvoke()
+    {
+        LobbySteamID = LobbyOwnerSteamID = CSteamID.Nil;
+        PluginDataSent = false;
+    }
 }

@@ -6,6 +6,7 @@ internal class General(ref ConfigFile ConfigFile)
 {
     private const string Section = "General";
 
-    public ConfigEntry<bool> Plugin_ShowUsagePresenceOnJoin = ConfigFile.Bind(Section, "Plugin_ShowUsagePresenceOnJoin", true);
-    public ConfigEntry<bool> Plugin_ShowOtherPluginUserMessageOnJoin = ConfigFile.Bind(Section, "Plugin_ShowOtherPluginUserMessageOnJoin", true);
+    public ConfigEntry<bool> PresenceEffectsOnJoin = ConfigFile.Bind(Section, "PresenceEffectsOnJoin", true);
+    public ConfigEntry<bool> OtherPluginUserNotificationOnJoin = ConfigFile.Bind(Section, "OtherPluginUserNotificationOnJoin", true);
+    public ConfigEntry<bool> HideUsagePresenceFromNonUserHosts = ConfigFile.Bind(Section, "HideUsagePresenceFromNonUserHosts", true);
 }

@@ -22,7 +22,7 @@ internal class ListPlayers : ICommand
             if (!Player)
                 continue;
 
-            string LobbyMemberDataKey_Version = Player.isLocalPlayer ? PluginInfo.Version : SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbyID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
+            string LobbyMemberDataKey_Version = Player.isLocalPlayer ? PluginInfo.Version : SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbySteamID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
             StringBuilder.Append(
                 Main.Instance.Translate(
                     "Commands.ListPlayers.Entry",

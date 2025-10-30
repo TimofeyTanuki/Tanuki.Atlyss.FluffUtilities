@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.18")]
+[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", "1.0.19")]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
 public class Main : Core.Plugins.Plugin
@@ -53,7 +53,7 @@ public class Main : Core.Plugins.Plugin
         NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
 
-        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
+        if (Configuration.Instance.General.PresenceEffectsOnJoin.Value)
             Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
         ReloadHotkeys();
@@ -384,7 +384,7 @@ public class Main : Core.Plugins.Plugin
     {
         Reloaded = true;
 
-        if (Configuration.Instance.General.Plugin_ShowUsagePresenceOnJoin.Value)
+        if (Configuration.Instance.General.PresenceEffectsOnJoin.Value)
         {
             Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
             Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;

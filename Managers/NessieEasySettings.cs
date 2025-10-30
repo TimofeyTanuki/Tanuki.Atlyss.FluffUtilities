@@ -20,6 +20,12 @@ internal class NessieEasySettings
 
         SettingsTab.AddHeader("- Tanuki Atlyss FluffUtilities -");
 
+        SettingsTab.AddHeader("General");
+
+        SettingsTab.AddToggle("Presence effects on join", Configuration.Instance.General.PresenceEffectsOnJoin);
+        SettingsTab.AddToggle("Hide usage presence from non user hosts", Configuration.Instance.General.HideUsagePresenceFromNonUserHosts);
+        SettingsTab.AddToggle("Show other plugin user notification on join", Configuration.Instance.General.OtherPluginUserNotificationOnJoin);
+
         SettingsTab.AddHeader("Free camera");
 
         SettingsTab.AddKeyButton("Toggle", Configuration.Instance.Hotkeys.FreeCamera);
@@ -249,5 +255,6 @@ internal class NessieEasySettings
         FreeCamera.Instance.Reload();
         NoClip.Instance.Reload();
         Main.Instance.ReloadHotkeys();
+        Lobby.Instance.Reload();
     }
 }
