@@ -8,10 +8,8 @@ internal class Configuration
     public static Configuration Instance;
 
     private Configuration() { }
-    public static void Initialize()
-    {
+    public static void Initialize() =>
         Instance ??= new();
-    }
 
     public Models.Configuration.Commands Commands;
     public PlayerAppearance PlayerAppearance;
