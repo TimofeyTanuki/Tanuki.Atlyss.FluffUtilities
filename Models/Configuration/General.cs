@@ -8,5 +8,5 @@ internal class General(ref ConfigFile ConfigFile)
 
     public ConfigEntry<bool> PresenceEffectsOnJoin = ConfigFile.Bind(Section, "PresenceEffectsOnJoin", true);
     public ConfigEntry<bool> OtherPluginUserNotificationOnJoin = ConfigFile.Bind(Section, "OtherPluginUserNotificationOnJoin", true);
-    public ConfigEntry<bool> HideUsagePresenceFromNonUserHosts = ConfigFile.Bind(Section, "HideUsagePresenceFromNonUserHosts", true);
+    public ConfigEntry<bool> HideUsagePresenceFromNonUserHosts = ConfigFile.Bind(Section, "HideUsagePresenceFromNonUserHosts", false);
 }
