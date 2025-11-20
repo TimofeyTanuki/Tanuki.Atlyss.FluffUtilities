@@ -7,7 +7,7 @@ Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pic
 - Allow appearance parameters beyond the limits.
 - Change character appearance with hotkeys.
   - `Keypad7`/`Keypad9` - Head width.
-  - `Keypad4`/`Keypad6` - Brease size.
+  - `Keypad4`/`Keypad6` - Breast size.
   - `Keypad2`/`Keypad5` - Belly size.
   - `Keypad1`/`Keypad3` - Bottom size.
   - Other parameters are also available in the configuration: torso size, voice pitch, muzzle length, body width and height.
