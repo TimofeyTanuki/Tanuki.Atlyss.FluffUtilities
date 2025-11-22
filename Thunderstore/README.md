@@ -31,7 +31,7 @@ The language can be changed in the Tanuki.Atlyss.Bootloader configuration:<br>
 `BepInEx\config\9c00d52e-10b8-413f-9ee4-bfde81762442.cfg`<br>
 The changes will take effect after restarting the game or reloading Tanuki.Atlyss using the `/reload` command.
 ## Commands
-### Commands for the Tanuki.Atlyss framework.
+### Commands for the Tanuki.Atlyss framework
 - `/reload Tanuki.Atlyss.FluffUtilities` - Reload this plugin.
 - `/help Tanuki.Atlyss.FluffUtilities` - Display a list of commands for this plugin.
 
