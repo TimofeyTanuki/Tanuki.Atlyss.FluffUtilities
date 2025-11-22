@@ -5,7 +5,6 @@
     "description": "Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pickup, free camera, no clip, hotkeys, a bunch of auxiliary commands, and more.",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2304",
-        "Tanuki-Tanuki_Atlyss-2.1.2",
-        "Nessie-EasySettings-1.2.0"
+        "Tanuki-Tanuki_Atlyss-2.1.3"
     ]
 }

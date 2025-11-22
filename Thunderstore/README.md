@@ -1,5 +1,5 @@
 # Tanuki.Atlyss.FluffUtilities
-Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pickup, free camera, no clip, hotkeys, a bunch of auxiliary commands, and more.
+Multifunctional plugin for Atlyss. Change character appearance sliders, auto-pickup, free camera, no clip, hotkeys, a bunch of auxiliary commands, and more.<br>
 ## Features
 - Change the range of character appearance sliders.
 - Allow appearance parameters beyond the limits.
@@ -35,7 +35,7 @@ The changes will take effect after restarting the game or reloading Tanuki.Atlys
 - `/reload Tanuki.Atlyss.FluffUtilities` - Reload this plugin.
 - `/help Tanuki.Atlyss.FluffUtilities` - Display a list of commands for this plugin.
 
-### Plugin commands.
+### Plugin commands
 - `/freecamera` - Free camera mode.
 - `/steamprofile <nickname>` - Open the player's Steam profile.
 - `/noskillcooldown` - Toggle the skill cooldown timer.
@@ -55,17 +55,24 @@ The changes will take effect after restarting the game or reloading Tanuki.Atlys
 - `/noskilltimer` - Toggle the skill timer.
 - `/noclip` - No clip mode.
 - ...
-
 Many commands have shortcuts and aliases. View them with the `/help` command.
 ### Configuration
-Plugin configuration:<br>
-`BepInEx/config/cc8615a7-47a4-4321-be79-11e36887b64a.cfg`
+Plugin configuration<br>
+> `BepInEx/config/cc8615a7-47a4-4321-be79-11e36887b64a.cfg`
 
-Plugin command configuration:<br>
-`BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.command.json`
+Plugin command configuration<br>
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.command.json`
 
-Plugin translation file:<br>
-`BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translation.properties`
+Plugin translation file<br>
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translation.properties`
+## Getting started
+### Thunderstore
+This mod on [Thunderstore](https://thunderstore.io/c/atlyss/p/Tanuki/Tanuki_Atlyss_FluffUtilities/).<br>
+It's recommended to use it together with the [EasySettings](https://thunderstore.io/c/atlyss/p/Nessie/EasySettings/) mod for easier configuration directly in the game.
+### Manual installation
+1. Install [BepInEx](https://docs.bepinex.dev/articles/user_guide/installation/index.html). It's recommended to use the [preconfigured package](https://thunderstore.io/c/atlyss/p/BepInEx/BepInExPack/).
+2. Install the [Tanuki.Atlyss](https://github.com/TimofeyTanuki/Tanuki.Atlyss) framework.
+3. Install the [Tanuki.Atlyss.FluffUtilities](../../releases) files.
 ## Anything else?
 [Contacts](https://tanu.su/)
 
