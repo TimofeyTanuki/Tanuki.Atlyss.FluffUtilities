@@ -5,6 +5,8 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
 internal class NessieEasySettings
 {
+    public const string GUID = "EasySettings";
+
     internal static NessieEasySettings Instance;
 
     private NessieEasySettings()
