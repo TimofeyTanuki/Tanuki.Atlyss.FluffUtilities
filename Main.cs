@@ -7,7 +7,7 @@ namespace Tanuki.Atlyss.FluffUtilities;
 
 [BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", PluginInfo.Version)]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
-[BepInDependency("EasySettings", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("EasySettings", BepInDependency.DependencyFlags.SoftDependency)]
 public class Main : Core.Plugins.Plugin
 {
     internal static Main Instance;
@@ -27,7 +27,9 @@ public class Main : Core.Plugins.Plugin
         FreeCamera.Initialize();
         NoClip.Initialize();
         Hotkey.Initialize();
-        NessieEasySettings.Initialize();
+
+        if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("EasySettings"))
+            NessieEasySettings.Initialize();
     }
     protected override void Load()
     {
