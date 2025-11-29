@@ -1,0 +1,35 @@
+﻿<Project>
+  <Target Name="OverwritePluginInfo" BeforeTargets="PrepareForBuild">
+    <ReadLinesFromFile File="Properties\AssemblyInfo.cs">
+      <Output TaskParameter="Lines" ItemName="AssemblyInfoLines" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <AssemblyInfoText>@(AssemblyInfoLines)</AssemblyInfoText>
+      <AssemblyVersionRegex>\[assembly: AssemblyVersion\("([^"]+)"\)\]</AssemblyVersionRegex>
+      <AssemblyVersion>$([System.Text.RegularExpressions.Regex]::Match($(AssemblyInfoText), $(AssemblyVersionRegex)).Groups[1].Value)</AssemblyVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+      <SourceFile>$(ProjectDir)PluginInfo.cs</SourceFile>
+      <Content Condition="Exists('$(SourceFile)')">$([System.IO.File]::ReadAllText('$(SourceFile)'))</Content>
+      <Content Condition="Exists('$(SourceFile)')">$(Content.Replace('{{VERSION}}', '$(AssemblyVersion)'))</Content>
+    </PropertyGroup>
+    <PropertyGroup>
+      <OriginalFileName>PluginInfo.cs</OriginalFileName>
+      <OriginalFile>$(MSBuildProjectDirectory)\$(OriginalFileName)</OriginalFile>
+      <ProcessedFile>$(IntermediateOutputPath)PluginInfo.g.cs</ProcessedFile>
+    </PropertyGroup>
+    <ReadLinesFromFile File="$(OriginalFile)">
+        <Output TaskParameter="Lines" ItemName="OriginalLines" />
+    </ReadLinesFromFile>
+    <ItemGroup>
+    <ProcessedLines Include="@(OriginalLines)">
+      <Text>$([System.String]::Copy('%(OriginalLines.Identity)').Replace('{{VERSION}}', '$(AssemblyVersion)'))</Text>
+    </ProcessedLines>
+    </ItemGroup>
+    <WriteLinesToFile File="$(ProcessedFile)" Lines="@(ProcessedLines->'%(Text)')" Overwrite="true" />
+    <ItemGroup>
+      <Compile Remove="**\$(OriginalFileName)" />
+      <Compile Include="$(ProcessedFile)" />
+    </ItemGroup>
+  </Target>
+</Project>

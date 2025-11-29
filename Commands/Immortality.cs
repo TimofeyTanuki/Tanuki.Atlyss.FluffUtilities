@@ -7,10 +7,8 @@ internal class Immortality : ICommand, IDisposable
 {
 
     private bool Status = false;
-    public Immortality()
-    {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
-    }
+    public Immortality() =>
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
 
     public bool Execute(string[] Arguments)
     {
@@ -41,8 +39,8 @@ internal class Immortality : ICommand, IDisposable
             return;
 
         Status = true;
-        Main.Instance.Patcher.Use(typeof(Game.Events.StatusEntity.Take_Damage_Prefix));
-        Game.Events.StatusEntity.Take_Damage_Prefix.OnInvoke += Subtract_Health_Before;
+        Main.Instance.Patcher.Use(typeof(Game.Patches.StatusEntity.Take_Damage_Prefix));
+        Game.Patches.StatusEntity.Take_Damage_Prefix.OnInvoke += Subtract_Health_Before;
     }
     private void Disable()
     {
@@ -50,7 +48,7 @@ internal class Immortality : ICommand, IDisposable
             return;
 
         Status = false;
-        Game.Events.StatusEntity.Take_Damage_Prefix.OnInvoke -= Subtract_Health_Before;
+        Game.Patches.StatusEntity.Take_Damage_Prefix.OnInvoke -= Subtract_Health_Before;
     }
     private void Subtract_Health_Before(StatusEntity StatusEntity, ref DamageStruct DamageStruct, ref bool ShouldAllow)
     {
@@ -62,7 +60,7 @@ internal class Immortality : ICommand, IDisposable
     }
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
         Disable();
     }
 }

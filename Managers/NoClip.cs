@@ -12,9 +12,10 @@ internal class NoClip
     public float Speed, AlternativeSpeed;
 
     private NoClip() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
 
     public static void Initialize() => Instance = new();
+
     public void Reload()
     {
         Forward = Configuration.Instance.Hotkeys.NoClip_Forward.Value;
@@ -40,7 +41,7 @@ internal class NoClip
 
         Status = true;
 
-        Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
+        Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
         Player._mainPlayer._pMove._playerController.enabled = false;
         CameraCollision._current.enabled = false;
 
@@ -51,10 +52,9 @@ internal class NoClip
         if (!Status)
             return;
 
-        Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
+        Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
         Player._mainPlayer._pMove._playerController.enabled = true;
         CameraCollision._current.enabled = true;
-        //Player._mainPlayer._pCasting.Init_SkillLibrary();
 
         Status = false;
         Component.enabled = false;

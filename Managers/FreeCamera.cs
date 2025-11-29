@@ -12,7 +12,7 @@ internal class FreeCamera
     private bool LockCharacterControls = false;
 
     private FreeCamera() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
 
     public static void Initialize() => Instance ??= new();
     public void Reload()
@@ -42,7 +42,7 @@ internal class FreeCamera
 
         this.LockCharacterControls = LockCharacterControls;
         if (LockCharacterControls)
-            Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
+            Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
 
         Component.SmoothLookMode = SmoothLook;
         if (SmoothLook)
@@ -63,7 +63,7 @@ internal class FreeCamera
 
         if (LockCharacterControls)
         {
-            Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
+            Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
         }
 
         CameraFunction._current.enabled = true;

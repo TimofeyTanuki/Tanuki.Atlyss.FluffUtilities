@@ -13,7 +13,6 @@ internal class FreeCamera : MonoBehaviour
         RotationX,
         RotationY;
     private Quaternion TargetRotation;
-
     public float Speed = 0;
     public bool SmoothLookMode = false;
     public float SmoothLookModeInterpolation = 0;

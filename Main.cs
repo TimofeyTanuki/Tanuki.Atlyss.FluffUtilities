@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-[BepInPlugin("cc8615a7-47a4-4321-be79-11e36887b64a", "Tanuki.Atlyss.FluffUtilities", PluginInfo.Version)]
+[BepInPlugin(PluginInfo.GUID, "Tanuki.Atlyss.FluffUtilities", PluginInfo.Version)]
 [BepInDependency("9c00d52e-10b8-413f-9ee4-bfde81762442", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency(NessieEasySettings.GUID, BepInDependency.DependencyFlags.SoftDependency)]
 public class Main : Core.Plugins.Plugin
@@ -42,11 +42,11 @@ public class Main : Core.Plugins.Plugin
         }
 
         Patcher.Use(
-            typeof(Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
-            typeof(Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix),
-            typeof(Game.Events.AtlyssNetworkManager.OnStopClient_Prefix),
-            typeof(Game.Events.Player.OnStartAuthority_Postfix),
-            typeof(Game.Events.PlayerMove.Client_LocalPlayerControl_Prefix)
+            typeof(Game.Patches.ItemObject.Enable_GroundCheckToVelocityZero_Postfix),
+            typeof(Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix),
+            typeof(Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix),
+            typeof(Game.Patches.Player.OnStartAuthority_Postfix),
+            typeof(Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix)
         );
 
         PlayerAppearance.Instance.Load();
@@ -55,7 +55,7 @@ public class Main : Core.Plugins.Plugin
         NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
+        Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
         ReloadHotkeys();
     }
@@ -358,7 +358,7 @@ public class Main : Core.Plugins.Plugin
     }
     private void Init_LoadScreenDisable_Postfix_OnInvoke()
     {
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
+        Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
 
         if (Player._mainPlayer._isHostPlayer)
             return;
@@ -373,7 +373,7 @@ public class Main : Core.Plugins.Plugin
         if (!Configuration.Instance.General.PresenceEffectsOnJoin.Value)
             return;
 
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
+        Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
     }
     private IEnumerator Plugin_ShowUsagePresenceOnJoinLobby_Effects()
     {
@@ -388,8 +388,8 @@ public class Main : Core.Plugins.Plugin
     {
         Reloaded = true;
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
+        Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
+        Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
 
         StopAllCoroutines();
         Lobby.Instance.Unload();

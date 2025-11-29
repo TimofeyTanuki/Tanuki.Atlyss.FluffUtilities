@@ -7,10 +7,6 @@ internal class Configuration
 {
     public static Configuration Instance;
 
-    private Configuration() { }
-    public static void Initialize() =>
-        Instance ??= new();
-
     public Models.Configuration.Commands Commands;
     public PlayerAppearance PlayerAppearance;
     public GlobalRaceDisplayParameters GlobalRaceDisplayParameters;
@@ -18,6 +14,10 @@ internal class Configuration
     public NoClip NoClip;
     public Hotkeys Hotkeys;
     public General General;
+
+    private Configuration() { }
+    public static void Initialize() =>
+        Instance ??= new();
 
     public void Load(ConfigFile ConfigFile)
     {

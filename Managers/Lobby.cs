@@ -10,14 +10,14 @@ internal class Lobby
     public CSteamID LobbySteamID = CSteamID.Nil;
     public CSteamID LobbyOwnerSteamID = CSteamID.Nil;
     public CSteamID PlayerSteamID = CSteamID.Nil;
-    public const string LobbyMemberDataKey_Version = $"{PluginInfo.ID}.ver";
+    public const string LobbyMemberDataKey_Version = $"{PluginInfo.GUID}.ver";
 
     public bool PluginDataSent = false;
 
     private Lobby()
     {
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+        Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
     }
 
     public static void Initialize()
@@ -32,16 +32,16 @@ internal class Lobby
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
-        Main.Instance.Patcher.Use(typeof(Game.Events.Player.Awake_Postfix));
+        Main.Instance.Patcher.Use(typeof(Game.Patches.Player.Awake_Postfix));
 
-        Game.Events.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
+        Game.Patches.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
     }
     public void Unload()
     {
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
-        Game.Events.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
+        Game.Patches.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
     }
     public void Reload()
     {

@@ -14,30 +14,30 @@ internal class PlayerAppearance
     private bool PendingNewPlayerAppearanceCommand;
     public void Load()
     {
-        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
+        Main.Instance.Patcher.Use(typeof(Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
 
         AllowParametersBeyondLimits = Configuration.Instance.PlayerAppearance.AllowParametersBeyondLimits.Value;
         PendingNewPlayerAppearanceCommand = false;
 
         if (AllowParametersBeyondLimits)
         {
-            Main.Instance.Patcher.Use(typeof(Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix));
-            Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke += Init_ParamsCheck_Prefix_OnInvoke;
+            Main.Instance.Patcher.Use(typeof(Game.Patches.ScriptablePlayerRace.Init_ParamsCheck_Prefix));
+            Game.Patches.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke += Init_ParamsCheck_Prefix_OnInvoke;
         }
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
+        Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
     }
 
     private void OnStopClient_Prefix_OnInvoke() =>
-        Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
+        Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
 
     private void Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin(PlayerVisual PlayerVisual)
     {
         if (!PlayerVisual.isLocalPlayer)
             return;
 
-        Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
+        Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
 
         PlayerAppearance_Profile PlayerAppearance_Profile = ProfileDataManager._current._characterFile._appearanceProfile;
         PlayerAppearanceStruct PlayerAppearanceStruct = new()
@@ -97,7 +97,7 @@ internal class PlayerAppearance
         if (Player._mainPlayer._isHostPlayer)
             return;
 
-        Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke += Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
+        Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke += Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
     }
 
     private IEnumerator NewPlayerAppearanceCommand()
@@ -111,12 +111,12 @@ internal class PlayerAppearance
     public void Unload()
     {
         if (AllowParametersBeyondLimits)
-            Game.Events.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke -= Init_ParamsCheck_Prefix_OnInvoke;
+            Game.Patches.ScriptablePlayerRace.Init_ParamsCheck_Prefix.OnInvoke -= Init_ParamsCheck_Prefix_OnInvoke;
 
 
-        Game.Events.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= OnStopClient_Prefix_OnInvoke;
-        Game.Events.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
+        Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke -= OnStartAuthority_Postfix_OnInvoke;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= OnStopClient_Prefix_OnInvoke;
+        Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
     }
     public void Reload()
     {

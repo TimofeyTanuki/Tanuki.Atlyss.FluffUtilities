@@ -35,7 +35,7 @@ internal class Item : ICommand
         if (!ScriptableItem)
         {
             string ItemNameSearch = ItemName.ToLower();
-            foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Fields.GameManager.Instance.CachedScriptableItems)
+            foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Fields.GameManager.CachedScriptableItems)
             {
                 if (!CachedScriptableItem.Key.ToLower().Contains(ItemNameSearch))
                     continue;

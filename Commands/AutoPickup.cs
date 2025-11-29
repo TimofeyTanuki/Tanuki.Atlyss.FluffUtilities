@@ -9,7 +9,7 @@ internal class AutoPickup : ICommand, IDisposable
     private float Distance = 0;
     private bool Status = false;
     public AutoPickup() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
 
     public bool Execute(string[] Arguments)
     {
@@ -49,7 +49,7 @@ internal class AutoPickup : ICommand, IDisposable
             return;
 
         Status = true;
-        Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke += Enable_GroundCheckToVelocityZero;
+        Game.Patches.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke += Enable_GroundCheckToVelocityZero;
     }
     private void Disable()
     {
@@ -57,7 +57,7 @@ internal class AutoPickup : ICommand, IDisposable
             return;
 
         Status = false;
-        Game.Events.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke -= Enable_GroundCheckToVelocityZero;
+        Game.Patches.ItemObject.Enable_GroundCheckToVelocityZero_Postfix.OnInvoke -= Enable_GroundCheckToVelocityZero;
     }
     private void Enable_GroundCheckToVelocityZero(ItemObject ItemObject)
     {
@@ -77,7 +77,7 @@ internal class AutoPickup : ICommand, IDisposable
     }
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
         Disable();
     }
 }

@@ -7,7 +7,7 @@ internal class NoSkillTimer : ICommand, IDisposable
 {
     private bool Status = false;
     public NoSkillTimer() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
     public bool Execute(string[] Arguments)
     {
         if (Status)
@@ -29,8 +29,8 @@ internal class NoSkillTimer : ICommand, IDisposable
             return;
 
         Status = true;
-        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerCasting.Cmd_InitSkill_Postfix));
-        Game.Events.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke += Cmd_InitSkill_Postfix_OnInvoke;
+        Main.Instance.Patcher.Use(typeof(Game.Patches.PlayerCasting.Cmd_InitSkill_Postfix));
+        Game.Patches.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke += Cmd_InitSkill_Postfix_OnInvoke;
     }
 
     private void Cmd_InitSkill_Postfix_OnInvoke(PlayerCasting PlayerCasting)
@@ -54,11 +54,11 @@ internal class NoSkillTimer : ICommand, IDisposable
             return;
 
         Status = false;
-        Game.Events.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke -= Cmd_InitSkill_Postfix_OnInvoke;
+        Game.Patches.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke -= Cmd_InitSkill_Postfix_OnInvoke;
     }
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
         Disable();
     }
 }

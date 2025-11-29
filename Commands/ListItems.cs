@@ -21,7 +21,7 @@ internal class ListItems : ICommand
                 "Commands.ListItems.All",
                 string.Join(
                     Main.Instance.Translate("Commands.ListItems.Separator"),
-                    Game.Fields.GameManager.Instance.CachedScriptableItems.Values
+                    Game.Fields.GameManager.CachedScriptableItems.Values
                         .OrderBy(x => x._itemName)
                         .Select(x => x._itemName)
                 )
@@ -33,7 +33,7 @@ internal class ListItems : ICommand
         SortedSet<string> Matches = [];
 
         string Match;
-        foreach (ScriptableItem ScriptableItem in Game.Fields.GameManager.Instance.CachedScriptableItems.Values)
+        foreach (ScriptableItem ScriptableItem in Game.Fields.GameManager.CachedScriptableItems.Values)
         {
             Match = ScriptableItem._itemName;
             if (!Match.Contains(Search))

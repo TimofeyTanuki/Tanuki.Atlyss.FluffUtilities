@@ -23,8 +23,8 @@ internal class GlobalRaceDisplayParameters
             return;
         }
 
-        Main.Instance.Patcher.Use(typeof(Game.Events.GameManager.Cache_ScriptableAssets_Postfix));
-        Game.Events.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke += Override;
+        Main.Instance.Patcher.Use(typeof(Game.Patches.GameManager.Cache_ScriptableAssets_Postfix));
+        Game.Patches.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke += Override;
     }
     public void Unload()
     {
@@ -33,12 +33,12 @@ internal class GlobalRaceDisplayParameters
         if (!Enabled)
             return;
 
-        Game.Events.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke -= Override;
+        Game.Patches.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke -= Override;
     }
     public void Override()
     {
         CharacterParamsGroup CharacterParamsGroup;
-        foreach (ScriptablePlayerRace ScriptablePlayerRace in Game.Fields.GameManager.Instance.CachedScriptableRaces.Values)
+        foreach (ScriptablePlayerRace ScriptablePlayerRace in Game.Fields.GameManager.CachedScriptableRaces.Values)
         {
             CharacterParamsGroup = ScriptablePlayerRace._raceDisplayParams;
             CharacterParamsGroup._headWidthRange = Configuration.Instance.GlobalRaceDisplayParameters.HeadWidth.AsVector2;

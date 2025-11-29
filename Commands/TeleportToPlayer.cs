@@ -11,7 +11,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
     private Vector3 Target;
     private bool TeleportingBetweenScenes = false;
     public TeleportToPlayer() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += ResetTeleportationBetweenScenes;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += ResetTeleportationBetweenScenes;
 
     public bool Execute(string[] Arguments)
     {
@@ -41,7 +41,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
                     return false;
                 }
 
-                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Fields.GameManager.Instance.CachedScriptableMapDatas)
+                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Fields.GameManager.CachedScriptableMapDatas)
                 {
                     if (ScriptableMapData.Value._mapCaptionTitle != Player._mapName)
                         continue;
@@ -51,7 +51,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
 
                     Managers.FreeCamera.Instance.Disable();
 
-                    Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Teleport;
+                    Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Teleport;
                     TeleportingBetweenScenes = true;
                     Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData.Value._subScene, ScriptableMapData.Value._spawnPointTag, ZoneDifficulty.NORMAL);
                     return false;
@@ -75,14 +75,14 @@ internal class TeleportToPlayer : ICommand, IDisposable
             return;
 
         TeleportingBetweenScenes = false;
-        Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
+        Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
     }
     private void Teleport()
     {
         if (TeleportingBetweenScenes)
         {
             TeleportingBetweenScenes = false;
-            Game.Events.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
+            Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
         }
 
         Player._mainPlayer._pMove.Teleport(Target);
@@ -90,7 +90,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
     }
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= ResetTeleportationBetweenScenes;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= ResetTeleportationBetweenScenes;
         ResetTeleportationBetweenScenes();
     }
 }

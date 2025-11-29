@@ -7,7 +7,7 @@ internal class InfiniteJumps : ICommand, IDisposable
 {
     private bool Status = false;
     public InfiniteJumps() =>
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
     public bool Execute(string[] Arguments)
     {
         if (Status)
@@ -28,8 +28,8 @@ internal class InfiniteJumps : ICommand, IDisposable
         if (Status)
             return;
 
-        Main.Instance.Patcher.Use(typeof(Game.Events.PlayerMove.Init_Jump_Postfix));
-        Game.Events.PlayerMove.Init_Jump_Postfix.OnInvoke += Init_Jump_Postfix_OnInvoke;
+        Main.Instance.Patcher.Use(typeof(Game.Patches.PlayerMove.Init_Jump_Postfix));
+        Game.Patches.PlayerMove.Init_Jump_Postfix.OnInvoke += Init_Jump_Postfix_OnInvoke;
 
         Status = true;
     }
@@ -38,7 +38,7 @@ internal class InfiniteJumps : ICommand, IDisposable
         if (!Status)
             return;
 
-        Game.Events.PlayerMove.Init_Jump_Postfix.OnInvoke -= Init_Jump_Postfix_OnInvoke;
+        Game.Patches.PlayerMove.Init_Jump_Postfix.OnInvoke -= Init_Jump_Postfix_OnInvoke;
 
         Status = false;
     }
@@ -52,7 +52,7 @@ internal class InfiniteJumps : ICommand, IDisposable
 
     public void Dispose()
     {
-        Game.Events.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
+        Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
 
         if (Status)
             Disable();
