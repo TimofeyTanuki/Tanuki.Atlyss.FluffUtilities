@@ -2,7 +2,7 @@
 
 namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
-internal class General(ref ConfigFile ConfigFile)
+internal class General(ConfigFile ConfigFile)
 {
     private const string Section = "General";
 

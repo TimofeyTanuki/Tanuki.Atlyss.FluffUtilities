@@ -2,7 +2,7 @@
 
 namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
-internal class FreeCamera(ref ConfigFile ConfigFile)
+internal class FreeCamera(ConfigFile ConfigFile)
 {
     private const string Section = "FreeCamera";
     public ConfigEntry<float> Speed = ConfigFile.Bind(Section, "Speed", 20f);

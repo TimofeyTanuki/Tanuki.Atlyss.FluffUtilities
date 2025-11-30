@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
-internal class Hotkeys(ref ConfigFile ConfigFile)
+internal class Hotkeys(ConfigFile ConfigFile)
 {
     private const string Section = "Hotkeys";
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
-internal class GlobalRaceDisplayParameters(ref ConfigFile ConfigFile)
+internal class GlobalRaceDisplayParameters(ConfigFile ConfigFile)
 {
     private const string Section = "GlobalRaceDisplayParameters";
     public class RangeParameter(ref ConfigFile ConfigFile, string Name, float Minimum, float Maximum)

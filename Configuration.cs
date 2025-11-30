@@ -21,12 +21,12 @@ internal class Configuration
 
     public void Load(ConfigFile ConfigFile)
     {
-        Commands = new(ref ConfigFile);
-        PlayerAppearance = new(ref ConfigFile);
-        GlobalRaceDisplayParameters = new(ref ConfigFile);
-        FreeCamera = new(ref ConfigFile);
-        NoClip = new(ref ConfigFile);
-        Hotkeys = new(ref ConfigFile);
-        General = new(ref ConfigFile);
+        Commands = new(ConfigFile);
+        PlayerAppearance = new(ConfigFile);
+        GlobalRaceDisplayParameters = new(ConfigFile);
+        FreeCamera = new(ConfigFile);
+        NoClip = new(ConfigFile);
+        Hotkeys = new(ConfigFile);
+        General = new(ConfigFile);
     }
 }
