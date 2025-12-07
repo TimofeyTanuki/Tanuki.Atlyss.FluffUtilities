@@ -61,10 +61,10 @@ Plugin configuration<br>
 > `BepInEx/config/cc8615a7-47a4-4321-be79-11e36887b64a.cfg`
 
 Plugin commands configuration<br>
-> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.commands.json`
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Language}.commands.json`
 
 Plugin translations file<br>
-> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translations.json`
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Language}.translations.json`
 ## Getting started
 ### Thunderstore
 This mod on [Thunderstore](https://thunderstore.io/c/atlyss/p/Tanuki/Tanuki_Atlyss_FluffUtilities/).<br>
