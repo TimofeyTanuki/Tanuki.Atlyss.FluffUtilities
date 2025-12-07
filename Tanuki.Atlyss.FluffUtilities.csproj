@@ -44,9 +44,8 @@
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="EasySettings, Version=1.1.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\EasySettings.dll</HintPath>
+    <Reference Include="EasySettings">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\EasySettings\EasySettings.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />

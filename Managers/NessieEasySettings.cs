@@ -20,7 +20,7 @@ internal class NessieEasySettings
     {
         SettingsTab SettingsTab = Settings.ModTab;
 
-        SettingsTab.AddHeader("- Tanuki Atlyss FluffUtilities -");
+        SettingsTab.AddHeader("- TA FluffUtilities -");
 
         SettingsTab.AddHeader("General");
 
