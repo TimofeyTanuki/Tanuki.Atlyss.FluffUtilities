@@ -60,11 +60,11 @@ Many commands have shortcuts and aliases. View them with the `/help` command.
 Plugin configuration<br>
 > `BepInEx/config/cc8615a7-47a4-4321-be79-11e36887b64a.cfg`
 
-Plugin command configuration<br>
-> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.command.json`
+Plugin commands configuration<br>
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.commands.json`
 
-Plugin translation file<br>
-> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translation.properties`
+Plugin translations file<br>
+> `BepInEx/config/Tanuki.Atlyss.FluffUtilities/{Current language}.translations.json`
 ## Getting started
 ### Thunderstore
 This mod on [Thunderstore](https://thunderstore.io/c/atlyss/p/Tanuki/Tanuki_Atlyss_FluffUtilities/).<br>
