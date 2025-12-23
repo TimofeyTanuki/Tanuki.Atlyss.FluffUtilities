@@ -45,8 +45,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EasySettings">
-      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\EasySettings\EasySettings.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\plugins\Nessie-EasySettings\EasySettings.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mirror">
