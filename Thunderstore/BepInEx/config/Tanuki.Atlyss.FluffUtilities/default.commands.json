@@ -85,7 +85,7 @@
       "li"
     ],
     "Help": "Display a list of items.",
-    "Syntax": "[case-sensitive search]"
+    "Syntax": "[search]"
   },
   "ListPlayers": {
     "Names": [
@@ -147,5 +147,29 @@
     ],
     "Help": "No clip mode.",
     "Syntax": null
+  },
+  "ListQuests": {
+    "Names": [
+      "list-quests",
+      "lq"
+    ],
+    "Help": "Display a list of quests.",
+    "Syntax": "[search]"
+  },
+  "GetQuest": {
+    "Names": [
+      "get-quest",
+      "gq"
+    ],
+    "Help": "Get a quest.",
+    "Syntax": "<name>"
+  },
+  "CompleteQuest": {
+    "Names": [
+      "complete-quest",
+      "cq"
+    ],
+    "Help": "Complete accepted quests.",
+    "Syntax": "<name/*>"
   }
 }

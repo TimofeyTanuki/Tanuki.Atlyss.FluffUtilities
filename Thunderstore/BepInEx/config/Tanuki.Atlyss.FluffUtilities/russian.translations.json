@@ -50,5 +50,17 @@
   "Commands.SteamProfile.NicknameNotSpecified": "<color=#e67c7c>Никнейм игрока не указан.</color>",
   "Commands.SteamProfile.PlayerNotFound": "<color=#e67c7c>Игрок не найден.</color>",
   "General.OtherPluginUserMessage.GlobalNickname": " (@{0})",
-  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1} использует FluffUtilities {2}</color>"
+  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1} использует FluffUtilities {2}</color>",
+  "Commands.ListQuests.Separator": "<color=#686b66>, </color>",
+  "Commands.ListQuests.Search.Match": "<color=#e0b341>{0}</color>",
+  "Commands.ListQuests.Search": "<color=#dba87b>Список заданий, содержащих в названии \"{0}\":</color>\n<color=#d1dbba>{1}</color><color=#686b66>.</color>",
+  "Commands.ListQuests.Search.QuestsNotFound": "<color=#e67c7c>Задания, содержащие в названии \"{0}\" не найдены.</color>",
+  "Commands.ListQuests.All": "<color=#dba87b>Список заданий:</color>\n<color=#d1dbba>{0}</color><color=#686b66>.</color>",
+  "Commands.GetQuest.QuestNotSpecified": "<color=#e67c7c>Задание не указано.</color>",
+  "Commands.GetQuest.QuestNotFound": "<color=#e67c7c>Задание \"{0}\" не найдено.</color>",
+  "Commands.GetQuest.QuestAlreadyActive": "<color=#e67c7c>Задание \"{0}\" уже активно.</color>",
+  "Commands.GetQuest.ActiveQuestsLimit": "<color=#e67c7c>Достигнут лимит активных заданий.</color>",
+  "Commands.CompleteQuest.QuestNotSpecified": "<color=#e67c7c>Задание не указано.</color>",
+  "Commands.CompleteQuest.NoQuests": "<color=#e67c7c>Нет активных заданий.</color>",
+  "Commands.CompleteQuest.QuestNotFound": "<color=#e67c7c>Задание \"{0}\" не найдено.</color>"
 }

@@ -54,6 +54,9 @@ The changes will take effect after restarting the game or reloading Tanuki.Atlys
 - `/experience <delta>` - Add or remove experience.
 - `/noskilltimer` - Toggle the skill timer.
 - `/noclip` - No clip mode.
+- `/list-quests [search]` - Display a list of quests.
+- `/get-quest <name>` - Get a quest.
+- `/complete-quest <name/*>` - Complete accepted quests.
 - ...
 Many commands have shortcuts and aliases. View them with the `/help` command.
 ### Configuration

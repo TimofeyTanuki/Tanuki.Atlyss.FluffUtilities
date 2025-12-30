@@ -92,6 +92,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CompleteQuest.cs" />
+    <Compile Include="Commands\GetQuest.cs" />
     <Compile Include="Commands\ListQuests.cs" />
     <Compile Include="Commands\NoClip.cs" />
     <Compile Include="Commands\FreeCamera.cs" />

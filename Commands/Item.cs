@@ -32,13 +32,11 @@ internal class Item : ICommand
 
         ScriptableItem ScriptableItem = GameManager._current.Locate_Item(ItemName);
 
-        int Index;
         if (!ScriptableItem)
         {
             foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Fields.GameManager.CachedScriptableItems)
             {
-                Index = CachedScriptableItem.Key.IndexOf(ItemName, System.StringComparison.InvariantCultureIgnoreCase);
-                if (Index < 0)
+                if (CachedScriptableItem.Key.IndexOf(ItemName, System.StringComparison.InvariantCultureIgnoreCase) < 0)
                     continue;
 
                 ScriptableItem = CachedScriptableItem.Value;

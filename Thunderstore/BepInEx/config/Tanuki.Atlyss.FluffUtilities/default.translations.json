@@ -50,5 +50,17 @@
   "Commands.SteamProfile.NicknameNotSpecified": "<color=#e67c7c>Player nickname not specified.</color>",
   "Commands.SteamProfile.PlayerNotFound": "<color=#e67c7c>Player not found.</color>",
   "General.OtherPluginUserMessage.GlobalNickname": " (@{0})",
-  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1}{2} uses FluffUtilities {3}</color>"
+  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1}{2} uses FluffUtilities {3}</color>",
+  "Commands.ListQuests.Separator": "<color=#686b66>, </color>",
+  "Commands.ListQuests.Search.Match": "<color=#e0b341>{0}</color>",
+  "Commands.ListQuests.Search": "<color=#dba87b>List of quests containing \"{0}\" in their name:</color>\n<color=#d1dbba>{1}</color><color=#686b66>.</color>",
+  "Commands.ListQuests.Search.QuestsNotFound": "<color=#e67c7c>No quests containing \"{0}\" in their name were found.</color>",
+  "Commands.ListQuests.All": "<color=#dba87b>List of quests:</color>\n<color=#d1dbba>{0}</color><color=#686b66>.</color>",
+  "Commands.GetQuest.QuestNotSpecified": "<color=#e67c7c>Quest not specified.</color>",
+  "Commands.GetQuest.QuestNotFound": "<color=#e67c7c>Quest \"{0}\" not found.</color>",
+  "Commands.GetQuest.QuestAlreadyActive": "<color=#e67c7c>Quest \"{0}\" is already active.</color>",
+  "Commands.GetQuest.ActiveQuestsLimit": "<color=#e67c7c>The limit of active quests has been reached.</color>",
+  "Commands.CompleteQuest.QuestNotSpecified": "<color=#e67c7c>Quest not specified.</color>",
+  "Commands.CompleteQuest.NoQuests": "<color=#e67c7c>No active quests.</color>",
+  "Commands.CompleteQuest.QuestNotFound": "<color=#e67c7c>Quest \"{0}\" not found.</color>"
 }

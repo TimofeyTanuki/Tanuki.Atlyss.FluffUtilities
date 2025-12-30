@@ -85,7 +85,7 @@
       "li"
     ],
     "Help": "Отобразить список предметов.",
-    "Syntax": "[поиск с учётом регистра]"
+    "Syntax": "[поиск]"
   },
   "ListPlayers": {
     "Names": [
@@ -147,5 +147,29 @@
     ],
     "Help": "Режим свободного полёта.",
     "Syntax": null
+  },
+  "ListQuests": {
+    "Names": [
+      "list-quests",
+      "lq"
+    ],
+    "Help": "Отобразить список заданий.",
+    "Syntax": "[поиск]"
+  },
+  "GetQuest": {
+    "Names": [
+      "get-quest",
+      "gq"
+    ],
+    "Help": "Получить задание",
+    "Syntax": "<название>"
+  },
+  "CompleteQuest": {
+    "Names": [
+      "complete-quest",
+      "cq"
+    ],
+    "Help": "Выполнить принятое задание.",
+    "Syntax": "<название/*>"
   }
 }
