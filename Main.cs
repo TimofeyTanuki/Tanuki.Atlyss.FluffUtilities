@@ -11,7 +11,6 @@ namespace Tanuki.Atlyss.FluffUtilities;
 public class Main : Core.Plugins.Plugin
 {
     internal static Main Instance;
-
     private bool Reloaded = false;
     internal Patching.Patcher Patcher = new();
 

@@ -46,7 +46,7 @@ The changes will take effect after restarting the game or reloading Tanuki.Atlys
 - `/heal <delta>` - Add or remove health.
 - `/immortality` - Immortality mode.
 - `/item <name> [quantity]` - Give an item. Example: `/item "Deadwood Axe" 1`. If there is no exact match, the first item with a similar name will be given.
-- `/list-items [case-sensitive search]` - Display a list of items.
+- `/list-items [search]` - Display a list of items.
 - `/list-players` - Display a list of players.
 - `/infinitejumps` - Infinite jumps.
 - `/movespeed [speed]` - Change the movement speed. Do not specify parameters to reset.
