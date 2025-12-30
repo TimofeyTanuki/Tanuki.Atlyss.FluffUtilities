@@ -32,7 +32,6 @@ internal class ListItems : ICommand
 
     private void DisplaySearch(string Search)
     {
-        Search = Search.ToLower();
         List<string> Matches =
             Helpers.Commands.FormatDictionaryKeyMatches(
                 Game.Fields.GameManager.CachedScriptableItems,
