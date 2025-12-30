@@ -15,6 +15,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Components
             enabled = false;
             InputSystem = UnityInput.Current;
         }
+
         private void Update()
         {
             if (Player._mainPlayer._inChat)

@@ -26,6 +26,7 @@ internal class GlobalRaceDisplayParameters
         Main.Instance.Patcher.Use(typeof(Game.Patches.GameManager.Cache_ScriptableAssets_Postfix));
         Game.Patches.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke += Override;
     }
+
     public void Unload()
     {
         Reloaded = true;
@@ -35,6 +36,7 @@ internal class GlobalRaceDisplayParameters
 
         Game.Patches.GameManager.Cache_ScriptableAssets_Postfix.OnInvoke -= Override;
     }
+
     public void Override()
     {
         CharacterParamsGroup CharacterParamsGroup;

@@ -35,6 +35,7 @@ internal class Hotkey : MonoBehaviour
         Instance = Main.Instance.gameObject.AddComponent<Hotkey>();
         DontDestroyOnLoad(Instance);
     }
+
     public void BindAction(KeyCode KeyCode, Action Action)
     {
         if (KeyCode is KeyCode.None)
@@ -50,6 +51,7 @@ internal class Hotkey : MonoBehaviour
         HotkeyActionGroup.Actions.Add(Action);
         enabled = true;
     }
+
     public void UnbindAction(Action Action)
     {
         List<HotkeyActionGroup> HotkeyActionGroupsToRemove = [];
@@ -64,6 +66,7 @@ internal class Hotkey : MonoBehaviour
         }
         HotkeyActionGroupsToRemove.ForEach(x => HotkeyActionGroups.Remove(x));
     }
+
     public void UnbindAction(KeyCode KeyCode, Action Action)
     {
         HotkeyActionGroup HotkeyActionGroup = HotkeyActionGroups.Where(x => x.KeyCode == KeyCode).SingleOrDefault();
@@ -75,6 +78,7 @@ internal class Hotkey : MonoBehaviour
         if (HotkeyActionGroup.Actions.Count == 0)
             HotkeyActionGroups.Remove(HotkeyActionGroup);
     }
+
     public void Reset()
     {
         enabled = false;
@@ -83,6 +87,7 @@ internal class Hotkey : MonoBehaviour
 
 #pragma warning disable IDE0051
     private void Awake() => enabled = false;
+
     private void Update()
     {
         foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)

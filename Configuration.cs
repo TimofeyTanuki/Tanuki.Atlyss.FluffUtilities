@@ -16,6 +16,7 @@ internal class Configuration
     public General General;
 
     private Configuration() { }
+
     public static void Initialize() =>
         Instance ??= new();
 

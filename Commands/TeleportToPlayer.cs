@@ -10,6 +10,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
 {
     private Vector3 Target;
     private bool TeleportingBetweenScenes = false;
+
     public TeleportToPlayer() =>
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += ResetTeleportationBetweenScenes;
 
@@ -77,6 +78,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
         TeleportingBetweenScenes = false;
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Teleport;
     }
+
     private void Teleport()
     {
         if (TeleportingBetweenScenes)
@@ -88,6 +90,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
         Player._mainPlayer._pMove.Teleport(Target);
         Player._mainPlayer._pVisual.Cmd_PlayTeleportEffect();
     }
+
     public void Dispose()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= ResetTeleportationBetweenScenes;

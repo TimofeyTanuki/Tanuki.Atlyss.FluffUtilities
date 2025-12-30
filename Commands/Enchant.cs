@@ -95,6 +95,7 @@ internal class Enchant : ICommand
 
         return false;
     }
+
     private void DisplayDamageTypes()
     {
         Type Type = typeof(DamageType);
@@ -117,6 +118,7 @@ internal class Enchant : ICommand
             )
         );
     }
+
     private void DisplayModifiers(ScriptableStatModifierTable ScriptableStatModifierTable)
     {
         List<string> Modifiers = [];

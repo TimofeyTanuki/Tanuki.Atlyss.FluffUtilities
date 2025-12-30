@@ -27,6 +27,7 @@ internal class Lobby
 
         Instance = new();
     }
+
     public void Load()
     {
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
@@ -36,6 +37,7 @@ internal class Lobby
 
         Game.Patches.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
     }
+
     public void Unload()
     {
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
@@ -43,6 +45,7 @@ internal class Lobby
 
         Game.Patches.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
     }
+
     public void Reload()
     {
         Unload();
@@ -56,6 +59,7 @@ internal class Lobby
 
         ApplySteamLobbyPluginData();
     }
+
     private void Awake_Postfix_OnInvoke(Player Player)
     {
         if (!Player._mainPlayer)
@@ -63,8 +67,10 @@ internal class Lobby
 
         Main.Instance.StartCoroutine(CheckPlayerPlugin(Player));
     }
+
     private string GetUserPluginVersion(CSteamID SteamID) =>
         SteamMatchmaking.GetLobbyMemberData(LobbySteamID, SteamID, LobbyMemberDataKey_Version);
+
     private void ApplySteamLobbyPluginData()
     {
         if (Configuration.Instance.General.HideUsagePresenceFromNonUserHosts.Value)
@@ -84,6 +90,7 @@ internal class Lobby
         SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, PluginInfo.Version);
         PluginDataSent = true;
     }
+
     private bool CheckPluginUserHost()
     {
         if (LobbyOwnerSteamID == PlayerSteamID)
@@ -91,6 +98,7 @@ internal class Lobby
 
         return !string.IsNullOrEmpty(GetUserPluginVersion(LobbyOwnerSteamID));
     }
+
     private IEnumerator CheckPlayerPlugin(Player Player)
     {
         while (Player)
@@ -127,6 +135,7 @@ internal class Lobby
 
         yield break;
     }
+
     private void OnStartAuthority_Postfix_OnInvoke()
     {
         if (AtlyssNetworkManager._current._soloMode)
@@ -138,6 +147,7 @@ internal class Lobby
 
         ApplySteamLobbyPluginData();
     }
+
     private void OnStopClient_Prefix_OnInvoke()
     {
         LobbySteamID = LobbyOwnerSteamID = CSteamID.Nil;

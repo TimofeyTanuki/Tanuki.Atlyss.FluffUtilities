@@ -7,15 +7,15 @@ internal class FreeCamera : MonoBehaviour
 {
     private IInputSystem InputSystem;
     private bool IsUpsideDown;
+    private Quaternion TargetRotation;
+    public float Speed = 0;
+    public bool SmoothLookMode = false;
+    public float SmoothLookModeInterpolation = 0;
     private float
         RotationShiftX,
         RotationShiftY,
         RotationX,
         RotationY;
-    private Quaternion TargetRotation;
-    public float Speed = 0;
-    public bool SmoothLookMode = false;
-    public float SmoothLookModeInterpolation = 0;
 
 #pragma warning disable IDE0051
     private void Awake()
@@ -29,6 +29,7 @@ internal class FreeCamera : MonoBehaviour
         RotationX = CameraFunction._current._RotX;
         RotationY = CameraFunction._current._RotY;
     }
+
     private void OnDisable()
     {
         CameraFunction._current._mainCamera.transform.rotation = CameraFunction._current.transform.rotation;
@@ -52,6 +53,7 @@ internal class FreeCamera : MonoBehaviour
         if (Speed < 0.01)
             Speed = 0.01f;
     }
+
     private void HandleRotation()
     {
         RotationShiftX = InputControlManager.current._altVert_input * CameraFunction._current.inputSensitivity;
@@ -68,6 +70,7 @@ internal class FreeCamera : MonoBehaviour
         TargetRotation = Quaternion.Euler(RotationX, RotationY, 0);
         transform.rotation = SmoothLookMode ? Quaternion.Slerp(transform.rotation, TargetRotation, SmoothLookModeInterpolation * Time.deltaTime) : TargetRotation;
     }
+
     private void HandlePosition()
     {
         if (InputSystem.GetKey(Managers.FreeCamera.Instance.Left))

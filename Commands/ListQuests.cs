@@ -5,7 +5,7 @@ using Tanuki.Atlyss.API.Commands;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
-internal class ListItems : ICommand
+internal class ListQuests : ICommand
 {
     public bool Execute(string[] Arguments)
     {
@@ -20,10 +20,10 @@ internal class ListItems : ICommand
     private void DisplayAll() =>
         ChatBehaviour._current.New_ChatMessage(
             Main.Instance.Translate(
-                "Commands.ListItems.All",
+                "Commands.ListQuests.All",
                 string.Join(
-                    Main.Instance.Translate("Commands.ListItems.Separator"),
-                    Game.Fields.GameManager.CachedScriptableItems.Keys
+                    Main.Instance.Translate("Commands.ListQuests.Separator"),
+                    Game.Fields.GameManager.CachedScriptableQuests.Keys
                         .OrderBy(x => x)
                         .Select(x => x)
                 )
@@ -32,27 +32,26 @@ internal class ListItems : ICommand
 
     private void DisplaySearch(string Search)
     {
-        Search = Search.ToLower();
         List<string> Matches =
             Helpers.Commands.FormatDictionaryKeyMatches(
-                Game.Fields.GameManager.CachedScriptableItems,
+                Game.Fields.GameManager.CachedScriptableQuests,
                 Search,
-                Main.Instance.Translate("Commands.ListItems.Search.Match"),
+                Main.Instance.Translate("Commands.ListQuests.Search.Match"),
                 StringComparison.InvariantCultureIgnoreCase
             );
 
         ChatBehaviour._current.New_ChatMessage(
             Matches.Count > 0 ?
                 Main.Instance.Translate(
-                    "Commands.ListItems.Search",
+                    "Commands.ListQuests.Search",
                     Search,
                     string.Join(
-                        Main.Instance.Translate("Commands.ListItems.Separator"),
+                        Main.Instance.Translate("Commands.ListQuests.Separator"),
                         Matches
                     )
                 )
                 :
-                Main.Instance.Translate("Commands.ListItems.Search.ItemsNotFound", Search)
+                Main.Instance.Translate("Commands.ListQuests.Search.QuestsNotFound", Search)
         );
     }
 }

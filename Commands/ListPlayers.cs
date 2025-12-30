@@ -12,6 +12,7 @@ internal class ListPlayers : ICommand
         Main.Instance.StartCoroutine(ListPlayersTask());
         return false;
     }
+
     private IEnumerator ListPlayersTask()
     {
         Player[] Players = UnityEngine.Object.FindObjectsOfType<Player>();

@@ -5,6 +5,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class MoveSpeed : ICommand
 {
     internal static bool Changed = false;
+
     public bool Execute(string[] Arguments)
     {
         if (Arguments.Length == 0)

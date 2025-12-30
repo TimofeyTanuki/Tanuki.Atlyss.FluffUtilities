@@ -5,7 +5,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
 internal class GlobalRaceDisplayParameters(ConfigFile ConfigFile)
 {
-    private const string Section = "GlobalRaceDisplayParameters";
     public class RangeParameter(ref ConfigFile ConfigFile, string Name, float Minimum, float Maximum)
     {
         public ConfigEntry<float>
@@ -15,8 +14,9 @@ internal class GlobalRaceDisplayParameters(ConfigFile ConfigFile)
         public Vector2 AsVector2 => new(Minimum.Value, Maximum.Value);
     }
 
-    public ConfigEntry<bool> Override = ConfigFile.Bind(Section, "Enabled", true);
+    private const string Section = "GlobalRaceDisplayParameters";
 
+    public ConfigEntry<bool> Override = ConfigFile.Bind(Section, "Enabled", true);
     public RangeParameter
         HeadWidth = new(ref ConfigFile, "HeadWidth", 0, 4),
         MuzzleLength = new(ref ConfigFile, "MuzzleLength", -500f, 1000f),

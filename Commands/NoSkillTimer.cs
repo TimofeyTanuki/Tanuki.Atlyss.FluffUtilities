@@ -6,8 +6,10 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class NoSkillTimer : ICommand, IDisposable
 {
     private bool Status = false;
+
     public NoSkillTimer() =>
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+
     public bool Execute(string[] Arguments)
     {
         if (Status)
@@ -23,6 +25,7 @@ internal class NoSkillTimer : ICommand, IDisposable
 
         return false;
     }
+
     private void Enable()
     {
         if (Status)
@@ -56,6 +59,7 @@ internal class NoSkillTimer : ICommand, IDisposable
         Status = false;
         Game.Patches.PlayerCasting.Cmd_InitSkill_Postfix.OnInvoke -= Cmd_InitSkill_Postfix_OnInvoke;
     }
+
     public void Dispose()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;

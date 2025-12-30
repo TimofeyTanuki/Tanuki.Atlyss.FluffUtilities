@@ -15,6 +15,7 @@ internal class FreeCamera
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
 
     public static void Initialize() => Instance ??= new();
+
     public void Reload()
     {
         Forward = Configuration.Instance.Hotkeys.FreeCamera_Forward.Value;
@@ -26,6 +27,7 @@ internal class FreeCamera
 
         ScrollSpeedAdjustmentStep = Configuration.Instance.FreeCamera.ScrollSpeedAdjustmentStep.Value;
     }
+
     public void Enable(bool LockCharacterControls, bool SmoothLook)
     {
         NoClip.Instance.Disable();
@@ -56,6 +58,7 @@ internal class FreeCamera
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
     public void Disable()
     {
         if (!Status)
@@ -72,6 +75,7 @@ internal class FreeCamera
         Status = false;
         Component.enabled = false;
     }
+
     private void Client_LocalPlayerControl_Prefix_OnInvoke(PlayerMove PlayerMove, ref bool ShouldAllow)
     {
         if (!PlayerMove.isLocalPlayer)
@@ -79,6 +83,7 @@ internal class FreeCamera
 
         ShouldAllow = false;
     }
+
     private void OnStopClient_Prefix_OnInvoke()
     {
         Disable();

@@ -6,12 +6,14 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class PlayerAppearance
 {
     public static PlayerAppearance Instance;
+    private bool AllowParametersBeyondLimits;
+    private bool PendingNewPlayerAppearanceCommand;
+
     private PlayerAppearance() { }
+
     public static void Initialize() =>
         Instance ??= new();
 
-    private bool AllowParametersBeyondLimits;
-    private bool PendingNewPlayerAppearanceCommand;
     public void Load()
     {
         Main.Instance.Patcher.Use(typeof(Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix));
@@ -108,6 +110,7 @@ internal class PlayerAppearance
         Player._mainPlayer._pVisual.Cmd_SendNew_PlayerAppearanceStruct(Player._mainPlayer._pVisual._playerAppearanceStruct);
         yield break;
     }
+
     public void Unload()
     {
         if (AllowParametersBeyondLimits)
@@ -118,13 +121,16 @@ internal class PlayerAppearance
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= OnStopClient_Prefix_OnInvoke;
         Game.Patches.PlayerVisual.Apply_NetworkedCharacterDisplay_Prefix.OnInvoke -= Apply_NetworkedCharacterDisplay_Prefix_OnInvoke_OnJoin;
     }
+
     public void Reload()
     {
         Unload();
         Load();
     }
+
     private void Init_ParamsCheck_Prefix_OnInvoke(PlayerAppearance_Profile PlayerAppearance, ref bool ShouldAllow) =>
         ShouldAllow = false;
+
     private void ApplyPlayerAppearanceStruct()
     {
         Player._mainPlayer._pVisual.Apply_NetworkedCharacterDisplay();
@@ -138,6 +144,7 @@ internal class PlayerAppearance
         PendingNewPlayerAppearanceCommand = true;
         Main.Instance.StartCoroutine(NewPlayerAppearanceCommand());
     }
+
     public void ModifyBreastSize(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._boobWeight += Delta;
@@ -147,6 +154,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyArmsSize(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._armWeight += Delta;
@@ -156,6 +164,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyBellySize(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._bellyWeight += Delta;
@@ -165,6 +174,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyBottomSize(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._bottomWeight += Delta;
@@ -174,6 +184,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyTorsoSize(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._torsoWeight += Delta;
@@ -183,6 +194,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyMuzzleLength(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._muzzleWeight += Delta;
@@ -192,6 +204,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyHeight(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._heightWeight += Delta;
@@ -201,6 +214,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyWidth(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._widthWeight += Delta;
@@ -210,6 +224,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyHeadWidth(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._headWidth += Delta;
@@ -219,6 +234,7 @@ internal class PlayerAppearance
 
         ApplyPlayerAppearanceStruct();
     }
+
     public void ModifyVoicePitch(float Delta, bool UpdateCharacterFile)
     {
         Player._mainPlayer._pVisual._playerAppearanceStruct._voicePitch += Delta;

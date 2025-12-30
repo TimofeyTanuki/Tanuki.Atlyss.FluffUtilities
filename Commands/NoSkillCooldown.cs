@@ -6,8 +6,10 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class NoSkillCooldown : ICommand, IDisposable
 {
     private bool Status = false;
+
     public NoSkillCooldown() =>
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+
     public bool Execute(string[] Arguments)
     {
         if (Status)
@@ -23,6 +25,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
 
         return false;
     }
+
     private void Enable()
     {
         if (Status)
@@ -32,6 +35,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
         Main.Instance.Patcher.Use(typeof(Game.Patches.PlayerCasting.New_CooldownSlot_Prefix));
         Game.Patches.PlayerCasting.New_CooldownSlot_Prefix.OnInvoke += New_CooldownSlot_Prefix_OnInvoke;
     }
+
     private void Disable()
     {
         if (!Status)
@@ -40,6 +44,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
         Status = false;
         Game.Patches.PlayerCasting.New_CooldownSlot_Prefix.OnInvoke -= New_CooldownSlot_Prefix_OnInvoke;
     }
+
     private void New_CooldownSlot_Prefix_OnInvoke(PlayerCasting PlayerCasting, ref ScriptableSkill ScriptableSkill, ref bool ShouldAllow)
     {
         if (!PlayerCasting.isLocalPlayer)
@@ -47,6 +52,7 @@ internal class NoSkillCooldown : ICommand, IDisposable
 
         ShouldAllow = false;
     }
+
     public void Dispose()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;

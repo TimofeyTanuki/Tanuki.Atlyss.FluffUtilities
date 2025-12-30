@@ -6,8 +6,10 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal class InfiniteJumps : ICommand, IDisposable
 {
     private bool Status = false;
+
     public InfiniteJumps() =>
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
+
     public bool Execute(string[] Arguments)
     {
         if (Status)
@@ -23,6 +25,7 @@ internal class InfiniteJumps : ICommand, IDisposable
 
         return false;
     }
+
     private void Enable()
     {
         if (Status)
@@ -33,6 +36,7 @@ internal class InfiniteJumps : ICommand, IDisposable
 
         Status = true;
     }
+
     private void Disable()
     {
         if (!Status)
@@ -42,6 +46,7 @@ internal class InfiniteJumps : ICommand, IDisposable
 
         Status = false;
     }
+
     private void Init_Jump_Postfix_OnInvoke(PlayerMove PlayerMove, float Force, float ForwardForce, float GravityMultiply, bool UseAnim)
     {
         if (!PlayerMove.isLocalPlayer)

@@ -5,8 +5,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Models.Configuration;
 
 internal class Hotkeys(ConfigFile ConfigFile)
 {
-    private const string Section = "Hotkeys";
-
     public class PlayerAppearanceHotkey(ref ConfigFile ConfigFile, string Name, float Step, KeyCode Decrease, KeyCode Increase)
     {
         public ConfigEntry<float> Step = ConfigFile.Bind(Section, $"{Name}_Step", Step);
@@ -14,6 +12,8 @@ internal class Hotkeys(ConfigFile ConfigFile)
             Increase = ConfigFile.Bind(Section, $"{Name}_Increase", Increase),
             Decrease = ConfigFile.Bind(Section, $"{Name}_Decrease", Decrease);
     }
+
+    private const string Section = "Hotkeys";
 
     public PlayerAppearanceHotkey
         PlayerAppearance_ModifyHeadWidth = new(ref ConfigFile, "HeadWidth", 0.25f, KeyCode.Keypad7, KeyCode.Keypad9),

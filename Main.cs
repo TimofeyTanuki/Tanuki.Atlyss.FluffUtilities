@@ -31,6 +31,7 @@ public class Main : Core.Plugins.Plugin
         if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(NessieEasySettings.GUID))
             NessieEasySettings.Initialize();
     }
+
     protected override void Load()
     {
         Logger.LogInfo("Tanuki.Atlyss.FluffUtilities by Timofey Tanuki / tanu.su");
@@ -59,6 +60,7 @@ public class Main : Core.Plugins.Plugin
 
         ReloadHotkeys();
     }
+
     internal void ReloadHotkeys()
     {
         Hotkey.Instance.Reset();
@@ -356,6 +358,7 @@ public class Main : Core.Plugins.Plugin
             }
         );
     }
+
     private void Init_LoadScreenDisable_Postfix_OnInvoke()
     {
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
@@ -365,6 +368,7 @@ public class Main : Core.Plugins.Plugin
 
         StartCoroutine(Plugin_ShowUsagePresenceOnJoinLobby_Effects());
     }
+
     private void OnStartAuthority_Postfix_OnInvoke()
     {
         if (Player._mainPlayer._isHostPlayer)
@@ -375,6 +379,7 @@ public class Main : Core.Plugins.Plugin
 
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Init_LoadScreenDisable_Postfix_OnInvoke;
     }
+
     private IEnumerator Plugin_ShowUsagePresenceOnJoinLobby_Effects()
     {
         yield return new WaitForSeconds(0.25f);
@@ -384,6 +389,7 @@ public class Main : Core.Plugins.Plugin
         yield return new WaitForSeconds(0.3f);
         Player._mainPlayer._pVisual.Cmd_VanitySparkleEffect();
     }
+
     protected override void Unload()
     {
         Reloaded = true;

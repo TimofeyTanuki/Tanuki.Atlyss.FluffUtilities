@@ -5,7 +5,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class NoClip
 {
     public static NoClip Instance;
-
     private Components.NoClip Component;
     public bool Status = false;
     public KeyCode Forward, Right, Backward, Left, Up, Down, AlternativeSpeedKey;
@@ -29,6 +28,7 @@ internal class NoClip
         AlternativeSpeedKey = Configuration.Instance.Hotkeys.NoClip_AlternativeSpeedKey.Value;
         AlternativeSpeed = Configuration.Instance.NoClip.AlternativeSpeed.Value;
     }
+
     public void Enable()
     {
         if (FreeCamera.Instance.Status)
@@ -47,6 +47,7 @@ internal class NoClip
 
         Component.enabled = true;
     }
+
     public void Disable()
     {
         if (!Status)
@@ -59,6 +60,7 @@ internal class NoClip
         Status = false;
         Component.enabled = false;
     }
+
     private void Client_LocalPlayerControl_Prefix_OnInvoke(PlayerMove PlayerMove, ref bool ShouldAllow)
     {
         if (!PlayerMove.isLocalPlayer)
@@ -66,6 +68,7 @@ internal class NoClip
 
         ShouldAllow = false;
     }
+
     private void OnStopClient_Prefix_OnInvoke()
     {
         Disable();

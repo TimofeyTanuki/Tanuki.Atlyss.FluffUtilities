@@ -6,7 +6,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 internal class NessieEasySettings
 {
     public const string GUID = "EasySettings";
-
     internal static NessieEasySettings Instance;
 
     private NessieEasySettings()
@@ -16,6 +15,7 @@ internal class NessieEasySettings
     }
 
     public static void Initialize() => Instance ??= new();
+
     private void NessieEasySettings_OnInitialize()
     {
         SettingsTab SettingsTab = Settings.ModTab;
@@ -249,6 +249,7 @@ internal class NessieEasySettings
 
         SettingsTab.AddSpace();
     }
+
     private void NessieEasySettings_OnApplySettings()
     {
         Configuration.Instance.Load(Main.Instance.Config);

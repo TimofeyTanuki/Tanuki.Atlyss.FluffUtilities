@@ -91,6 +91,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ListQuests.cs" />
     <Compile Include="Commands\NoClip.cs" />
     <Compile Include="Commands\FreeCamera.cs" />
     <Compile Include="Commands\NoSkillCooldown.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Commands\NoSkillTimer.cs" />
     <Compile Include="Components\FreeCamera.cs" />
     <Compile Include="Components\NoClip.cs" />
+    <Compile Include="Helpers\Commands.cs" />
     <Compile Include="Managers\FreeCamera.cs" />
     <Compile Include="Managers\GlobalRaceDisplayParameters.cs" />
     <Compile Include="Managers\Hotkey.cs" />

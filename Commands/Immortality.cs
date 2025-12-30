@@ -7,6 +7,7 @@ internal class Immortality : ICommand, IDisposable
 {
 
     private bool Status = false;
+
     public Immortality() =>
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += Disable;
 
@@ -33,6 +34,7 @@ internal class Immortality : ICommand, IDisposable
 
         return false;
     }
+
     private void Enable()
     {
         if (Status)
@@ -42,6 +44,7 @@ internal class Immortality : ICommand, IDisposable
         Main.Instance.Patcher.Use(typeof(Game.Patches.StatusEntity.Take_Damage_Prefix));
         Game.Patches.StatusEntity.Take_Damage_Prefix.OnInvoke += Subtract_Health_Before;
     }
+
     private void Disable()
     {
         if (!Status)
@@ -50,6 +53,7 @@ internal class Immortality : ICommand, IDisposable
         Status = false;
         Game.Patches.StatusEntity.Take_Damage_Prefix.OnInvoke -= Subtract_Health_Before;
     }
+
     private void Subtract_Health_Before(StatusEntity StatusEntity, ref DamageStruct DamageStruct, ref bool ShouldAllow)
     {
         if (!StatusEntity.isLocalPlayer)
@@ -58,6 +62,7 @@ internal class Immortality : ICommand, IDisposable
         ShouldAllow = false;
         StatusEntity.Rpc_DisplayBlockHitEffect(StatusEntity, 1, false, DamageStruct._damageType == DamageType.Mind, DamageStruct._colliderHitPoint);
     }
+
     public void Dispose()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= Disable;
