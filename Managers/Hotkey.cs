@@ -1,7 +1,6 @@
 ﻿using BepInEx;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Managers;
@@ -36,12 +35,26 @@ internal class Hotkey : MonoBehaviour
         DontDestroyOnLoad(Instance);
     }
 
+    private HotkeyActionGroup FindHotkeyActionGroup(KeyCode KeyCode)
+    {
+        foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)
+        {
+            if (HotkeyActionGroup.KeyCode != KeyCode)
+                continue;
+
+            return HotkeyActionGroup;
+        }
+
+        return null;
+    }
+
     public void BindAction(KeyCode KeyCode, Action Action)
     {
         if (KeyCode is KeyCode.None)
             return;
 
-        HotkeyActionGroup HotkeyActionGroup = HotkeyActionGroups.Where(x => x.KeyCode == KeyCode).SingleOrDefault();
+        HotkeyActionGroup HotkeyActionGroup = FindHotkeyActionGroup(KeyCode);
+
         if (HotkeyActionGroup is null)
         {
             HotkeyActionGroup = new(KeyCode);
@@ -64,12 +77,14 @@ internal class Hotkey : MonoBehaviour
 
             HotkeyActionGroupsToRemove.Add(HotkeyActionGroup);
         }
-        HotkeyActionGroupsToRemove.ForEach(x => HotkeyActionGroups.Remove(x));
+
+        foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)
+            HotkeyActionGroups.Remove(HotkeyActionGroup);
     }
 
     public void UnbindAction(KeyCode KeyCode, Action Action)
     {
-        HotkeyActionGroup HotkeyActionGroup = HotkeyActionGroups.Where(x => x.KeyCode == KeyCode).SingleOrDefault();
+        HotkeyActionGroup HotkeyActionGroup = FindHotkeyActionGroup(KeyCode);
         if (HotkeyActionGroup is null)
             return;
 
@@ -90,6 +105,11 @@ internal class Hotkey : MonoBehaviour
 
     private void Update()
     {
+        if (!InputSystem.anyKeyDown)
+            return;
+
+        Console.WriteLine("Update");
+
         foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)
         {
             if (!InputSystem.GetKeyDown(HotkeyActionGroup.KeyCode))
