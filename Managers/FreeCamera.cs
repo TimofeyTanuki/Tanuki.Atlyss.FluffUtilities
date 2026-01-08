@@ -41,7 +41,6 @@ internal class FreeCamera
             Status = true;
         }
 
-
         this.LockCharacterControls = LockCharacterControls;
         if (LockCharacterControls)
             Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke += Client_LocalPlayerControl_Prefix_OnInvoke;
@@ -65,9 +64,7 @@ internal class FreeCamera
             return;
 
         if (LockCharacterControls)
-        {
             Game.Patches.PlayerMove.Client_LocalPlayerControl_Prefix.OnInvoke -= Client_LocalPlayerControl_Prefix_OnInvoke;
-        }
 
         CameraFunction._current.enabled = true;
         CameraCollision._current.enabled = true;

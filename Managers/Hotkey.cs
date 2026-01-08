@@ -108,8 +108,6 @@ internal class Hotkey : MonoBehaviour
         if (!InputSystem.anyKeyDown)
             return;
 
-        Console.WriteLine("Update");
-
         foreach (HotkeyActionGroup HotkeyActionGroup in HotkeyActionGroups)
         {
             if (!InputSystem.GetKeyDown(HotkeyActionGroup.KeyCode))
