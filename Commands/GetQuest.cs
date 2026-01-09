@@ -19,7 +19,7 @@ internal class GetQuest : ICommand
 
         if (!ScriptableQuest)
         {
-            foreach (KeyValuePair<string, ScriptableQuest> CachedScriptableQuest in Game.Fields.GameManager.CachedScriptableQuests)
+            foreach (KeyValuePair<string, ScriptableQuest> CachedScriptableQuest in Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current))
             {
                 if (CachedScriptableQuest.Key.IndexOf(QuestName, System.StringComparison.InvariantCultureIgnoreCase) < 0)
                     continue;

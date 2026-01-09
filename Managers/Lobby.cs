@@ -20,13 +20,7 @@ internal class Lobby
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke += OnStopClient_Prefix_OnInvoke;
     }
 
-    public static void Initialize()
-    {
-        if (Instance is not null)
-            return;
-
-        Instance = new();
-    }
+    public static void Initialize() => Instance ??= new();
 
     public void Load()
     {

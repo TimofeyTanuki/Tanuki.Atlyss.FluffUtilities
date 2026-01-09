@@ -42,7 +42,7 @@ internal class TeleportToPlayer : ICommand, IDisposable
                     return false;
                 }
 
-                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Fields.GameManager.CachedScriptableMapDatas)
+                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Accessors.GameManager._cachedScriptableMapDatas(GameManager._current))
                 {
                     if (ScriptableMapData.Value._mapCaptionTitle != Player._mapName)
                         continue;

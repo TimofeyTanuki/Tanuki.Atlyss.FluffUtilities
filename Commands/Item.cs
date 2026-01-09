@@ -34,7 +34,7 @@ internal class Item : ICommand
 
         if (!ScriptableItem)
         {
-            foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Fields.GameManager.CachedScriptableItems)
+            foreach (KeyValuePair<string, ScriptableItem> CachedScriptableItem in Game.Accessors.GameManager._cachedScriptableItems(GameManager._current))
             {
                 if (CachedScriptableItem.Key.IndexOf(ItemName, System.StringComparison.InvariantCultureIgnoreCase) < 0)
                     continue;

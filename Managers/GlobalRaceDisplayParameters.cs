@@ -1,4 +1,6 @@
-﻿namespace Tanuki.Atlyss.FluffUtilities.Managers;
+﻿using UnityEngine;
+
+namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
 internal class GlobalRaceDisplayParameters
 {
@@ -39,20 +41,33 @@ internal class GlobalRaceDisplayParameters
 
     public void Override()
     {
+        Models.Configuration.GlobalRaceDisplayParameters GlobalRaceDisplayParameters = Configuration.Instance.GlobalRaceDisplayParameters;
+        Vector2
+            HeadWidth = GlobalRaceDisplayParameters.HeadWidth.AsVector2,
+            MuzzleLength = GlobalRaceDisplayParameters.MuzzleLength.AsVector2,
+            Height = GlobalRaceDisplayParameters.Height.AsVector2,
+            Width = GlobalRaceDisplayParameters.Width.AsVector2,
+            TorsoSize = GlobalRaceDisplayParameters.TorsoSize.AsVector2,
+            BreastSize = GlobalRaceDisplayParameters.BreastSize.AsVector2,
+            ArmsSize = GlobalRaceDisplayParameters.ArmsSize.AsVector2,
+            BellySize = GlobalRaceDisplayParameters.BellySize.AsVector2,
+            BottomSize = GlobalRaceDisplayParameters.BottomSize.AsVector2,
+            VoicePitch = GlobalRaceDisplayParameters.VoicePitch.AsVector2;
+
         CharacterParamsGroup CharacterParamsGroup;
-        foreach (ScriptablePlayerRace ScriptablePlayerRace in Game.Fields.GameManager.CachedScriptableRaces.Values)
+        foreach (ScriptablePlayerRace ScriptablePlayerRace in Game.Accessors.GameManager._cachedScriptableRaces(GameManager._current).Values)
         {
             CharacterParamsGroup = ScriptablePlayerRace._raceDisplayParams;
-            CharacterParamsGroup._headWidthRange = Configuration.Instance.GlobalRaceDisplayParameters.HeadWidth.AsVector2;
-            CharacterParamsGroup._headModRange = Configuration.Instance.GlobalRaceDisplayParameters.MuzzleLength.AsVector2;
-            CharacterParamsGroup._heightRange = Configuration.Instance.GlobalRaceDisplayParameters.Height.AsVector2;
-            CharacterParamsGroup._widthRange = Configuration.Instance.GlobalRaceDisplayParameters.Width.AsVector2;
-            CharacterParamsGroup._torsoRange = Configuration.Instance.GlobalRaceDisplayParameters.TorsoSize.AsVector2;
-            CharacterParamsGroup._boobRange = Configuration.Instance.GlobalRaceDisplayParameters.BreastSize.AsVector2;
-            CharacterParamsGroup._armRange = Configuration.Instance.GlobalRaceDisplayParameters.ArmsSize.AsVector2;
-            CharacterParamsGroup._bellyRange = Configuration.Instance.GlobalRaceDisplayParameters.BellySize.AsVector2;
-            CharacterParamsGroup._bottomRange = Configuration.Instance.GlobalRaceDisplayParameters.BottomSize.AsVector2;
-            CharacterParamsGroup._pitchRange = Configuration.Instance.GlobalRaceDisplayParameters.VoicePitch.AsVector2;
+            CharacterParamsGroup._headWidthRange = HeadWidth;
+            CharacterParamsGroup._headModRange = MuzzleLength;
+            CharacterParamsGroup._heightRange = Height;
+            CharacterParamsGroup._widthRange = Width;
+            CharacterParamsGroup._torsoRange = TorsoSize;
+            CharacterParamsGroup._boobRange = BreastSize;
+            CharacterParamsGroup._armRange = ArmsSize;
+            CharacterParamsGroup._bellyRange = BellySize;
+            CharacterParamsGroup._bottomRange = BottomSize;
+            CharacterParamsGroup._pitchRange = VoicePitch;
         }
     }
 }

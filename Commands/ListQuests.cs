@@ -23,7 +23,7 @@ internal class ListQuests : ICommand
                 "Commands.ListQuests.All",
                 string.Join(
                     Main.Instance.Translate("Commands.ListQuests.Separator"),
-                    Game.Fields.GameManager.CachedScriptableQuests.Keys
+                    Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current).Keys
                         .OrderBy(x => x)
                         .Select(x => x)
                 )
@@ -34,7 +34,7 @@ internal class ListQuests : ICommand
     {
         List<string> Matches =
             Helpers.Commands.FormatDictionaryKeyMatches(
-                Game.Fields.GameManager.CachedScriptableQuests,
+                Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current),
                 Search,
                 Main.Instance.Translate("Commands.ListQuests.Search.Match"),
                 StringComparison.InvariantCultureIgnoreCase

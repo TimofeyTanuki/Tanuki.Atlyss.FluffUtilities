@@ -57,6 +57,7 @@ The changes will take effect after restarting the game or reloading Tanuki.Atlys
 - `/list-quests [search]` - Display a list of quests.
 - `/get-quest <name>` - Get a quest.
 - `/complete-quest <name/*>` - Complete accepted quests.
+- `/time-set [time]` - Set the time.
 - ...
 Many commands have shortcuts and aliases. View them with the `/help` command.
 ### Configuration

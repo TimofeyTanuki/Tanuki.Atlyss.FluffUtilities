@@ -171,5 +171,13 @@
     ],
     "Help": "Complete accepted quests.",
     "Syntax": "<name/*>"
+  },
+  "TimeSet": {
+    "Names": [
+      "time-set",
+      "ts"
+    ],
+    "Help": "Set the time.",
+    "Syntax": "[time]"
   }
 }

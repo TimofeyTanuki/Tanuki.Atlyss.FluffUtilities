@@ -23,7 +23,7 @@ internal class ListItems : ICommand
                 "Commands.ListItems.All",
                 string.Join(
                     Main.Instance.Translate("Commands.ListItems.Separator"),
-                    Game.Fields.GameManager.CachedScriptableItems.Keys
+                    Game.Accessors.GameManager._cachedScriptableItems(GameManager._current).Keys
                         .OrderBy(x => x)
                         .Select(x => x)
                 )
@@ -34,7 +34,7 @@ internal class ListItems : ICommand
     {
         List<string> Matches =
             Helpers.Commands.FormatDictionaryKeyMatches(
-                Game.Fields.GameManager.CachedScriptableItems,
+                Game.Accessors.GameManager._cachedScriptableItems(GameManager._current),
                 Search,
                 Main.Instance.Translate("Commands.ListItems.Search.Match"),
                 StringComparison.InvariantCultureIgnoreCase

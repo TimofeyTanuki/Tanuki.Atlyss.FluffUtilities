@@ -32,6 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -86,6 +91,10 @@
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.ParticleSystemModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>D:\Programs\Steam\steamapps\common\ATLYSS\ATLYSS_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
@@ -95,6 +104,7 @@
     <Compile Include="Commands\CompleteQuest.cs" />
     <Compile Include="Commands\GetQuest.cs" />
     <Compile Include="Commands\ListQuests.cs" />
+    <Compile Include="Commands\TimeSet.cs" />
     <Compile Include="Commands\NoClip.cs" />
     <Compile Include="Commands\FreeCamera.cs" />
     <Compile Include="Commands\NoSkillCooldown.cs" />
@@ -109,6 +119,7 @@
     <Compile Include="Managers\Lobby.cs" />
     <Compile Include="Managers\NessieEasySettings.cs" />
     <Compile Include="Managers\NoClip.cs" />
+    <Compile Include="Managers\MapInstance.cs" />
     <Compile Include="Models\Configuration\NoClip.cs" />
     <Compile Include="Models\Configuration\General.cs" />
     <Compile Include="Models\Configuration\Commands.cs" />
@@ -137,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Patches\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

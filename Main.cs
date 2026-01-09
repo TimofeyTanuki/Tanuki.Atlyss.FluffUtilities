@@ -26,6 +26,7 @@ public class Main : Core.Plugins.Plugin
         FreeCamera.Initialize();
         NoClip.Initialize();
         Hotkey.Initialize();
+        Managers.MapInstance.Initialize();
 
         if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(NessieEasySettings.GUID))
             NessieEasySettings.Initialize();
@@ -54,6 +55,7 @@ public class Main : Core.Plugins.Plugin
         Lobby.Instance.Load();
         NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
+        Managers.MapInstance.Instance.Load();
 
         Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
@@ -400,6 +402,7 @@ public class Main : Core.Plugins.Plugin
         Lobby.Instance.Unload();
         PlayerAppearance.Instance.Unload();
         GlobalRaceDisplayParameters.Instance.Unload();
+        Managers.MapInstance.Instance.Unload();
         Hotkey.Instance.Reset();
 
         Patcher.UnuseAll();
