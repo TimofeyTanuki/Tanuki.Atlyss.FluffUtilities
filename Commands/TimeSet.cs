@@ -53,10 +53,6 @@ internal class TimeSet : ICommand
         if (Time == 0)
             Time = 12;
 
-        GameWorldManager._current._timeDisplay = Time;
-        GameWorldManager._current._clockSetting = ClockSetting;
-        GameWorldManager._current._worldTime = (ClockSetting == ClockSetting.AM && Time >= 6) || (ClockSetting == ClockSetting.PM && Time < 8) ? WorldTime.DAY : WorldTime.NIGHT;
-
         if (Player._mainPlayer._isHostPlayer)
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TimeSet.Host", Time, ClockSetting));
         else
@@ -64,6 +60,13 @@ internal class TimeSet : ICommand
             Managers.MapInstance.Instance.FollowClientTime();
             ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TimeSet.Client", Time, ClockSetting));
         }
+
+        GameWorldManager._current._timeDisplay = Time;
+        GameWorldManager._current._clockSetting = ClockSetting;
+        GameWorldManager._current._worldTime = (ClockSetting == ClockSetting.AM && Time >= 6) || (ClockSetting == ClockSetting.PM && Time < 8) ? WorldTime.DAY : WorldTime.NIGHT;
+        Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(GameWorldManager._current) = 0f;
+
+        Managers.MapInstance.Instance.UpdateClientTime();
 
         return false;
     }

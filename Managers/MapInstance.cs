@@ -35,15 +35,6 @@ internal class MapInstance
 
     public static void Initialize() => Instance ??= new MapInstance();
 
-    public void Load()
-    {
-        Main.Instance.Patcher.Use(
-            typeof(Game.Patches.MapInstance.DeserializeSyncVars),
-            typeof(Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix),
-            typeof(Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix)
-        );
-    }
-
     private void OnStopClient_Prefix_OnInvoke()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient_Prefix.OnInvoke -= OnStopClient_Prefix_OnInvoke;
@@ -51,31 +42,62 @@ internal class MapInstance
         FollowHost();
     }
 
-    private void HandleDayNightCycleOverride(ref bool ShouldAllow)
+    private void HandleDayNightCycle(ref bool ShouldAllow)
     {
+        RefreshMapInstanceCache();
+
         ShouldAllow = false;
 
-        global::MapInstance MapInstance = Player._mainPlayer._playerMapInstance;
-        if (!MapInstance)
+        GameWorldManager GameWorldManager = GameWorldManager._current;
+
+        if (GameWorldManager._dayNightCycleInterval <= 0f)
             return;
 
-        SetLocalTime(MapInstance);
+        if (Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(GameWorldManager) < GameWorldManager._dayNightCycleInterval)
+        {
+            Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(GameWorldManager) += Time.deltaTime;
+            return;
+        }
+
+        Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(GameWorldManager) = 0f;
+
+        GameWorldManager._timeDisplay++;
+
+        if (GameWorldManager._timeDisplay > 11 && GameWorldManager._clockSetting == ClockSetting.AM && GameWorldManager._worldTime == WorldTime.DAY)
+            GameWorldManager._clockSetting = ClockSetting.PM;
+        else if (GameWorldManager._timeDisplay > 11 && GameWorldManager._clockSetting == ClockSetting.PM && GameWorldManager._worldTime == WorldTime.NIGHT)
+            GameWorldManager._clockSetting = ClockSetting.AM;
+
+        if (GameWorldManager._timeDisplay > 12)
+            GameWorldManager._timeDisplay = 1;
+
+        if (GameWorldManager._timeDisplay == 6 && GameWorldManager._clockSetting == ClockSetting.AM)
+            GameWorldManager._worldTime = WorldTime.DAY;
+        else if (GameWorldManager._timeDisplay == 8 && GameWorldManager._clockSetting == ClockSetting.PM)
+            GameWorldManager._worldTime = WorldTime.NIGHT;
+
+        UpdateClientTime();
     }
 
     public void Unload() =>
         FollowHost();
 
-    private void SetLocalTime(global::MapInstance MapInstance)
+    public void UpdateClientTime()
     {
+        RefreshMapInstanceCache();
+
+        if (!CachedMapInstance)
+            return;
+
         GameWorldManager GameWorldManager = GameWorldManager._current;
 
-        MapInstance._instanceWorldTime = GameWorldManager._worldTime;
-        MapInstance._instanceClockSetting = GameWorldManager._clockSetting;
-        MapInstance._instanceTime = GameWorldManager._timeDisplay;
+        CachedMapInstance._instanceWorldTime = GameWorldManager._worldTime;
+        CachedMapInstance._instanceClockSetting = GameWorldManager._clockSetting;
+        CachedMapInstance._instanceTime = GameWorldManager._timeDisplay;
     }
 
-    private void SetLocalWeather(global::MapInstance MapInstance) =>
-        MapInstance._isWeatherEnabled = CachedIsWeatherEnabled;
+    public void UpdateClientWeather() =>
+        CachedMapInstance._isWeatherEnabled = CachedIsWeatherEnabled;
 
     private void DeserializeSyncVars_OnBefore(global::MapInstance MapInstance, NetworkReader NetworkReader, bool initialState, ref bool ShouldAllow)
     {
@@ -104,7 +126,7 @@ internal class MapInstance
         CachedMapVisuals._weatherIntervalBuffer = 60;
     }
 
-    private void HandleWeatherOverride(global::MapInstance MapInstance, ref bool ShouldAllow)
+    private void HandleWeather(global::MapInstance MapInstance, ref bool ShouldAllow)
     {
         RefreshMapInstanceCache();
 
@@ -156,8 +178,7 @@ internal class MapInstance
 
         RefreshCaching();
 
-        Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix.OnInvoke -= HandleDayNightCycleOverride;
-        Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix.OnInvoke -= HandleWeatherOverride;
+        Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix.OnInvoke -= HandleDayNightCycle;
         Game.Patches.MapInstance.DeserializeSyncVars.OnAfter -= HandleTimeOverride;
 
         global::MapInstance MapInstance = Player._mainPlayer._playerMapInstance;
@@ -165,7 +186,6 @@ internal class MapInstance
         MapInstance._instanceWorldTime = CachedNetworkWorldTime;
         MapInstance._instanceClockSetting = CachedNetworkClockSetting;
         MapInstance._instanceTime = CachedNetworkInstanceTime;
-        MapInstance._isWeatherEnabled = CachedNetworkIsWeatherEnabled;
     }
 
     public void FollowClientTime()
@@ -176,12 +196,16 @@ internal class MapInstance
         if (!HostTime)
             return;
 
+        Main.Instance.Patcher.Use(
+            typeof(Game.Patches.MapInstance.DeserializeSyncVars),
+            typeof(Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix)
+        );
+
         HostTime = false;
 
         RefreshCaching();
 
-        Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix.OnInvoke += HandleDayNightCycleOverride;
-        Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix.OnInvoke += HandleWeatherOverride;
+        Game.Patches.GameWorldManager.Server_DayNightCycleRuntime_Prefix.OnInvoke += HandleDayNightCycle;
         Game.Patches.MapInstance.DeserializeSyncVars.OnAfter += HandleTimeOverride;
 
         global::MapInstance MapInstance = Player._mainPlayer._playerMapInstance;
@@ -189,11 +213,10 @@ internal class MapInstance
         CachedNetworkWorldTime = MapInstance._instanceWorldTime;
         CachedNetworkClockSetting = MapInstance._instanceClockSetting;
         CachedNetworkInstanceTime = MapInstance._instanceTime;
-        CachedNetworkIsWeatherEnabled = MapInstance._isWeatherEnabled;
     }
 
     private void HandleTimeOverride(global::MapInstance MapInstance, NetworkReader NetworkReader, bool InitialState, bool Cancelled) =>
-        SetLocalTime(MapInstance);
+        UpdateClientTime();
 
     public void FollowHostWeather()
     {
@@ -204,11 +227,16 @@ internal class MapInstance
 
         RefreshCaching();
 
-        Game.Patches.MapInstance.DeserializeSyncVars.OnAfter += HandleWeatherOverride;
+        Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix.OnInvoke -= HandleWeather;
+        Game.Patches.MapInstance.DeserializeSyncVars.OnAfter -= HandleWeatherOverride;
+
+        global::MapInstance MapInstance = Player._mainPlayer._playerMapInstance;
+
+        MapInstance._isWeatherEnabled = CachedIsWeatherEnabled;
     }
 
     private void HandleWeatherOverride(global::MapInstance MapInstance, NetworkReader NetworkReader, bool InitialState, bool Cancelled) =>
-        SetLocalWeather(MapInstance);
+        UpdateClientWeather();
 
     public void FollowClientWeather()
     {
@@ -218,11 +246,21 @@ internal class MapInstance
         if (!HostWeather)
             return;
 
+        Main.Instance.Patcher.Use(
+            typeof(Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix),
+            typeof(Game.Patches.MapInstance.DeserializeSyncVars)
+        );
+
         HostWeather = false;
 
         RefreshCaching();
 
-        Game.Patches.MapInstance.DeserializeSyncVars.OnAfter -= HandleWeatherOverride;
+        Game.Patches.MapInstance.Handle_InstanceRuntime_Prefix.OnInvoke += HandleWeather;
+        Game.Patches.MapInstance.DeserializeSyncVars.OnAfter += HandleWeatherOverride;
+
+        global::MapInstance MapInstance = Player._mainPlayer._playerMapInstance;
+
+        CachedIsWeatherEnabled = MapInstance._isWeatherEnabled;
     }
 
     public void FollowHost()

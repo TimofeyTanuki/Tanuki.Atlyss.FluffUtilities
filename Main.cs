@@ -55,7 +55,6 @@ public class Main : Core.Plugins.Plugin
         Lobby.Instance.Load();
         NoClip.Instance.Reload();
         FreeCamera.Instance.Reload();
-        Managers.MapInstance.Instance.Load();
 
         Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
