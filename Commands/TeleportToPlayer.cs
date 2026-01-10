@@ -22,51 +22,53 @@ internal class TeleportToPlayer : ICommand, IDisposable
             return false;
         }
 
-        string Nickname = string.Join(" ", Arguments).ToLower();
+        string Input = string.Join(" ", Arguments);
 
-        foreach (Player Player in UnityEngine.Object.FindObjectsOfType<Player>())
+        Player Player = Player.GetByAutoRecognition(Input);
+
+        if (!Player)
         {
-            if (Player.isLocalPlayer)
-                continue;
-
-            if (!Player._nickname.ToLower().Contains(Nickname))
-                continue;
-
-            Target = Player.transform.position;
-
-            if (Player._mainPlayer._mapName != Player._mapName)
-            {
-                if (string.IsNullOrEmpty(Player._mapName))
-                {
-                    ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.EmptyMapName", Player._mapName));
-                    return false;
-                }
-
-                foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Accessors.GameManager._cachedScriptableMapDatas(GameManager._current))
-                {
-                    if (ScriptableMapData.Value._mapCaptionTitle != Player._mapName)
-                        continue;
-
-                    if (!Player._mainPlayer._waypointAttunements.Contains(ScriptableMapData.Key))
-                        break;
-
-                    Managers.FreeCamera.Instance.Disable();
-
-                    Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Teleport;
-                    TeleportingBetweenScenes = true;
-                    Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData.Value._subScene, ScriptableMapData.Value._spawnPointTag, ZoneDifficulty.NORMAL);
-                    return false;
-                }
-
-                ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.SubSceneNotFound", Player._mapName));
-            }
-            else
-                Teleport();
-
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
             return false;
         }
 
-        ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
+        if (Player.isLocalPlayer)
+        {
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translation.Translate("Commands.TeleportToPlayer.Self"));
+            return false;
+        }
+
+        Target = Player.transform.position;
+
+        if (Player._mainPlayer._mapName != Player._mapName)
+        {
+            if (string.IsNullOrEmpty(Player._mapName))
+            {
+                ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.EmptyMapName", Player._mapName));
+                return false;
+            }
+
+            foreach (KeyValuePair<string, ScriptableMapData> ScriptableMapData in Game.Accessors.GameManager._cachedScriptableMapDatas(GameManager._current))
+            {
+                if (ScriptableMapData.Value._mapCaptionTitle != Player._mapName)
+                    continue;
+
+                if (!Player._mainPlayer._waypointAttunements.Contains(ScriptableMapData.Key))
+                    break;
+
+                Managers.FreeCamera.Instance.Disable();
+
+                Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke += Teleport;
+                TeleportingBetweenScenes = true;
+                Player._mainPlayer.Cmd_SceneTransport(ScriptableMapData.Value._subScene, ScriptableMapData.Value._spawnPointTag, ZoneDifficulty.NORMAL);
+                return false;
+            }
+
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.TeleportToPlayer.SubSceneNotFound", Player._mapName));
+        }
+        else
+            Teleport();
+
         return false;
     }
 

@@ -91,7 +91,7 @@ internal class PlayerAppearance
         PlayerVisual.Cmd_SendNew_PlayerAppearanceStruct(PlayerAppearanceStruct);
     }
 
-    private void OnStartAuthority_Postfix_OnInvoke()
+    private void OnStartAuthority_Postfix_OnInvoke(Player Player)
     {
         if (!AtlyssNetworkManager._current.isNetworkActive)
             return;

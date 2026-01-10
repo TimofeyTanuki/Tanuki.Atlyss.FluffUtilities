@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Tanuki.Atlyss.API.Commands;
+﻿using Tanuki.Atlyss.API.Commands;
+using Tanuki.Atlyss.Game.Extensions;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -14,23 +14,16 @@ internal class SteamProfile : ICommand
             return false;
         }
 
-        string Nickname = string.Join(" ", Arguments.Select(x => x.ToLower()));
-        Player[] Players = Object.FindObjectsOfType<Player>();
+        Player Player = global::Player.GetByAutoRecognition(string.Join(" ", Arguments));
 
-        foreach (Player Player in Players)
+        if (!Player)
         {
-            if (Player.isLocalPlayer)
-                continue;
-
-            if (!Player._nickname.ToLower().Contains(Nickname))
-                continue;
-
-            Application.OpenURL(string.Format(Configuration.Instance.Commands.SteamProfile_LinkTemplate.Value, Player._steamID));
-            Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
+            ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.SteamProfile.PlayerNotFound"));
             return false;
         }
 
-        ChatBehaviour._current.New_ChatMessage(Main.Instance.Translate("Commands.SteamProfile.PlayerNotFound"));
+        Application.OpenURL(string.Format(Configuration.Instance.Commands.SteamProfile_LinkTemplate.Value, Player._steamID));
+        Player._mainPlayer._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
 
         return false;
     }

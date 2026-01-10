@@ -25,7 +25,7 @@ internal class MapInstance
     public MapInstance() =>
         Game.Patches.Player.OnStartAuthority_Postfix.OnInvoke += OnStartAuthority_Postfix_OnInvoke;
 
-    private void OnStartAuthority_Postfix_OnInvoke()
+    private void OnStartAuthority_Postfix_OnInvoke(Player Player)
     {
         HostTime = HostWeather = true;
 

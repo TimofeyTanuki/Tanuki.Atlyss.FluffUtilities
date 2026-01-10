@@ -1,6 +1,4 @@
 ﻿using Steamworks;
-using System.Collections;
-using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
@@ -27,9 +25,35 @@ internal class Lobby
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
-        Main.Instance.Patcher.Use(typeof(Game.Patches.Player.Awake_Postfix));
+        Game.Managers.Player.OnPlayerInitialized += Player_OnPlayerInitialized;
+    }
 
-        Game.Patches.Player.Awake_Postfix.OnInvoke += Awake_Postfix_OnInvoke;
+    private void Player_OnPlayerInitialized(Player Player)
+    {
+        if (!Player._mainPlayer)
+            return;
+
+        if (Player._mainPlayer.netId >= Player.netId)
+            return;
+
+        if (!ulong.TryParse(Player._steamID, out ulong SteamID))
+            return;
+
+        string Version = GetUserPluginVersion(new(SteamID));
+
+        if (string.IsNullOrEmpty(Version))
+            return;
+
+        ChatBehaviour._current.New_ChatMessage(
+            Main.Instance.Translate(
+                "General.OtherPluginUserMessage",
+                Player.netId,
+                Player._nickname,
+                string.IsNullOrEmpty(Player._globalNickname) ?
+                    string.Empty : Main.Instance.Translate("General.OtherPluginUserMessage.GlobalNickname", Player._globalNickname),
+                Version
+            )
+        );
     }
 
     public void Unload()
@@ -37,7 +61,7 @@ internal class Lobby
         if (!Configuration.Instance.General.OtherPluginUserNotificationOnJoin.Value)
             return;
 
-        Game.Patches.Player.Awake_Postfix.OnInvoke -= Awake_Postfix_OnInvoke;
+        Game.Managers.Player.OnPlayerInitialized -= Player_OnPlayerInitialized;
     }
 
     public void Reload()
@@ -54,31 +78,20 @@ internal class Lobby
         ApplySteamLobbyPluginData();
     }
 
-    private void Awake_Postfix_OnInvoke(Player Player)
-    {
-        if (!Player._mainPlayer)
-            return;
-
-        Main.Instance.StartCoroutine(CheckPlayerPlugin(Player));
-    }
-
     private string GetUserPluginVersion(CSteamID SteamID) =>
         SteamMatchmaking.GetLobbyMemberData(LobbySteamID, SteamID, LobbyMemberDataKey_Version);
 
     private void ApplySteamLobbyPluginData()
     {
-        if (Configuration.Instance.General.HideUsagePresenceFromNonUserHosts.Value)
+        if (Configuration.Instance.General.HideUsagePresenceFromNonUserHosts.Value &&
+            !CheckPluginUserHost() &&
+            PluginDataSent)
         {
-            if (!CheckPluginUserHost())
-            {
-                if (PluginDataSent)
-                {
-                    SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, string.Empty);
-                    PluginDataSent = false;
-                }
 
-                return;
-            }
+            SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, string.Empty);
+            PluginDataSent = false;
+
+            return;
         }
 
         SteamMatchmaking.SetLobbyMemberData(LobbySteamID, LobbyMemberDataKey_Version, PluginInfo.Version);
@@ -93,44 +106,7 @@ internal class Lobby
         return !string.IsNullOrEmpty(GetUserPluginVersion(LobbyOwnerSteamID));
     }
 
-    private IEnumerator CheckPlayerPlugin(Player Player)
-    {
-        while (Player)
-        {
-            if (Player._currentPlayerCondition != PlayerCondition.CONNECTING)
-                break;
-
-            yield return new WaitForSeconds(0.3f);
-        }
-
-        if (!Player)
-            yield break;
-
-        if (Player.isLocalPlayer)
-            yield break;
-
-        if (!ulong.TryParse(Player._steamID, out ulong SteamID))
-            yield break;
-
-        string Version = GetUserPluginVersion(new(SteamID));
-
-        if (string.IsNullOrEmpty(Version))
-            yield break;
-
-        ChatBehaviour._current.New_ChatMessage(
-            Main.Instance.Translate(
-                "General.OtherPluginUserMessage",
-                Player.netId,
-                Player._nickname,
-                string.IsNullOrEmpty(Player._globalNickname) ? string.Empty : Main.Instance.Translate("General.OtherPluginUserMessage.GlobalNickname", Player._globalNickname),
-                Version
-            )
-        );
-
-        yield break;
-    }
-
-    private void OnStartAuthority_Postfix_OnInvoke()
+    private void OnStartAuthority_Postfix_OnInvoke(Player Player)
     {
         if (AtlyssNetworkManager._current._soloMode)
             return;

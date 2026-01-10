@@ -369,7 +369,7 @@ public class Main : Core.Plugins.Plugin
         StartCoroutine(Plugin_ShowUsagePresenceOnJoinLobby_Effects());
     }
 
-    private void OnStartAuthority_Postfix_OnInvoke()
+    private void OnStartAuthority_Postfix_OnInvoke(Player Player)
     {
         if (Player._mainPlayer._isHostPlayer)
             return;
@@ -398,7 +398,6 @@ public class Main : Core.Plugins.Plugin
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable_Postfix.OnInvoke -= Init_LoadScreenDisable_Postfix_OnInvoke;
 
         StopAllCoroutines();
-        Lobby.Instance.Unload();
         PlayerAppearance.Instance.Unload();
         GlobalRaceDisplayParameters.Instance.Unload();
         Managers.MapInstance.Instance.Unload();

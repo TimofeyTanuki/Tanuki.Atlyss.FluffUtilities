@@ -15,28 +15,38 @@ internal class ListPlayers : ICommand
 
     private IEnumerator ListPlayersTask()
     {
-        Player[] Players = UnityEngine.Object.FindObjectsOfType<Player>();
-        StringBuilder StringBuilder = new(Main.Instance.Translate("Commands.ListPlayers.Header", Players.Length));
+        StringBuilder StringBuilder = new();
+        byte Count = 0;
 
-        foreach (Player Player in Players)
+        foreach (Player Player in Game.Managers.Player.Instance.Players.Values)
         {
-            if (!Player)
-                continue;
+            ulong.TryParse(Player._steamID, out ulong SteamID);
 
-            string LobbyMemberDataKey_Version = Player.isLocalPlayer ? PluginInfo.Version : SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbySteamID, new(ulong.Parse(Player._steamID)), Managers.Lobby.LobbyMemberDataKey_Version);
+            Count++;
+
+            string LobbyMemberDataKey_Version =
+                Player.isLocalPlayer ?
+                    PluginInfo.Version
+                    :
+                    SteamID == 0 ?
+                        string.Empty
+                        :
+                        SteamMatchmaking.GetLobbyMemberData(Managers.Lobby.Instance.LobbySteamID, new(SteamID), Managers.Lobby.LobbyMemberDataKey_Version);
+
             StringBuilder.Append(
                 Main.Instance.Translate(
                     "Commands.ListPlayers.Entry",
                     Main.Instance.Translate(Player._isHostPlayer ? "Commands.ListPlayers.NetID.Host" : "Commands.ListPlayers.NetID.Client", Player.netIdentity.netId),
                     Player._nickname,
                     Player._nickname != Player._globalNickname && !string.IsNullOrEmpty(Player._globalNickname) ? Main.Instance.Translate("Commands.ListPlayers.GlobalNickname", Player._globalNickname) : string.Empty,
-                    Player._steamID,
+                    SteamID,
                     string.IsNullOrEmpty(Player._mapName) ? Main.Instance.Translate("Commands.ListPlayers.NoMap") : Player._mapName,
                     string.IsNullOrEmpty(LobbyMemberDataKey_Version) ? string.Empty : Main.Instance.Translate("Commands.ListPlayers.FluffUtilities", LobbyMemberDataKey_Version)
                 )
             );
         }
 
+        StringBuilder.Insert(0, Main.Instance.Translate("Commands.ListPlayers.Header", Count));
         ChatBehaviour._current.New_ChatMessage(StringBuilder.ToString());
 
         yield break;
