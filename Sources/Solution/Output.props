@@ -1,0 +1,10 @@
+<Project>
+  
+  <PropertyGroup>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)</OutputPath>
+    <DebugType>none</DebugType>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+</Project>

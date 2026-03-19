@@ -1,0 +1,18 @@
+<Project>
+
+  <Target Name="Package_Compile" AfterTargets="Build" Condition="$(Configuration) == 'Release'">
+    <ItemGroup>
+      <Plugins Include="$(TargetDir)*.dll" />
+      <Config Include="$(SolutionDir)Resources\Configuration\**\*.json" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(Config)" DestinationFolder="$(PackageConfigDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(Plugins)" DestinationFolder="$(PackagePluginsDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="Package_Clean" AfterTargets="Clean">
+    <RemoveDir Directories="$(PackageBepInExDir)" />
+    <RemoveDir Directories="$(PackagePluginsDir)" />
+  </Target>
+
+</Project>

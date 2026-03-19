@@ -1,0 +1,10 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <Import Project="$(SolutionDir)Solution/Paths.props" />
+  <Import Project="$(SolutionDir)Solution/Output.props" />
+
+</Project>

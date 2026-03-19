@@ -1,0 +1,183 @@
+{
+  "Tanuki.Atlyss.FluffUtilities.Commands.FreeCamera": {
+    "Names": [
+      "freecamera",
+      "freecam",
+      "fc"
+    ],
+    "Help": "Free camera mode.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.SteamProfile": {
+    "Names": [
+      "steamprofile",
+      "steam"
+    ],
+    "Help": "Open the player's Steam profile.",
+    "Syntax": "<nickname>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoSkillCooldown": {
+    "Names": [
+      "noskillcooldown",
+      "noskillcd",
+      "nsc"
+    ],
+    "Help": "Toggle the skill cooldown timer.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.AutoPickup": {
+    "Names": [
+      "autopickup",
+      "ap"
+    ],
+    "Help": "Automatic item pickup.",
+    "Syntax": "[radius]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Currency": {
+    "Names": [
+      "currency",
+      "money"
+    ],
+    "Help": "Add or remove currency.",
+    "Syntax": "<delta>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Disenchant": {
+    "Names": [
+      "disenchant"
+    ],
+    "Help": "Remove the enchantment from the item in the first (top left) slot on the equipment tab.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Enchant": {
+    "Names": [
+      "enchant"
+    ],
+    "Help": "Enchant the item in the first (top left) slot on the equipment tab.",
+    "Syntax": "<[damage type]> [modifier ID]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Heal": {
+    "Names": [
+      "heal"
+    ],
+    "Help": "Add or remove health.",
+    "Syntax": "<delta>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Immortality": {
+    "Names": [
+      "immortality",
+      "god"
+    ],
+    "Help": "Immortality mode.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Item": {
+    "Names": [
+      "item",
+      "i",
+      "give"
+    ],
+    "Help": "Give an item.",
+    "Syntax": "<name> [quantity]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListItems": {
+    "Names": [
+      "list-items",
+      "li"
+    ],
+    "Help": "Display a list of items.",
+    "Syntax": "[search]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListPlayers": {
+    "Names": [
+      "list-players",
+      "lp"
+    ],
+    "Help": "Display a list of players.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.InfiniteJumps": {
+    "Names": [
+      "infinitejumps",
+      "ij",
+      "jumps"
+    ],
+    "Help": "Infinite jumps.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.MoveSpeed": {
+    "Names": [
+      "movespeed",
+      "ms",
+      "speed"
+    ],
+    "Help": "Change the movement speed.",
+    "Syntax": "[speed]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.TeleportToPlayer": {
+    "Names": [
+      "teleporttoplayer",
+      "ttp",
+      "teleport",
+      "tp"
+    ],
+    "Help": "Teleport to a player.",
+    "Syntax": "<SteamID/NetID/nickname>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Experience": {
+    "Names": [
+      "experience",
+      "exp"
+    ],
+    "Help": "Add or remove experience.",
+    "Syntax": "<delta>"
+  },
+  "NoSkillTimer": {
+    "Names": [
+      "noskilltimer",
+      "nst"
+    ],
+    "Help": "Toggle the skill timer.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoClip": {
+    "Names": [
+      "noclip",
+      "nc",
+      "fly"
+    ],
+    "Help": "No clip mode.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListQuests": {
+    "Names": [
+      "list-quests",
+      "lq"
+    ],
+    "Help": "Display a list of quests.",
+    "Syntax": "[search]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.GetQuest": {
+    "Names": [
+      "get-quest",
+      "gq"
+    ],
+    "Help": "Get a quest.",
+    "Syntax": "<name>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.CompleteQuest": {
+    "Names": [
+      "complete-quest",
+      "cq"
+    ],
+    "Help": "Complete accepted quests.",
+    "Syntax": "<name/*>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
+    "Names": [
+      "time-set",
+      "ts"
+    ],
+    "Help": "Set the time.",
+    "Syntax": "[time]"
+  }
+}

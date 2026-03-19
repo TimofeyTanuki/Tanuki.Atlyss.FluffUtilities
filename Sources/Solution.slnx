@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+  </Folder>
+  <Folder Name="/Solution Items/Resources/" />
+  <Folder Name="/Solution Items/Resources/Configuration/" />
+  <Folder Name="/Solution Items/Resources/Configuration/Commands/">
+    <File Path="Resources/Configuration/Commands/neutral.commands.json" />
+    <File Path="Resources/Configuration/Commands/russian.commands.json" />
+  </Folder>
+  <Folder Name="/Solution Items/Resources/Configuration/Translations/">
+    <File Path="Resources/Configuration/Translations/neutral.translations.json" />
+    <File Path="Resources/Configuration/Translations/russian.translations.json" />
+  </Folder>
+  <Folder Name="/Solution Items/Solution/">
+    <File Path="Solution/Build.props" />
+    <File Path="Solution/Output.props" />
+    <File Path="Solution/Package.targets" />
+    <File Path="Solution/Paths.props" />
+    <File Path="Solution/Paths.props.template" />
+    <File Path="Solution/PluginInfo.targets" />
+  </Folder>
+  <Project Path="Tanuki.Atlyss.FluffUtilities/Tanuki.Atlyss.FluffUtilities.csproj" />
+</Solution>

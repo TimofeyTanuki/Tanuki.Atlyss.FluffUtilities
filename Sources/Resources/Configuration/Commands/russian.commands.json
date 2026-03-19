@@ -1,0 +1,183 @@
+{
+  "Tanuki.Atlyss.FluffUtilities.Commands.FreeCamera": {
+    "Names": [
+      "freecamera",
+      "freecam",
+      "fc"
+    ],
+    "Help": "Режим свободной камеры.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.SteamProfile": {
+    "Names": [
+      "steamprofile",
+      "steam"
+    ],
+    "Help": "Открыть Steam профиль игрока.",
+    "Syntax": "<никнейм>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoSkillCooldown": {
+    "Names": [
+      "noskillcooldown",
+      "noskillcd",
+      "nsc"
+    ],
+    "Help": "Переключение таймера отката навыков.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.AutoPickup": {
+    "Names": [
+      "autopickup",
+      "ap"
+    ],
+    "Help": "Автоматическое поднятие предметов.",
+    "Syntax": "[радиус]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Currency": {
+    "Names": [
+      "currency",
+      "money"
+    ],
+    "Help": "Добавить или снять валюту.",
+    "Syntax": "<изменение>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Disenchant": {
+    "Names": [
+      "disenchant"
+    ],
+    "Help": "Снять зачарование с предмета, находящийся в первом (левом верхнем) слоте на вкладке экипировки.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Enchant": {
+    "Names": [
+      "enchant"
+    ],
+    "Help": "Зачаровать предмет, находящийся в первом (левом верхнем) слоте на вкладке экипировки.",
+    "Syntax": "[тип урона] [ID модификатора]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Heal": {
+    "Names": [
+      "heal"
+    ],
+    "Help": "Добавить или снять здоровье.",
+    "Syntax": "<изменение>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Immortality": {
+    "Names": [
+      "immortality",
+      "god"
+    ],
+    "Help": "Режим бессмертия.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Item": {
+    "Names": [
+      "item",
+      "i",
+      "give"
+    ],
+    "Help": "Выдать предмет.",
+    "Syntax": "<название> [количество]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListItems": {
+    "Names": [
+      "list-items",
+      "li"
+    ],
+    "Help": "Отобразить список предметов.",
+    "Syntax": "[поиск]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListPlayers": {
+    "Names": [
+      "list-players",
+      "lp"
+    ],
+    "Help": "Отобразить список игроков.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.InfiniteJumps": {
+    "Names": [
+      "infinitejumps",
+      "ij",
+      "jumps"
+    ],
+    "Help": "Бесконечные прыжки.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.MoveSpeed": {
+    "Names": [
+      "movespeed",
+      "ms",
+      "speed"
+    ],
+    "Help": "Изменить скорость передвижения.",
+    "Syntax": "[скорость]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.TeleportToPlayer": {
+    "Names": [
+      "teleporttoplayer",
+      "ttp",
+      "teleport",
+      "tp"
+    ],
+    "Help": "Телепортироваться к игроку.",
+    "Syntax": "<SteamID/NetID/никнейм>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Experience": {
+    "Names": [
+      "experience",
+      "exp"
+    ],
+    "Help": "Добавить или снять опыт.",
+    "Syntax": "<изменение>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoSkillTimer": {
+    "Names": [
+      "noskilltimer",
+      "nst"
+    ],
+    "Help": "Переключение таймера навыков.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoClip": {
+    "Names": [
+      "noclip",
+      "nc",
+      "fly"
+    ],
+    "Help": "Режим свободного полёта.",
+    "Syntax": null
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.ListQuests": {
+    "Names": [
+      "list-quests",
+      "lq"
+    ],
+    "Help": "Отобразить список заданий.",
+    "Syntax": "[поиск]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.GetQuest": {
+    "Names": [
+      "get-quest",
+      "gq"
+    ],
+    "Help": "Получить задание.",
+    "Syntax": "<название>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.CompleteQuest": {
+    "Names": [
+      "complete-quest",
+      "cq"
+    ],
+    "Help": "Выполнить принятое задание.",
+    "Syntax": "<название/*>"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
+    "Names": [
+      "time-set",
+      "ts"
+    ],
+    "Help": "Установить время.",
+    "Syntax": "[время]"
+  }
+}

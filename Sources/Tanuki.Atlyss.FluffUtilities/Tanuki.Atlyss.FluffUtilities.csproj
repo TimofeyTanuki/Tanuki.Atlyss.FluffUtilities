@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.API.dll" Private="False" />
+    <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Core.dll" Private="False" />
+    <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Game.dll" Private="False" />
+    <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Network.dll" Private="False" />
+    <Reference Include="$(BepInExCoreDir)BepInEx.dll" Private="False" />
+    <Reference Include="$(BepInExCoreDir)0Harmony.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)Assembly-CSharp.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)com.rlabrecque.steamworks.net.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)Mirror.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)UnityEngine.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)UnityEngine.AudioModule.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)UnityEngine.CoreModule.dll" Private="False" />
+    <Reference Include="$(GameDataManagedDir)UnityEngine.PhysicsModule.dll" Private="False" />
+  </ItemGroup>
+
+</Project>

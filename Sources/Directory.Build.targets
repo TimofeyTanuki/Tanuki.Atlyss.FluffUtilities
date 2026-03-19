@@ -1,0 +1,22 @@
+<Project>
+
+  <Import Project="$(SolutionDir)Solution/Package.targets"/>
+
+  <Target Name="Solution_Build" AfterTargets="Build">
+    <ItemGroup>
+      <Plugins Include="$(TargetDir)*.dll" />
+      <Config Include="$(SolutionDir)Resources\Configuration\**\*.json" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(Config)" DestinationFolder="$(OutputConfigDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(Plugins)" DestinationFolder="$(OutputPluginsDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="Solution_Clean" AfterTargets="Clean">
+    <RemoveDir Directories="$(OutputConfigDir)" />
+    <RemoveDir Directories="$(OutputPluginsDir)" />
+  </Target>
+
+  <Import Project="$(SolutionDir)Solution/PluginInfo.targets"/>
+
+</Project>
