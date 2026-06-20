@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
-using Tanuki.Atlyss.Game.Data.Player;
+using Tanuki.Atlyss.Game.Types.Player;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
