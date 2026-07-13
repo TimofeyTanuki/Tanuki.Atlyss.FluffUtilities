@@ -1,20 +1,20 @@
 ﻿using BepInEx.Configuration;
-using Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+using Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-internal sealed class Configuration
+public sealed class Configuration
 {
-    private static Configuration instance = null!;
+    internal static Configuration instance = null!;
 
     public static Configuration Instance => instance;
 
-    public Data.Configuration.Sections.Commands Commands;
+    public Types.Configuration.Sections.Commands Commands;
     public PlayerAppearance PlayerAppearance;
     public GlobalRaceDisplayParameters GlobalRaceDisplayParameters;
     public FreeCamera FreeCamera;
     public NoClip NoClip;
-    //public Hotkeys Hotkeys;
+    public Hotkeys Hotkeys;
     public General General;
 
     public static void Initialize(ConfigFile configFile)
@@ -32,7 +32,7 @@ internal sealed class Configuration
         GlobalRaceDisplayParameters = new(configFile);
         FreeCamera = new(configFile);
         NoClip = new(configFile);
-        //Hotkeys = new(configFile);
+        Hotkeys = new(configFile);
         General = new(configFile);
     }
 }

@@ -15,7 +15,7 @@ internal sealed class Item : ICommand
     static Item()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
     }
 
     public void Execute(IContext context)

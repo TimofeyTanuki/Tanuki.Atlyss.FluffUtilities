@@ -1,9 +1,9 @@
 ﻿using BepInEx.Configuration;
-using Tanuki.Atlyss.FluffUtilities.Data.Configuration.ConfigEntries;
+using Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
-namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal sealed class GlobalRaceDisplayParameters(ConfigFile configFile)
+public sealed class GlobalRaceDisplayParameters(ConfigFile configFile)
 {
     private const string SECTION_NAME = "GlobalRaceDisplayParameters";
 

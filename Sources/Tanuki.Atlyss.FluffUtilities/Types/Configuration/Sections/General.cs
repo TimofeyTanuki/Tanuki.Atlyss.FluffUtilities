@@ -1,8 +1,8 @@
 ﻿using BepInEx.Configuration;
 
-namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal sealed class General(ConfigFile configFile)
+public sealed class General(ConfigFile configFile)
 {
     private const string SECTION_NAME = "General";
 

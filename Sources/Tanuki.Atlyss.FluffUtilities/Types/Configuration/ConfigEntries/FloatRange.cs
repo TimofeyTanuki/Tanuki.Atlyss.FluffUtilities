@@ -2,7 +2,7 @@
 using System;
 using System.Numerics;
 
-namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.ConfigEntries;
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
 public sealed class FloatRange : IDisposable
 {

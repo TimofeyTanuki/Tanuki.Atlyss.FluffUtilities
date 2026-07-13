@@ -17,12 +17,12 @@ internal sealed class AutoPickup : ICommand
     static AutoPickup()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
 
         state = false;
         distance = 0;
 
-        Main.Instance.OnUnload += Disable;
+        Main.instance.OnUnload += Disable;
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += Disable;
     }
 

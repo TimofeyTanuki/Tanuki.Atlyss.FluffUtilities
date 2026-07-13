@@ -13,7 +13,7 @@ internal sealed class Currency : ICommand
     static Currency()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
     }
 
     public void Execute(IContext context)

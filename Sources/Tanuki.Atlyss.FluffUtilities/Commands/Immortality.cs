@@ -14,11 +14,11 @@ internal sealed class Immortality : ICommand
     static Immortality()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
 
         state = false;
 
-        Main.Instance.OnUnload += Disable;
+        Main.instance.OnUnload += Disable;
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += Disable;
     }
 

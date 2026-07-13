@@ -2,8 +2,7 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.FreeCamera": {
     "Names": [
       "freecamera",
-      "freecam",
-      "fc"
+      "freecam"
     ],
     "Help": "Free camera mode.",
     "Syntax": null
@@ -98,7 +97,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.InfiniteJumps": {
     "Names": [
       "infinitejumps",
-      "ij",
       "jumps"
     ],
     "Help": "Infinite jumps.",
@@ -107,7 +105,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.MoveSpeed": {
     "Names": [
       "movespeed",
-      "ms",
       "speed"
     ],
     "Help": "Change the movement speed.",
@@ -131,7 +128,7 @@
     "Help": "Add or remove experience.",
     "Syntax": "<delta>"
   },
-  "NoSkillTimer": {
+  "Tanuki.Atlyss.FluffUtilities.Commands.NoSkillTimer": {
     "Names": [
       "noskilltimer",
       "nst"
@@ -142,7 +139,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.NoClip": {
     "Names": [
       "noclip",
-      "nc",
       "fly"
     ],
     "Help": "No clip mode.",
@@ -174,8 +170,8 @@
   },
   "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
     "Names": [
-      "time-set",
-      "ts"
+      "set-time",
+      "stime"
     ],
     "Help": "Set the time.",
     "Syntax": "[time]"

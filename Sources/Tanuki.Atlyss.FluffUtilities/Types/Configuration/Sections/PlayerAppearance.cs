@@ -1,8 +1,8 @@
 ﻿using BepInEx.Configuration;
 
-namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal class PlayerAppearance(ConfigFile ConfigFile)
+public class PlayerAppearance(ConfigFile ConfigFile)
 {
     private const string SECTION_NAME = "PlayerAppearance";
 

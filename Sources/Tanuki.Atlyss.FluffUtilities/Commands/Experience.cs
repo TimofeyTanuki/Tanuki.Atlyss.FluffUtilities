@@ -13,7 +13,7 @@ internal sealed class Experience : ICommand
     static Experience()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
     }
 
     public void Execute(IContext context)

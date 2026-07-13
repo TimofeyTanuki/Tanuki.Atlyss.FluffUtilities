@@ -1,6 +1,7 @@
 ﻿using BepInEx.Logging;
 using Steamworks;
 using System.Diagnostics.CodeAnalysis;
+using Tanuki.Atlyss.Core.Managers;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
@@ -8,19 +9,29 @@ namespace Tanuki.Atlyss.FluffUtilities;
 [BepInEx.BepInDependency(Core.PluginInfo.GUID, BepInEx.BepInDependency.DependencyFlags.HardDependency)]
 public sealed class Main : Core.Bases.Plugin
 {
-    internal static Main Instance = null!;
+    internal static Main instance = null!;
+    internal Types.Managers managers = null!;
 
     private ManualLogSource manualLogSource = null!;
 
     private bool reloaded = false;
 
+    public static Main Instance => instance;
+
     [SuppressMessage("CodeQuality", "IDE0051")]
     private void Awake()
     {
-        Instance = this;
+        instance = this;
         manualLogSource = Logger;
 
         Configuration.Initialize(Config);
+
+        managers = new()
+        {
+            noClip = new()
+        };
+
+
     }
 
     protected override void Load()
@@ -30,7 +41,25 @@ public sealed class Main : Core.Bases.Plugin
         if (reloaded)
             Config.Reload();
 
+        Configuration configuration = Configuration.Instance;
+
+        managers.noClip.Reconfigure();
+
         Game.Patches.Player.OnStartAuthority.OnPostfix += OnStartAuthority_OnPostfix;
+
+        RegisterHotkeys();
+    }
+
+    internal void DeregisterHotkeys()
+    {
+        Core.Tanuki.Instance.Managers.Hotkey.Deregister(managers.noClip.Toggle);
+    }
+
+    internal void RegisterHotkeys()
+    {
+        Types.Configuration.Sections.Hotkeys hotkeySection = Configuration.instance.Hotkeys;
+        Core.Tanuki.Instance.Managers.Hotkey.Register([new(hotkeySection.NoClip_Toggle.Value, Core.Types.Managers.Hotkey.EKeyState.Pressed)], managers.noClip.Toggle);
+
     }
 
     private void OnStartAuthority_OnPostfix(Player player)
@@ -45,6 +74,8 @@ public sealed class Main : Core.Bases.Plugin
 
     protected override void Unload()
     {
+        DeregisterHotkeys();
+
         reloaded = true;
         Game.Patches.Player.OnStartAuthority.OnPostfix -= OnStartAuthority_OnPostfix;
     }

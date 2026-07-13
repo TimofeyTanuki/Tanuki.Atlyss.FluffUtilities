@@ -2,8 +2,7 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.FreeCamera": {
     "Names": [
       "freecamera",
-      "freecam",
-      "fc"
+      "freecam"
     ],
     "Help": "Режим свободной камеры.",
     "Syntax": null
@@ -98,7 +97,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.InfiniteJumps": {
     "Names": [
       "infinitejumps",
-      "ij",
       "jumps"
     ],
     "Help": "Бесконечные прыжки.",
@@ -107,7 +105,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.MoveSpeed": {
     "Names": [
       "movespeed",
-      "ms",
       "speed"
     ],
     "Help": "Изменить скорость передвижения.",
@@ -142,7 +139,6 @@
   "Tanuki.Atlyss.FluffUtilities.Commands.NoClip": {
     "Names": [
       "noclip",
-      "nc",
       "fly"
     ],
     "Help": "Режим свободного полёта.",
@@ -174,8 +170,8 @@
   },
   "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
     "Names": [
-      "time-set",
-      "ts"
+      "set-time",
+      "st"
     ],
     "Help": "Установить время.",
     "Syntax": "[время]"

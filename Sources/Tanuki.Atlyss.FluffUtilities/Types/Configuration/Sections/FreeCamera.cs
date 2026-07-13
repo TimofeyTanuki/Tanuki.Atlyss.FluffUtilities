@@ -1,8 +1,8 @@
 ﻿using BepInEx.Configuration;
 
-namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal sealed class FreeCamera(ConfigFile configFile)
+public sealed class FreeCamera(ConfigFile configFile)
 {
     private const string SECTION_NAME = "FreeCamera";
 

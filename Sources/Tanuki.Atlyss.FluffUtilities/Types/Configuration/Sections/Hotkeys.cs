@@ -1,5 +1,15 @@
-﻿namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.Sections;
+﻿using BepInEx.Configuration;
+using UnityEngine;
 
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
+
+public sealed class Hotkeys(ConfigFile ConfigFile)
+{
+    private const string SECTION_NAME = "Hotkeys";
+
+    public readonly ConfigEntry<KeyCode>
+        NoClip_Toggle = ConfigFile.Bind(SECTION_NAME, "NoClip_Toggle", KeyCode.Delete);
+}
 /*
 internal sealed class Hotkeys(ConfigFile ConfigFile)
 {

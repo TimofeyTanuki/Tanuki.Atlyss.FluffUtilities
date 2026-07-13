@@ -1,4 +1,4 @@
-﻿namespace Tanuki.Atlyss.FluffUtilities.Data.Configuration.ConfigEntries;
+﻿namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
 /*
 public sealed class IncrementDecrementHotkey(ConfigFile configFile, string sectionName, )

@@ -18,7 +18,7 @@ internal sealed class ListQuests : ICommand
     static ListQuests()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.translationSet;
+        translationSet = Main.instance.translationSet;
 
         cachedScriptableItems = Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current);
     }
