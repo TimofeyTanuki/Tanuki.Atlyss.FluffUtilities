@@ -43,7 +43,7 @@ public sealed class Main : Core.Bases.Plugin
 
         Configuration configuration = Configuration.Instance;
 
-        managers.noClip.Reconfigure();
+        managers.NoClip.Reconfigure();
 
         Game.Patches.Player.OnStartAuthority.OnPostfix += OnStartAuthority_OnPostfix;
 
@@ -52,13 +52,13 @@ public sealed class Main : Core.Bases.Plugin
 
     internal void DeregisterHotkeys()
     {
-        Core.Tanuki.Instance.Managers.Hotkey.Deregister(managers.noClip.Toggle);
+        Core.Tanuki.Instance.Managers.Hotkey.Deregister(managers.noClip.ToggleState);
     }
 
     internal void RegisterHotkeys()
     {
-        Types.Configuration.Sections.Hotkeys hotkeySection = Configuration.instance.Hotkeys;
-        Core.Tanuki.Instance.Managers.Hotkey.Register([new(hotkeySection.NoClip_Toggle.Value, Core.Types.Managers.Hotkey.EKeyState.Pressed)], managers.noClip.Toggle);
+        Types.Configuration.Sections.Hotkeys hotkeySection = Configuration.Instance.Hotkeys;
+        Core.Tanuki.Instance.Managers.Hotkey.Register([new(hotkeySection.NoClip_Toggle.Value, Core.Types.Managers.Hotkey.EKeyState.Pressed)], managers.noClip.ToggleState);
 
     }
 

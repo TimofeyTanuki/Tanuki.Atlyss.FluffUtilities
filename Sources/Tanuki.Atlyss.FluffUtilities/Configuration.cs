@@ -3,11 +3,9 @@ using Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
-public sealed class Configuration
+internal sealed class Configuration
 {
-    internal static Configuration instance = null!;
-
-    public static Configuration Instance => instance;
+    public static Configuration Instance = null!;
 
     public Types.Configuration.Sections.Commands Commands;
     public PlayerAppearance PlayerAppearance;
@@ -19,10 +17,10 @@ public sealed class Configuration
 
     public static void Initialize(ConfigFile configFile)
     {
-        if (instance is not null)
+        if (Instance is not null)
             return;
 
-        instance = new(configFile);
+        Instance = new(configFile);
     }
 
     private Configuration(ConfigFile configFile)
