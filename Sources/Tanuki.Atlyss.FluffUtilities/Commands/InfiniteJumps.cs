@@ -11,7 +11,7 @@ internal sealed class InfiniteJumps : ICommand
     {
         state = false;
 
-        Main.instance.OnUnload += Disable;
+        Main.Instance.OnUnload += Disable;
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += Disable;
     }
 

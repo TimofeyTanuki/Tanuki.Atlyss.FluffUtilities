@@ -19,7 +19,7 @@ internal sealed class TeleportToPlayer : ICommand
     static TeleportToPlayer()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
         playerProvider = Game.Tanuki.Instance.Providers.Player;
 
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable.OnPostfix += HandleTeleportBetweenScenes;

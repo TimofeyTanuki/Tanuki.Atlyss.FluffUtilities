@@ -7,9 +7,9 @@ internal sealed class NoClip : MonoBehaviour
 {
     private static NoClip? instance;
 
-    public KeyCode Forward, Right, Backward, Left, Up, Down, AlternativeSpeedKey;
-    public float BaseSpeed, AlternativeBaseSpeed;
-    private IInputSystem InputSystem = null!;
+    public KeyCode moveForward, moveRight, moveBackward, moveLeft, moveUp, moveDown, alternativeSpeedKey;
+    public float speed, alternativeSpeed;
+    private IInputSystem inputSystem = null!;
 
     private Vector3 positionShift;
     private float delta;
@@ -17,6 +17,7 @@ internal sealed class NoClip : MonoBehaviour
     private Player player = null!;
     private Transform playerTransform = null!;
     private CameraFunction cameraFunction = null!;
+    private CameraCollision cameraCollision = null!;
 
     public static NoClip? GetOrCreate()
     {
@@ -31,18 +32,20 @@ internal sealed class NoClip : MonoBehaviour
 
     public void Reconfigure()
     {
+        enabled = false;
+
         Types.Configuration.Sections.NoClip noClipSection = Configuration.Instance.NoClip;
 
-        Forward = noClipSection.Move_Forward.Value;
-        Right = noClipSection.Move_Right.Value;
-        Backward = noClipSection.Move_Backward.Value;
-        Left = noClipSection.Move_Left.Value;
-        Up = noClipSection.Move_Up.Value;
-        Down = noClipSection.Move_Down.Value;
-        AlternativeSpeedKey = noClipSection.AlternativeSpeedKey.Value;
+        moveForward = noClipSection.Move_Forward.Value;
+        moveRight = noClipSection.Move_Right.Value;
+        moveBackward = noClipSection.Move_Backward.Value;
+        moveLeft = noClipSection.Move_Left.Value;
+        moveUp = noClipSection.Move_Up.Value;
+        moveDown = noClipSection.Move_Down.Value;
+        alternativeSpeedKey = noClipSection.AlternativeSpeedKey.Value;
 
-        BaseSpeed = noClipSection.BaseSpeed.Value;
-        AlternativeBaseSpeed = noClipSection.AlternativeBaseSpeed.Value;
+        speed = noClipSection.Speed.Value;
+        alternativeSpeed = noClipSection.AlternativeSpeed.Value;
     }
 
     private void PreventLocalPlayerControl(PlayerMove instance, ref bool runOriginal)
@@ -56,7 +59,7 @@ internal sealed class NoClip : MonoBehaviour
     private void OnStopClient() => Destroy(this);
 
 #pragma warning disable IDE0051
-    private void Start() => InputSystem = UnityInput.Current;
+    private void Start() => inputSystem = UnityInput.Current;
 
     private void Awake()
     {
@@ -67,22 +70,20 @@ internal sealed class NoClip : MonoBehaviour
         }
 
         instance = this;
-        enabled = false;
+        Reconfigure();
 
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnStopClient;
 
         player = Player._mainPlayer;
         playerTransform = player.transform;
         cameraFunction = CameraFunction._current;
-
-        Reconfigure();
+        cameraCollision = CameraCollision._current;
     }
-
 
     private void OnEnable()
     {
         player._pMove._playerController.enabled = false;
-        CameraCollision._current.enabled = false;
+        cameraCollision.enabled = false;
 
         Game.Patches.PlayerMove.Client_LocalPlayerControl.OnPrefix += PreventLocalPlayerControl;
     }
@@ -97,7 +98,7 @@ internal sealed class NoClip : MonoBehaviour
         player._pMove._airTime = 0;
         player._pMove._playerController.enabled = true;
 
-        CameraCollision._current.enabled = true;
+        cameraCollision.enabled = true;
     }
 
     private void OnDestroy()
@@ -111,24 +112,24 @@ internal sealed class NoClip : MonoBehaviour
         if (player._inChat)
             return;
 
-        delta = (InputSystem.GetKey(AlternativeSpeedKey) ? AlternativeBaseSpeed : BaseSpeed) * Time.deltaTime;
+        delta = (inputSystem.GetKey(alternativeSpeedKey) ? alternativeSpeed : speed) * Time.deltaTime;
         positionShift = Vector3.zero;
 
         playerTransform.rotation = Quaternion.Euler(0f, cameraFunction._RotY, 0f);
 
-        if (InputSystem.GetKey(Left))
+        if (inputSystem.GetKey(moveLeft))
             positionShift += Vector3.left * delta;
-        else if (InputSystem.GetKey(Right))
+        else if (inputSystem.GetKey(moveRight))
             positionShift += Vector3.right * delta;
 
-        if (InputSystem.GetKey(Forward))
+        if (inputSystem.GetKey(moveForward))
             positionShift += Vector3.forward * delta;
-        else if (InputSystem.GetKey(Backward))
+        else if (inputSystem.GetKey(moveBackward))
             positionShift += Vector3.back * delta;
 
-        if (InputSystem.GetKey(Up))
+        if (inputSystem.GetKey(moveUp))
             positionShift += Vector3.up * delta;
-        else if (InputSystem.GetKey(Down))
+        else if (inputSystem.GetKey(moveDown))
             positionShift += Vector3.down * delta;
 
         playerTransform.Translate(positionShift);

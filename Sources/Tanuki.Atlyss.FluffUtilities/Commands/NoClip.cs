@@ -6,5 +6,5 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 internal sealed class NoClip : ICommand
 {
     public void Execute(IContext context) =>
-        Main.instance.managers.noClip.ToggleState();
+        Main.Instance.Managers.NoClip.ToggleState();
 }

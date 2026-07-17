@@ -15,7 +15,7 @@ internal sealed class MoveSpeed : ICommand
     static MoveSpeed()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
 
         state = false;
 

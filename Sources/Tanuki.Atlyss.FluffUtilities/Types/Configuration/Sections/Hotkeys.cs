@@ -9,6 +9,9 @@ public sealed class Hotkeys(ConfigFile ConfigFile)
 
     public readonly ConfigEntry<KeyCode>
         NoClip_Toggle = ConfigFile.Bind(SECTION_NAME, "NoClip_Toggle", KeyCode.Delete);
+
+    public readonly ConfigEntry<KeyCode>
+        FreeCamera_Toggle = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Toggle", KeyCode.End);
 }
 /*
 internal sealed class Hotkeys(ConfigFile ConfigFile)

@@ -15,7 +15,7 @@ internal sealed class SteamProfile : ICommand
     static SteamProfile()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
         playerProvider = Game.Tanuki.Instance.Providers.Player;
     }
 

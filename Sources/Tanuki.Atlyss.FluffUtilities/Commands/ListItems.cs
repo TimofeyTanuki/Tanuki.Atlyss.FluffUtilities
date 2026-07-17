@@ -18,7 +18,7 @@ internal sealed class ListItems : ICommand
     static ListItems()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
 
         cachedScriptableItems = Game.Accessors.GameManager._cachedScriptableItems(GameManager._current);
     }

@@ -1,24 +1,23 @@
 ﻿using BepInEx.Logging;
 using Steamworks;
-using System.Diagnostics.CodeAnalysis;
-using Tanuki.Atlyss.Core.Managers;
+using Tanuki.Atlyss.FluffUtilities.Managers;
 
 namespace Tanuki.Atlyss.FluffUtilities;
 
 [BepInEx.BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
 [BepInEx.BepInDependency(Core.PluginInfo.GUID, BepInEx.BepInDependency.DependencyFlags.HardDependency)]
+[BepInEx.BepInDependency(NessieEasySettings.GUID, BepInEx.BepInDependency.DependencyFlags.SoftDependency)]
 public sealed class Main : Core.Bases.Plugin
 {
-    internal static Main instance = null!;
-    internal Types.Managers managers = null!;
-
+    private static Main instance = null!;
     private ManualLogSource manualLogSource = null!;
-
+    private Types.Managers managers = null!;
     private bool reloaded = false;
 
     public static Main Instance => instance;
+    public Types.Managers Managers => managers;
 
-    [SuppressMessage("CodeQuality", "IDE0051")]
+#pragma warning disable IDE0051
     private void Awake()
     {
         instance = this;
@@ -28,11 +27,12 @@ public sealed class Main : Core.Bases.Plugin
 
         managers = new()
         {
-            noClip = new()
+            NoClip = new(),
+            FreeCamera = new(),
+            NessieEasySettings = NessieEasySettings.GetInstance()
         };
-
-
     }
+#pragma warning restore IDE0051
 
     protected override void Load()
     {
@@ -44,22 +44,12 @@ public sealed class Main : Core.Bases.Plugin
         Configuration configuration = Configuration.Instance;
 
         managers.NoClip.Reconfigure();
+        managers.FreeCamera.Reconfigure();
 
         Game.Patches.Player.OnStartAuthority.OnPostfix += OnStartAuthority_OnPostfix;
 
-        RegisterHotkeys();
-    }
-
-    internal void DeregisterHotkeys()
-    {
-        Core.Tanuki.Instance.Managers.Hotkey.Deregister(managers.noClip.ToggleState);
-    }
-
-    internal void RegisterHotkeys()
-    {
-        Types.Configuration.Sections.Hotkeys hotkeySection = Configuration.Instance.Hotkeys;
-        Core.Tanuki.Instance.Managers.Hotkey.Register([new(hotkeySection.NoClip_Toggle.Value, Core.Types.Managers.Hotkey.EKeyState.Pressed)], managers.noClip.ToggleState);
-
+        managers.FreeCamera.RegisterHotkeys();
+        managers.NoClip.RegisterHotkeys();
     }
 
     private void OnStartAuthority_OnPostfix(Player player)
@@ -74,7 +64,8 @@ public sealed class Main : Core.Bases.Plugin
 
     protected override void Unload()
     {
-        DeregisterHotkeys();
+        managers.FreeCamera.DeregisterHotkeys();
+        managers.NoClip.DeregisterHotkeys();
 
         reloaded = true;
         Game.Patches.Player.OnStartAuthority.OnPostfix -= OnStartAuthority_OnPostfix;

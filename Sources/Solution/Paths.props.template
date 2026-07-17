@@ -3,13 +3,15 @@
   <PropertyGroup>
     <GameRootDir>..\ATLYSS\</GameRootDir>
     <BepInExRootDir>..\ATLYSS\BepInEx\</BepInExRootDir>
-    <TanukiAtlyssDir>$(BepInExRootDir)plugins\Tanuki.Atlyss</TanukiAtlyssDir>
 
     <GameDataManagedDir>$(GameRootDir)ATLYSS_Data\Managed\</GameDataManagedDir>
 
     <BepInExPluginsDir>$(BepInExRootDir)plugins\</BepInExPluginsDir>
     <BepInExConfigDir>$(BepInExRootDir)config\</BepInExConfigDir>
     <BepInExCoreDir>$(BepInExRootDir)core\</BepInExCoreDir>
+
+    <TanukiAtlyssDir>$(BepInExRootDir)plugins\Tanuki.Atlyss\</TanukiAtlyssDir>
+    <NessieEasySettingsDir>$(BepInExRootDir)plugins\Nessie-EasySettings\</NessieEasySettingsDir>
 
     <OutputConfigDir>$(BepInExConfigDir)$(ProductName)\</OutputConfigDir>
     <OutputPluginsDir>$(BepInExPluginsDir)$(ProductName)\</OutputPluginsDir>

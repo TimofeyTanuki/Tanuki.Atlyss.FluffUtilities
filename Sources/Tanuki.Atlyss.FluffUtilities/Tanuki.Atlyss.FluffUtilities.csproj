@@ -20,6 +20,8 @@
     <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Core.dll" Private="False" />
     <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Game.dll" Private="False" />
     <Reference Include="$(TanukiAtlyssDir)Tanuki.Atlyss.Network.dll" Private="False" />
+
+    <Reference Include="$(NessieEasySettingsDir)EasySettings.dll" Private="False" />
   </ItemGroup>
 
 </Project>

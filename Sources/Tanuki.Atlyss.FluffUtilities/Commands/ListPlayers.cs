@@ -19,7 +19,7 @@ internal sealed class ListPlayers : ICommand
     static ListPlayers()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
         playerProvider = Game.Tanuki.Instance.Providers.Player;
         steamLobbyProvider = Network.Tanuki.Instance.Providers.SteamLobby;
     }
@@ -36,7 +36,7 @@ internal sealed class ListPlayers : ICommand
             playerEntries.Add(entry);
         }
 
-        Main.instance.StartCoroutine(DisplayPlayers(playerEntries));
+        Main.Instance.StartCoroutine(DisplayPlayers(playerEntries));
     }
 
     private IEnumerator DisplayPlayers(List<Entry> playerEntries)
@@ -55,15 +55,15 @@ internal sealed class ListPlayers : ICommand
                     :
                     SteamMatchmaking.GetLobbyMemberData(steamLobbyProvider.SteamId, playerEntry.SteamId, "cc8615a7-47a4-4321-be79-11e36887b64a.ver"); // NOT IMPLEMENTED
 
-            pluginVersion = string.IsNullOrEmpty(pluginVersion) ? string.Empty : Main.instance.Translate("Commands.ListPlayers.FluffUtilities", pluginVersion);
+            pluginVersion = string.IsNullOrEmpty(pluginVersion) ? string.Empty : Main.Instance.Translate("Commands.ListPlayers.FluffUtilities", pluginVersion);
 
             string globalNickname =
                 player._nickname != player._globalNickname && !string.IsNullOrEmpty(player._globalNickname) ?
-                    Main.instance.Translate("Commands.ListPlayers.GlobalNickname", player._globalNickname)
+                    Main.Instance.Translate("Commands.ListPlayers.GlobalNickname", player._globalNickname)
                     :
                     string.Empty;
 
-            string mapName = string.IsNullOrEmpty(player._mapName) ? Main.instance.Translate("Commands.ListPlayers.NoMap") : player._mapName;
+            string mapName = string.IsNullOrEmpty(player._mapName) ? Main.Instance.Translate("Commands.ListPlayers.NoMap") : player._mapName;
 
             stringBuilder.Append(
                 translationSet.Translate(
@@ -78,7 +78,7 @@ internal sealed class ListPlayers : ICommand
             );
         }
 
-        stringBuilder.Insert(0, Main.instance.Translate("Commands.ListPlayers.Header", playerEntries.Count));
+        stringBuilder.Insert(0, Main.Instance.Translate("Commands.ListPlayers.Header", playerEntries.Count));
         chatManager.SendClientMessage(stringBuilder.ToString());
 
         yield break;

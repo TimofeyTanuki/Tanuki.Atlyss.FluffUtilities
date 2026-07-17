@@ -14,7 +14,7 @@ internal sealed class CompleteQuest : ICommand
     static CompleteQuest()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
     }
 
     public void Execute(IContext context)

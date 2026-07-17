@@ -15,7 +15,7 @@ internal sealed class Enchant : ICommand
     static Enchant()
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.instance.translationSet;
+        translationSet = Main.Instance.TranslationSet;
     }
 
     public void Execute(IContext context)
@@ -59,7 +59,7 @@ internal sealed class Enchant : ICommand
         {
             if (!ushort.TryParse(arguments[0], out ushort damageTypeIndex))
             {
-                chatManager.SendClientMessage(Main.instance.Translate("Commands.Enchant.DamageTypeNotInteger"));
+                chatManager.SendClientMessage(Main.Instance.Translate("Commands.Enchant.DamageTypeNotInteger"));
                 return;
             }
 
