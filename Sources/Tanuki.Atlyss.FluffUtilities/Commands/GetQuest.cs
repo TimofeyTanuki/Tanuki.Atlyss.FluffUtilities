@@ -24,7 +24,7 @@ internal sealed class GetQuest : ICommand
 
         if (questName.Length == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.GetQuest.QuestNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestNotSpecified"));
             return;
         }
 
@@ -32,7 +32,7 @@ internal sealed class GetQuest : ICommand
 
         if (!cachedScriptableQuests.TryGetValueFlexible(questName, out ScriptableQuest scriptableQuest, false, StringComparison.OrdinalIgnoreCase))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.GetQuest.QuestNotFound", questName));
+            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestNotFound", questName));
             return;
         }
 
@@ -40,13 +40,13 @@ internal sealed class GetQuest : ICommand
 
         if (playerQuesting.Check_HasQuest(scriptableQuest))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.GetQuest.QuestAlreadyActive", scriptableQuest._questName));
+            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestAlreadyActive", scriptableQuest._questName));
             return;
         }
 
         if (playerQuesting._questProgressData.Count >= playerQuesting._questLogLimit)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.GetQuest.ActiveQuestsLimit"));
+            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.ActiveQuestsLimit"));
             return;
         }
 

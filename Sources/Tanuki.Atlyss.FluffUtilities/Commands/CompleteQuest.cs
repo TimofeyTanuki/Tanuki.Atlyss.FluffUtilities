@@ -24,7 +24,7 @@ internal sealed class CompleteQuest : ICommand
 
         if (questName.Length == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotSpecified"));
             return;
         }
 
@@ -33,7 +33,7 @@ internal sealed class CompleteQuest : ICommand
 
         if (questProgressStructs.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.CompleteQuest.NoQuests"));
+            chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.NoQuests"));
             return;
         }
 
@@ -61,6 +61,6 @@ internal sealed class CompleteQuest : ICommand
             return;
         }
 
-        chatManager.SendClientMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotFound", questName));
+        chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotFound", questName));
     }
 }

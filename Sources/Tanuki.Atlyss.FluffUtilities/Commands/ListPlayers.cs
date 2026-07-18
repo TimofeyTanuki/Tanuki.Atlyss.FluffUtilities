@@ -79,7 +79,7 @@ internal sealed class ListPlayers : ICommand
         }
 
         stringBuilder.Insert(0, Main.Instance.Translate("Commands.ListPlayers.Header", playerEntries.Count));
-        chatManager.SendClientMessage(stringBuilder.ToString());
+        chatManager.AddMessage(stringBuilder.ToString());
 
         yield break;
     }

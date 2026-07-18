@@ -70,5 +70,4 @@ public sealed class Main : Core.Bases.Plugin
         reloaded = true;
         Game.Patches.Player.OnStartAuthority.OnPostfix -= OnStartAuthority_OnPostfix;
     }
-
 }

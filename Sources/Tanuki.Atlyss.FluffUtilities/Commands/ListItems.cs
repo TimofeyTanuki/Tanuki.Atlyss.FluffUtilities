@@ -34,7 +34,7 @@ internal sealed class ListItems : ICommand
     }
 
     private void DisplayAll() =>
-        chatManager.SendClientMessage(
+        chatManager.AddMessage(
             translationSet.Translate(
                 "Commands.ListItems.All",
                 string.Join(
@@ -55,7 +55,7 @@ internal sealed class ListItems : ICommand
                 StringComparison.OrdinalIgnoreCase
             );
 
-        chatManager.SendClientMessage(
+        chatManager.AddMessage(
             matches.Count > 0 ?
                 translationSet.Translate(
                     "Commands.ListItems.Search",

@@ -26,7 +26,7 @@ internal sealed class Enchant : ICommand
         ItemData? itemData = player._pInventory.GetItem(0, false, ItemType.GEAR);
         if (itemData is null)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Enchant.FirstEquipmentSlotIsEmpty"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Enchant.FirstEquipmentSlotIsEmpty"));
             return;
         }
 
@@ -35,7 +35,7 @@ internal sealed class Enchant : ICommand
 
         if (!scriptableEquipment._statModifierTable)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Enchant.NotEnchantableItem", itemData._itemName));
+            chatManager.AddMessage(translationSet.Translate("Commands.Enchant.NotEnchantableItem", itemData._itemName));
             return;
         }
 
@@ -59,7 +59,7 @@ internal sealed class Enchant : ICommand
         {
             if (!ushort.TryParse(arguments[0], out ushort damageTypeIndex))
             {
-                chatManager.SendClientMessage(Main.Instance.Translate("Commands.Enchant.DamageTypeNotInteger"));
+                chatManager.AddMessage(Main.Instance.Translate("Commands.Enchant.DamageTypeNotInteger"));
                 return;
             }
 
@@ -77,7 +77,7 @@ internal sealed class Enchant : ICommand
         {
             if (!int.TryParse(arguments[modifier], out modifierId))
             {
-                chatManager.SendClientMessage(translationSet.Translate("Commands.Enchant.ModifierNotInteger"));
+                chatManager.AddMessage(translationSet.Translate("Commands.Enchant.ModifierNotInteger"));
                 return;
             }
 
@@ -120,7 +120,7 @@ internal sealed class Enchant : ICommand
             value++;
         }
 
-        chatManager.SendClientMessage(
+        chatManager.AddMessage(
             translationSet.Translate(
                 "Commands.Enchant.DamageTypes",
                 string.Join(
@@ -144,7 +144,7 @@ internal sealed class Enchant : ICommand
                 )
             );
 
-        chatManager.SendClientMessage(
+        chatManager.AddMessage(
             translationSet.Translate(
                 "Commands.Enchant.Modifiers",
                 string.Join(

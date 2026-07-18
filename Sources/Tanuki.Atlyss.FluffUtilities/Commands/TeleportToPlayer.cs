@@ -11,7 +11,6 @@ internal sealed class TeleportToPlayer : ICommand
 {
     private static readonly Core.Managers.Chat chatManager;
     private static readonly TranslationSet translationSet;
-    private static readonly Game.Providers.Player playerProvider;
 
     private static bool teleportBetweenScenes = false;
     private static Vector3 targetPosition;
@@ -20,7 +19,6 @@ internal sealed class TeleportToPlayer : ICommand
     {
         chatManager = Core.Tanuki.Instance.Managers.Chat;
         translationSet = Main.Instance.TranslationSet;
-        playerProvider = Game.Tanuki.Instance.Providers.Player;
 
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable.OnPostfix += HandleTeleportBetweenScenes;
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPostfix += OnAtlyssNetworkManagerStopClient;
@@ -35,21 +33,21 @@ internal sealed class TeleportToPlayer : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.TeleportToPlayer.NicknameNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.TeleportToPlayer.NicknameNotSpecified"));
             return;
         }
 
-        Player? targetPlayer = playerProvider.FindByFlexibleInput(string.Join(" ", arguments));
+        Player? targetPlayer = Game.Tanuki.Instance.Providers.Player.FindByFlexibleInput(string.Join(" ", arguments));
         if (targetPlayer is null)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
+            chatManager.AddMessage(translationSet.Translate("Commands.TeleportToPlayer.PlayerNotFound"));
             return;
         }
 
         Player player = Player._mainPlayer;
         if (player == targetPlayer)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.TeleportToPlayer.Self"));
+            chatManager.AddMessage(translationSet.Translate("Commands.TeleportToPlayer.Self"));
             return;
         }
 
@@ -63,7 +61,7 @@ internal sealed class TeleportToPlayer : ICommand
 
         if (string.IsNullOrEmpty(targetPlayer._mapName))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.TeleportToPlayer.EmptyMapName", targetPlayer._mapName));
+            chatManager.AddMessage(translationSet.Translate("Commands.TeleportToPlayer.EmptyMapName", targetPlayer._mapName));
             return;
         }
 
@@ -75,7 +73,7 @@ internal sealed class TeleportToPlayer : ICommand
             if (!player._waypointAttunements.Contains(scriptableMapData.Key))
                 break;
 
-            //Managers.FreeCamera.Instance.Disable();
+            Main.Instance.Managers.FreeCamera.SetState(false);
 
             teleportBetweenScenes = true;
             player.Cmd_SceneTransport(scriptableMapData.Value._subScene, scriptableMapData.Value._spawnPointTag, ZoneDifficulty.NORMAL);
@@ -83,7 +81,7 @@ internal sealed class TeleportToPlayer : ICommand
             return;
         }
 
-        chatManager.SendClientMessage(translationSet.Translate("Commands.TeleportToPlayer.SubSceneNotFound", targetPlayer._mapName));
+        chatManager.AddMessage(translationSet.Translate("Commands.TeleportToPlayer.SubSceneNotFound", targetPlayer._mapName));
     }
 
     private static void HandleTeleportBetweenScenes()

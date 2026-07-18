@@ -23,7 +23,7 @@ internal sealed class Disenchant : ICommand
 
         if (itemData is null)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Disenchant.FirstEquipmentSlotIsEmpty"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Disenchant.FirstEquipmentSlotIsEmpty"));
             return;
         }
 

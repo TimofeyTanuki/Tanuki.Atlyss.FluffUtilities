@@ -23,19 +23,19 @@ internal sealed class Heal : ICommand
 
         if (!player._isHostPlayer)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Heal.NotHost"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Heal.NotHost"));
             return;
         }
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Heal.DeltaNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Heal.DeltaNotSpecified"));
             return;
         }
 
         if (!int.TryParse(arguments[0], out int Delta))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Heal.DeltaNotInteger"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Heal.DeltaNotInteger"));
             return;
         }
 

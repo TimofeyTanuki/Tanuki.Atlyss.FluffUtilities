@@ -26,7 +26,7 @@ internal sealed class SteamProfile : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.SteamProfile.NicknameNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.SteamProfile.NicknameNotSpecified"));
             return;
         }
 
@@ -34,7 +34,7 @@ internal sealed class SteamProfile : ICommand
 
         if (targetPlayer is null)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.SteamProfile.PlayerNotFound"));
+            chatManager.AddMessage(translationSet.Translate("Commands.SteamProfile.PlayerNotFound"));
             return;
         }
 

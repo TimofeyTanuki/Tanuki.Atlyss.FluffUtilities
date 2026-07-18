@@ -23,13 +23,13 @@ internal sealed class Currency : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Currency.DeltaNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Currency.DeltaNotSpecified"));
             return;
         }
 
         if (!int.TryParse(arguments[0], out int delta))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Currency.DeltaNotInteger"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Currency.DeltaNotInteger"));
             return;
         }
 

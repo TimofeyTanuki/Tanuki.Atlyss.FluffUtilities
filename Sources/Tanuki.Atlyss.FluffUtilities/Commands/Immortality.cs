@@ -28,7 +28,7 @@ internal sealed class Immortality : ICommand
 
         if (!player._isHostPlayer)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Immortality.NotHost"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Immortality.NotHost"));
             return;
         }
 
@@ -36,13 +36,13 @@ internal sealed class Immortality : ICommand
         {
             Disable();
             player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockoutSound);
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Immortality.Disabled"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Immortality.Disabled"));
         }
         else
         {
             Enable();
             player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockonSound);
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Immortality.Enabled"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Immortality.Enabled"));
         }
     }
 

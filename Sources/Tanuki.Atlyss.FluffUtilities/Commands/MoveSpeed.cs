@@ -34,18 +34,18 @@ internal sealed class MoveSpeed : ICommand
             {
                 playerMove._movSpeed = GameManager._current._statLogics._baseMoveSpeed;
 
-                chatManager.SendClientMessage(translationSet.Translate("Commands.MoveSpeed.Reset"));
+                chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.Reset"));
                 player._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
             }
             else
-                chatManager.SendClientMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotSpecified"));
+                chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotSpecified"));
 
             return;
         }
 
         if (!float.TryParse(arguments[0], out float speed))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotFloat"));
+            chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotFloat"));
             return;
         }
 
@@ -54,7 +54,7 @@ internal sealed class MoveSpeed : ICommand
 
         state = true;
         playerMove._movSpeed = speed;
-        chatManager.SendClientMessage(translationSet.Translate("Commands.MoveSpeed.Enabled", speed));
+        chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.Enabled", speed));
         player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockoutSound);
     }
 

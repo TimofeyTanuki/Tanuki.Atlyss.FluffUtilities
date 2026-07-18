@@ -25,7 +25,7 @@ internal sealed class Item : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Item.InvalidParameters"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Item.InvalidParameters"));
             return;
         }
 
@@ -44,7 +44,7 @@ internal sealed class Item : ICommand
 
         if (!cachedScriptableItems.TryGetValueFlexible(itemName, out ScriptableItem scriptableItem, false, StringComparison.OrdinalIgnoreCase))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Item.ItemNotFound", itemName));
+            chatManager.AddMessage(translationSet.Translate("Commands.Item.ItemNotFound", itemName));
             return;
         }
 

@@ -38,14 +38,14 @@ internal sealed class AutoPickup : ICommand
                 if (distance > 0)
                 {
                     Enable();
-                    chatManager.SendClientMessage(translationSet.Translate("Commands.AutoPickup.Enabled", distance));
+                    chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.Enabled", distance));
                     player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockonSound);
                     return;
                 }
             }
             else
             {
-                chatManager.SendClientMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotFloat"));
+                chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotFloat"));
                 return;
             }
         }
@@ -53,11 +53,11 @@ internal sealed class AutoPickup : ICommand
         if (state)
         {
             Disable();
-            chatManager.SendClientMessage(translationSet.Translate("Commands.AutoPickup.Disabled"));
+            chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.Disabled"));
             player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockoutSound);
         }
         else
-            chatManager.SendClientMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotSpecified"));
     }
 
     private static void Enable()

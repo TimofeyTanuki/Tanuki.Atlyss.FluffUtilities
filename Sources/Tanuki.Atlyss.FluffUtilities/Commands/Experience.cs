@@ -23,19 +23,19 @@ internal sealed class Experience : ICommand
 
         if (!player._isHostPlayer)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Experience.NotHost"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Experience.NotHost"));
             return;
         }
 
         if (arguments.Count == 0)
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Experience.DeltaNotSpecified"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Experience.DeltaNotSpecified"));
             return;
         }
 
         if (!int.TryParse(arguments[0], out int Delta))
         {
-            chatManager.SendClientMessage(translationSet.Translate("Commands.Experience.DeltaNotInteger"));
+            chatManager.AddMessage(translationSet.Translate("Commands.Experience.DeltaNotInteger"));
             return;
         }
 
