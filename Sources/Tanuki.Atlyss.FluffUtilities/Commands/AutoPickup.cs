@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -8,17 +8,11 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class AutoPickup : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
     private static bool state;
     private static float distance;
 
     static AutoPickup()
     {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-
         state = false;
         distance = 0;
 
@@ -38,14 +32,14 @@ internal sealed class AutoPickup : ICommand
                 if (distance > 0)
                 {
                     Enable();
-                    chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.Enabled", distance));
+                    Chat.AddTranslatedMessage("Commands.AutoPickup.Enabled", distance);
                     player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockonSound);
                     return;
                 }
             }
             else
             {
-                chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotFloat"));
+                Chat.AddTranslatedMessage("Commands.AutoPickup.DistanceNotFloat");
                 return;
             }
         }
@@ -53,11 +47,11 @@ internal sealed class AutoPickup : ICommand
         if (state)
         {
             Disable();
-            chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.Disabled"));
+            Chat.AddTranslatedMessage("Commands.AutoPickup.Disabled");
             player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockoutSound);
         }
         else
-            chatManager.AddMessage(translationSet.Translate("Commands.AutoPickup.DistanceNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.AutoPickup.DistanceNotSpecified");
     }
 
     private static void Enable()

@@ -1,5 +1,5 @@
-﻿using Tanuki.Atlyss.API.Collections;
-using Tanuki.Atlyss.API.Core.Commands;
+﻿using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 using Tanuki.Atlyss.Game.Extensions;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -7,15 +7,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Disenchant : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Disenchant()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         Player player = Player._mainPlayer;
@@ -23,7 +14,7 @@ internal sealed class Disenchant : ICommand
 
         if (itemData is null)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Disenchant.FirstEquipmentSlotIsEmpty"));
+            Chat.AddTranslatedMessage("Commands.Disenchant.FirstEquipmentSlotIsEmpty");
             return;
         }
 

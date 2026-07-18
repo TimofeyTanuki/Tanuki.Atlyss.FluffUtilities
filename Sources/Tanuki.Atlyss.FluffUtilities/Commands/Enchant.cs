@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 using Tanuki.Atlyss.Game.Extensions;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -9,15 +10,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Enchant : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Enchant()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         IReadOnlyList<string> arguments = context.Arguments;
@@ -26,7 +18,7 @@ internal sealed class Enchant : ICommand
         ItemData? itemData = player._pInventory.GetItem(0, false, ItemType.GEAR);
         if (itemData is null)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Enchant.FirstEquipmentSlotIsEmpty"));
+            Chat.AddTranslatedMessage("Commands.Enchant.FirstEquipmentSlotIsEmpty");
             return;
         }
 
@@ -35,7 +27,7 @@ internal sealed class Enchant : ICommand
 
         if (!scriptableEquipment._statModifierTable)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Enchant.NotEnchantableItem", itemData._itemName));
+            Chat.AddTranslatedMessage("Commands.Enchant.NotEnchantableItem", itemData._itemName);
             return;
         }
 
@@ -44,9 +36,9 @@ internal sealed class Enchant : ICommand
         if (arguments.Count == 0)
         {
             if (modifier == 0)
-                DisplayModifiers(chatManager, translationSet, scriptableEquipment._statModifierTable);
+                DisplayModifiers(scriptableEquipment._statModifierTable);
             else
-                DisplayDamageTypes(chatManager, translationSet);
+                DisplayDamageTypes();
 
             return;
         }
@@ -59,13 +51,13 @@ internal sealed class Enchant : ICommand
         {
             if (!ushort.TryParse(arguments[0], out ushort damageTypeIndex))
             {
-                chatManager.AddMessage(Main.Instance.Translate("Commands.Enchant.DamageTypeNotInteger"));
+                Chat.AddTranslatedMessage("Commands.Enchant.DamageTypeNotInteger");
                 return;
             }
 
             if (damageTypeIndex >= Enum.GetNames(typeof(DamageType)).Length)
             {
-                DisplayDamageTypes(chatManager, translationSet);
+                DisplayDamageTypes();
                 return;
             }
 
@@ -77,7 +69,7 @@ internal sealed class Enchant : ICommand
         {
             if (!int.TryParse(arguments[modifier], out modifierId))
             {
-                chatManager.AddMessage(translationSet.Translate("Commands.Enchant.ModifierNotInteger"));
+                Chat.AddTranslatedMessage("Commands.Enchant.ModifierNotInteger");
                 return;
             }
 
@@ -94,7 +86,7 @@ internal sealed class Enchant : ICommand
 
             if (!scriptableStatModifier)
             {
-                DisplayModifiers(chatManager, translationSet, scriptableEquipment._statModifierTable);
+                DisplayModifiers(scriptableEquipment._statModifierTable);
                 return;
             }
 
@@ -108,7 +100,7 @@ internal sealed class Enchant : ICommand
         player._pSound._aSrcGeneral.PlayOneShot(player._pSound._purchaseItemSound);
     }
 
-    private void DisplayDamageTypes(Core.Managers.Chat chatManager, TranslationSet translationSet)
+    private void DisplayDamageTypes()
     {
         Type type = typeof(DamageType);
         List<string> damageTypeNames = [];
@@ -116,41 +108,37 @@ internal sealed class Enchant : ICommand
         byte value = 0;
         foreach (string name in Enum.GetNames(type))
         {
-            damageTypeNames.Add(translationSet.Translate("Commands.Enchant.DamageTypes.DamageType", value, name));
+            damageTypeNames.Add(Main.Translate("Commands.Enchant.DamageTypes.DamageType", value, name));
             value++;
         }
 
-        chatManager.AddMessage(
-            translationSet.Translate(
-                "Commands.Enchant.DamageTypes",
-                string.Join(
-                    translationSet.Translate("Commands.Enchant.DamageTypes.Separator"),
-                    damageTypeNames
-                )
+        Chat.AddTranslatedMessage(
+            "Commands.Enchant.DamageTypes",
+            string.Join(
+                Main.Translate("Commands.Enchant.DamageTypes.Separator"),
+                damageTypeNames
             )
         );
     }
 
-    private void DisplayModifiers(Core.Managers.Chat chatManager, TranslationSet translationSet, ScriptableStatModifierTable scriptableStatModifierTable)
+    private void DisplayModifiers(ScriptableStatModifierTable scriptableStatModifierTable)
     {
         List<string> modifierNames = [];
 
         foreach (StatModifierSlot statModifierSlot in scriptableStatModifierTable._statModifierSlots)
             modifierNames.Add(
-                translationSet.Translate(
+                Main.Translate(
                     "Commands.Enchant.Modifiers.Modifier",
                     statModifierSlot._equipModifier._modifierID,
                     statModifierSlot._equipModifier._modifierTag
                 )
             );
 
-        chatManager.AddMessage(
-            translationSet.Translate(
-                "Commands.Enchant.Modifiers",
-                string.Join(
-                    translationSet.Translate("Commands.Enchant.Modifiers.Separator"),
-                    modifierNames
-                )
+        Chat.AddTranslatedMessage(
+            "Commands.Enchant.Modifiers",
+            string.Join(
+                Main.Translate("Commands.Enchant.Modifiers.Separator"),
+                modifierNames
             )
         );
     }

@@ -1,21 +1,12 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Experience : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Experience()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         IReadOnlyList<string> arguments = context.Arguments;
@@ -23,19 +14,19 @@ internal sealed class Experience : ICommand
 
         if (!player._isHostPlayer)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Experience.NotHost"));
+            Chat.AddTranslatedMessage("Commands.Experience.NotHost");
             return;
         }
 
         if (arguments.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Experience.DeltaNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.Experience.DeltaNotSpecified");
             return;
         }
 
         if (!int.TryParse(arguments[0], out int Delta))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Experience.DeltaNotInteger"));
+            Chat.AddTranslatedMessage("Commands.Experience.DeltaNotInteger");
             return;
         }
 

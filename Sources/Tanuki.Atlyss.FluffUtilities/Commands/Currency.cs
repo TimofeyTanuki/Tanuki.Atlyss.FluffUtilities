@@ -1,21 +1,12 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Currency : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Currency()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         IReadOnlyList<string> arguments = context.Arguments;
@@ -23,13 +14,13 @@ internal sealed class Currency : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Currency.DeltaNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.Currency.DeltaNotSpecified");
             return;
         }
 
         if (!int.TryParse(arguments[0], out int delta))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Currency.DeltaNotInteger"));
+            Chat.AddTranslatedMessage("Commands.Currency.DeltaNotInteger");
             return;
         }
 

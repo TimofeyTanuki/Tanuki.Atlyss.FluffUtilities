@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.Core.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Item : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Item()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
+    private IReadOnlyDictionary<string, ScriptableItem> CachedScriptableItems => Game.Accessors.GameManager._cachedScriptableItems(GameManager._current);
 
     public void Execute(IContext context)
     {
@@ -25,7 +18,7 @@ internal sealed class Item : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Item.InvalidParameters"));
+            Chat.AddTranslatedMessage("Commands.Item.InvalidParameters");
             return;
         }
 
@@ -40,11 +33,9 @@ internal sealed class Item : ICommand
 
         string itemName = Core.Extensions.String.Join(" ", arguments, 0, namePartsCount);
 
-        IReadOnlyDictionary<string, ScriptableItem> cachedScriptableItems = Game.Accessors.GameManager._cachedScriptableItems(GameManager._current);
-
-        if (!cachedScriptableItems.TryGetValueFlexible(itemName, out ScriptableItem scriptableItem, false, StringComparison.OrdinalIgnoreCase))
+        if (!CachedScriptableItems.TryGetValueFlexible(itemName, out ScriptableItem scriptableItem, false, StringComparison.OrdinalIgnoreCase))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Item.ItemNotFound", itemName));
+            Chat.AddTranslatedMessage("Commands.Item.ItemNotFound", itemName);
             return;
         }
 

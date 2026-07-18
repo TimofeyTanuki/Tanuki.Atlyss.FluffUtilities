@@ -4,24 +4,14 @@ using System.Linq;
 using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.FluffUtilities.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class ListQuests : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    private static readonly IReadOnlyDictionary<string, ScriptableQuest> cachedScriptableItems;
-
-    static ListQuests()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-
-        cachedScriptableItems = Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current);
-    }
+    private IReadOnlyDictionary<string, ScriptableQuest> CachedScriptableItems => Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current);
 
     public void Execute(IContext context)
     {
@@ -34,39 +24,37 @@ internal sealed class ListQuests : ICommand
     }
 
     private void DisplayAll() =>
-        chatManager.AddMessage(
-            translationSet.Translate(
-                "Commands.ListQuests.All",
-                string.Join(
-                    translationSet.Translate("Commands.ListQuests.Separator"),
-                    cachedScriptableItems.Keys
-                        .OrderBy(x => x)
-                        .Select(x => x)
-                )
+        Chat.AddTranslatedMessage(
+            "Commands.ListQuests.All",
+            string.Join(
+                Main.Translate("Commands.ListQuests.Separator"),
+                CachedScriptableItems.Keys
+                    .OrderBy(x => x)
+                    .Select(x => x)
             )
         );
 
     private void DisplaySearch(string match)
     {
         List<string> matches =
-            cachedScriptableItems.GetHighlightedKeys(
+            CachedScriptableItems.GetHighlightedKeys(
                 match,
-                translationSet.Translate("Commands.ListQuests.Search.Match"),
+                Main.Translate("Commands.ListQuests.Search.Match"),
                 StringComparison.OrdinalIgnoreCase
             );
 
-        chatManager.AddMessage(
+        Chat.AddTranslatedMessage(
             matches.Count > 0 ?
-                translationSet.Translate(
+                Main.Translate(
                     "Commands.ListQuests.Search",
                     match,
                     string.Join(
-                        translationSet.Translate("Commands.ListQuests.Separator"),
+                        Main.Translate("Commands.ListQuests.Separator"),
                         matches
                     )
                 )
                 :
-                translationSet.Translate("Commands.ListQuests.Search.QuestsNotFound", match)
+                Main.Translate("Commands.ListQuests.Search.QuestsNotFound", match)
         );
     }
 }

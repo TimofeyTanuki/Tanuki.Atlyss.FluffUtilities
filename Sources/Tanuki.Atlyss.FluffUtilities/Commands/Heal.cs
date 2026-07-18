@@ -1,21 +1,13 @@
 ﻿using System.Collections.Generic;
 using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class Heal : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static Heal()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         IReadOnlyList<string> arguments = context.Arguments;
@@ -23,19 +15,19 @@ internal sealed class Heal : ICommand
 
         if (!player._isHostPlayer)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Heal.NotHost"));
+            Chat.AddTranslatedMessage("Commands.Heal.NotHost");
             return;
         }
 
         if (arguments.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Heal.DeltaNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.Heal.DeltaNotSpecified");
             return;
         }
 
         if (!int.TryParse(arguments[0], out int Delta))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.Heal.DeltaNotInteger"));
+            Chat.AddTranslatedMessage("Commands.Heal.DeltaNotInteger");
             return;
         }
 

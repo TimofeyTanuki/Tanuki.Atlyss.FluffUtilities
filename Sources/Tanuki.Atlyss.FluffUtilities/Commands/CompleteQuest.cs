@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class CompleteQuest : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static CompleteQuest()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         Player player = Player._mainPlayer;
@@ -24,7 +15,7 @@ internal sealed class CompleteQuest : ICommand
 
         if (questName.Length == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.CompleteQuest.QuestNotSpecified");
             return;
         }
 
@@ -33,7 +24,7 @@ internal sealed class CompleteQuest : ICommand
 
         if (questProgressStructs.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.NoQuests"));
+            Chat.AddTranslatedMessage("Commands.CompleteQuest.NoQuests");
             return;
         }
 
@@ -61,6 +52,6 @@ internal sealed class CompleteQuest : ICommand
             return;
         }
 
-        chatManager.AddMessage(translationSet.Translate("Commands.CompleteQuest.QuestNotFound", questName));
+        Chat.AddTranslatedMessage("Commands.CompleteQuest.QuestNotFound", questName);
     }
 }

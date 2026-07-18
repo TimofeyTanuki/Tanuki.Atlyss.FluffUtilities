@@ -1,30 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.Core.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class GetQuest : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    static GetQuest()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-    }
-
     public void Execute(IContext context)
     {
         string questName = string.Join(" ", context.Arguments);
 
         if (questName.Length == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.GetQuest.QuestNotSpecified");
             return;
         }
 
@@ -32,7 +23,7 @@ internal sealed class GetQuest : ICommand
 
         if (!cachedScriptableQuests.TryGetValueFlexible(questName, out ScriptableQuest scriptableQuest, false, StringComparison.OrdinalIgnoreCase))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestNotFound", questName));
+            Chat.AddTranslatedMessage("Commands.GetQuest.QuestNotFound", questName);
             return;
         }
 
@@ -40,13 +31,13 @@ internal sealed class GetQuest : ICommand
 
         if (playerQuesting.Check_HasQuest(scriptableQuest))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.QuestAlreadyActive", scriptableQuest._questName));
+            Chat.AddTranslatedMessage("Commands.GetQuest.QuestAlreadyActive", scriptableQuest._questName);
             return;
         }
 
         if (playerQuesting._questProgressData.Count >= playerQuesting._questLogLimit)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.GetQuest.ActiveQuestsLimit"));
+            Chat.AddTranslatedMessage("Commands.GetQuest.ActiveQuestsLimit");
             return;
         }
 

@@ -4,24 +4,14 @@ using System.Linq;
 using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.FluffUtilities.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class ListItems : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
-    private static readonly IReadOnlyDictionary<string, ScriptableItem> cachedScriptableItems;
-
-    static ListItems()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-
-        cachedScriptableItems = Game.Accessors.GameManager._cachedScriptableItems(GameManager._current);
-    }
+    private IReadOnlyDictionary<string, ScriptableItem> CachedScriptableItems => Game.Accessors.GameManager._cachedScriptableItems(GameManager._current);
 
     public void Execute(IContext context)
     {
@@ -34,12 +24,12 @@ internal sealed class ListItems : ICommand
     }
 
     private void DisplayAll() =>
-        chatManager.AddMessage(
-            translationSet.Translate(
+        Chat.AddTranslatedMessage(
+            Main.Translate(
                 "Commands.ListItems.All",
                 string.Join(
-                    translationSet.Translate("Commands.ListItems.Separator"),
-                    cachedScriptableItems.Keys
+                    Main.Translate("Commands.ListItems.Separator"),
+                    CachedScriptableItems.Keys
                         .OrderBy(x => x)
                         .Select(x => x)
                 )
@@ -49,24 +39,24 @@ internal sealed class ListItems : ICommand
     private void DisplaySearch(string match)
     {
         List<string> matches =
-            cachedScriptableItems.GetHighlightedKeys(
+            CachedScriptableItems.GetHighlightedKeys(
                 match,
-                translationSet.Translate("Commands.ListItems.Search.Match"),
+                Main.Translate("Commands.ListItems.Search.Match"),
                 StringComparison.OrdinalIgnoreCase
             );
 
-        chatManager.AddMessage(
+        Chat.AddTranslatedMessage(
             matches.Count > 0 ?
-                translationSet.Translate(
+                Main.Translate(
                     "Commands.ListItems.Search",
                     match,
                     string.Join(
-                        translationSet.Translate("Commands.ListItems.Separator"),
+                        Main.Translate("Commands.ListItems.Separator"),
                         matches
                     )
                 )
                 :
-                translationSet.Translate("Commands.ListItems.Search.ItemsNotFound", match)
+                Main.Translate("Commands.ListItems.Search.ItemsNotFound", match)
         );
     }
 }

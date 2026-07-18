@@ -1,22 +1,16 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class MoveSpeed : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-
     private static bool state;
 
     static MoveSpeed()
     {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-
         state = false;
 
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnAtlyssNetworkManagerStopClient;
@@ -34,18 +28,18 @@ internal sealed class MoveSpeed : ICommand
             {
                 playerMove._movSpeed = GameManager._current._statLogics._baseMoveSpeed;
 
-                chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.Reset"));
+                Chat.AddTranslatedMessage("Commands.MoveSpeed.Reset");
                 player._pSound._aSrcGeneral.PlayOneShot(Player._mainPlayer._pSound._lockonSound);
             }
             else
-                chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotSpecified"));
+                Chat.AddTranslatedMessage("Commands.MoveSpeed.SpeedNotSpecified");
 
             return;
         }
 
         if (!float.TryParse(arguments[0], out float speed))
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.SpeedNotFloat"));
+            Chat.AddTranslatedMessage("Commands.MoveSpeed.SpeedNotFloat");
             return;
         }
 
@@ -54,7 +48,7 @@ internal sealed class MoveSpeed : ICommand
 
         state = true;
         playerMove._movSpeed = speed;
-        chatManager.AddMessage(translationSet.Translate("Commands.MoveSpeed.Enabled", speed));
+        Chat.AddTranslatedMessage("Commands.MoveSpeed.Enabled", speed);
         player._pSound._aSrcGeneral.PlayOneShot(player._pSound._lockoutSound);
     }
 

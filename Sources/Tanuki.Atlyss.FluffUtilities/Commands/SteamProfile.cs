@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -8,17 +8,6 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class SteamProfile : ICommand
 {
-    private static readonly Core.Managers.Chat chatManager;
-    private static readonly TranslationSet translationSet;
-    private static readonly Game.Providers.Player playerProvider;
-
-    static SteamProfile()
-    {
-        chatManager = Core.Tanuki.Instance.Managers.Chat;
-        translationSet = Main.Instance.TranslationSet;
-        playerProvider = Game.Tanuki.Instance.Providers.Player;
-    }
-
     public void Execute(IContext context)
     {
         IReadOnlyList<string> arguments = context.Arguments;
@@ -26,15 +15,15 @@ internal sealed class SteamProfile : ICommand
 
         if (arguments.Count == 0)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.SteamProfile.NicknameNotSpecified"));
+            Chat.AddTranslatedMessage("Commands.SteamProfile.NicknameNotSpecified");
             return;
         }
 
-        Player? targetPlayer = playerProvider.FindByFlexibleInput(string.Join(" ", arguments));
+        Player? targetPlayer = Game.Tanuki.Instance.Providers.Player.FindByFlexibleInput(string.Join(" ", arguments));
 
         if (targetPlayer is null)
         {
-            chatManager.AddMessage(translationSet.Translate("Commands.SteamProfile.PlayerNotFound"));
+            Chat.AddTranslatedMessage("Commands.SteamProfile.PlayerNotFound");
             return;
         }
 

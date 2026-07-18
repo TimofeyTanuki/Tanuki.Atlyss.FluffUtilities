@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tanuki.Atlyss.FluffUtilities.Extensions;
 
-public static class StringKeyedDictionary
+public static class StringKeyedDictionaryExtensions
 {
     extension<T>(IReadOnlyDictionary<string, T> instance)
     {
