@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Tanuki.Atlyss.API.Collections;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.FluffUtilities.Helpers;
 

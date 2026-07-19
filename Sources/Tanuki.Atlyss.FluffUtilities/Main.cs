@@ -1,5 +1,4 @@
-﻿using BepInEx.Logging;
-using Steamworks;
+﻿using Steamworks;
 using Tanuki.Atlyss.FluffUtilities.Managers;
 
 namespace Tanuki.Atlyss.FluffUtilities;
@@ -10,7 +9,6 @@ namespace Tanuki.Atlyss.FluffUtilities;
 public sealed class Main : Core.Bases.Plugin
 {
     private static Main instance = null!;
-    private ManualLogSource manualLogSource = null!;
     private Types.Managers managers = null!;
     private bool reloaded = false;
 
@@ -21,7 +19,6 @@ public sealed class Main : Core.Bases.Plugin
     private void Awake()
     {
         instance = this;
-        manualLogSource = Logger;
 
         Configuration.Initialize(Config);
 
@@ -36,7 +33,7 @@ public sealed class Main : Core.Bases.Plugin
 
     protected override void Load()
     {
-        manualLogSource.LogInfo("Tanuki.Atlyss.FluffUtilities by Timofey Tanuki / tanu.su");
+        Logger.LogInfo("Tanuki.Atlyss.FluffUtilities by Timofey Tanuki / tanu.su");
 
         if (reloaded)
             Config.Reload();
