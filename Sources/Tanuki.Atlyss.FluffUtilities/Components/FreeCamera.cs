@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Components;
@@ -120,9 +121,10 @@ internal sealed class FreeCamera : MonoBehaviour
 
     private void OnStopClient() => Destroy(this);
 
-#pragma warning disable IDE0051
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Start() => inputSystem = UnityInput.Current;
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Awake()
     {
         if (instance && instance != this)
@@ -141,6 +143,7 @@ internal sealed class FreeCamera : MonoBehaviour
         inputControlManager = InputControlManager.current;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnEnable()
     {
         rotationX = CameraFunction._current._RotX;
@@ -153,6 +156,7 @@ internal sealed class FreeCamera : MonoBehaviour
             Game.Patches.PlayerMove.Client_LocalPlayerControl.OnPrefix += PreventLocalPlayerControl;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnDisable()
     {
         if (lockCharacterControl)
@@ -170,17 +174,18 @@ internal sealed class FreeCamera : MonoBehaviour
         cameraFunction.CameraReset_Lerp();
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnDestroy()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix -= OnStopClient;
         instance = null;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Update()
     {
         HandleControls();
         HandleRotation();
         HandlePosition();
     }
-#pragma warning restore IDE0051
 }

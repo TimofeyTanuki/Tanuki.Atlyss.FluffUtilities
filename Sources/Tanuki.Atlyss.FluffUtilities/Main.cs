@@ -1,4 +1,5 @@
 ﻿using Steamworks;
+using System.Diagnostics.CodeAnalysis;
 using Tanuki.Atlyss.FluffUtilities.Managers;
 
 namespace Tanuki.Atlyss.FluffUtilities;
@@ -9,13 +10,13 @@ namespace Tanuki.Atlyss.FluffUtilities;
 public sealed class Main : Core.Bases.Plugin
 {
     private static Main instance = null!;
-    private Types.Managers managers = null!;
+    private Types.Main.Managers managers = null!;
     private bool reloaded = false;
 
     public static Main Instance => instance;
-    public Types.Managers Managers => managers;
+    public Types.Main.Managers Managers => managers;
 
-#pragma warning disable IDE0051
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Awake()
     {
         instance = this;
@@ -26,10 +27,10 @@ public sealed class Main : Core.Bases.Plugin
         {
             NoClip = new(),
             FreeCamera = new(),
+            GameWorld = new(),
             NessieEasySettings = NessieEasySettings.GetInstance()
         };
     }
-#pragma warning restore IDE0051
 
     protected override void Load()
     {

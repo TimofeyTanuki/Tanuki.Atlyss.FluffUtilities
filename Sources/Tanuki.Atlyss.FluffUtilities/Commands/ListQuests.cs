@@ -42,18 +42,16 @@ internal sealed class ListQuests : ICommand
                 StringComparison.OrdinalIgnoreCase
             );
 
-        Chat.AddTranslatedMessage(
-            matches.Count > 0 ?
-                Main.Translate(
-                    "Commands.ListQuests.Search",
-                    match,
-                    string.Join(
-                        Main.Translate("Commands.ListQuests.Separator"),
-                        matches
-                    )
+        if (matches.Count > 0)
+            Chat.AddTranslatedMessage(
+                "Commands.ListQuests.Search",
+                match,
+                string.Join(
+                    Main.Translate("Commands.ListQuests.Separator"),
+                    matches
                 )
-                :
-                Main.Translate("Commands.ListQuests.Search.QuestsNotFound", match)
-        );
+            );
+        else
+            Chat.AddTranslatedMessage("Commands.ListQuests.Search.QuestsNotFound", match);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Components;
@@ -58,9 +59,10 @@ internal sealed class NoClip : MonoBehaviour
 
     private void OnStopClient() => Destroy(this);
 
-#pragma warning disable IDE0051
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Start() => inputSystem = UnityInput.Current;
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Awake()
     {
         if (instance && instance != this)
@@ -80,6 +82,7 @@ internal sealed class NoClip : MonoBehaviour
         cameraCollision = CameraCollision._current;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnEnable()
     {
         player._pMove._playerController.enabled = false;
@@ -88,6 +91,7 @@ internal sealed class NoClip : MonoBehaviour
         Game.Patches.PlayerMove.Client_LocalPlayerControl.OnPrefix += PreventLocalPlayerControl;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnDisable()
     {
         Game.Patches.PlayerMove.Client_LocalPlayerControl.OnPrefix -= PreventLocalPlayerControl;
@@ -101,12 +105,14 @@ internal sealed class NoClip : MonoBehaviour
         cameraCollision.enabled = true;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void OnDestroy()
     {
         Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix -= OnStopClient;
         instance = null;
     }
 
+    [SuppressMessage("CodeQuality", "IDE0051")]
     private void Update()
     {
         if (player._inChat)
@@ -134,5 +140,4 @@ internal sealed class NoClip : MonoBehaviour
 
         playerTransform.Translate(positionShift);
     }
-#pragma warning restore IDE0051
 }

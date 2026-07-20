@@ -24,14 +24,12 @@ internal sealed class ListItems : ICommand
 
     private void DisplayAll() =>
         Chat.AddTranslatedMessage(
-            Main.Translate(
-                "Commands.ListItems.All",
-                string.Join(
-                    Main.Translate("Commands.ListItems.Separator"),
-                    CachedScriptableItems.Keys
-                        .OrderBy(x => x)
-                        .Select(x => x)
-                )
+            "Commands.ListItems.All",
+            string.Join(
+                Main.Translate("Commands.ListItems.Separator"),
+                CachedScriptableItems.Keys
+                    .OrderBy(x => x)
+                    .Select(x => x)
             )
         );
 
@@ -44,18 +42,16 @@ internal sealed class ListItems : ICommand
                 StringComparison.OrdinalIgnoreCase
             );
 
-        Chat.AddTranslatedMessage(
-            matches.Count > 0 ?
-                Main.Translate(
-                    "Commands.ListItems.Search",
-                    match,
-                    string.Join(
-                        Main.Translate("Commands.ListItems.Separator"),
-                        matches
-                    )
+        if (matches.Count > 0)
+            Chat.AddTranslatedMessage(
+                "Commands.ListItems.Search",
+                match,
+                string.Join(
+                    Main.Translate("Commands.ListItems.Separator"),
+                    matches
                 )
-                :
-                Main.Translate("Commands.ListItems.Search.ItemsNotFound", match)
-        );
+            );
+        else
+            Chat.AddTranslatedMessage("Commands.ListItems.Search.ItemsNotFound", match);
     }
 }

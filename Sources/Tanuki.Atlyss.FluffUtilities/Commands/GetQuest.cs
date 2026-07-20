@@ -9,6 +9,8 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class GetQuest : ICommand
 {
+    private IReadOnlyDictionary<string, ScriptableQuest> CachedScriptableQuests => Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current);
+
     public void Execute(IContext context)
     {
         string questName = string.Join(" ", context.Arguments);
@@ -19,9 +21,7 @@ internal sealed class GetQuest : ICommand
             return;
         }
 
-        Dictionary<string, ScriptableQuest> cachedScriptableQuests = Game.Accessors.GameManager._cachedScriptableQuests(GameManager._current);
-
-        if (!cachedScriptableQuests.TryGetValueFlexible(questName, out ScriptableQuest scriptableQuest, false, StringComparison.OrdinalIgnoreCase))
+        if (!CachedScriptableQuests.TryGetValueFlexible(questName, out ScriptableQuest scriptableQuest, false, StringComparison.OrdinalIgnoreCase))
         {
             Chat.AddTranslatedMessage("Commands.GetQuest.QuestNotFound", questName);
             return;

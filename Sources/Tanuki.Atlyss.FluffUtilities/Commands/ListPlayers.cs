@@ -12,20 +12,11 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class ListPlayers : ICommand
 {
-    private static readonly Game.Providers.Player playerProvider;
-    private static readonly Network.Providers.SteamLobby steamLobbyProvider;
-
-    static ListPlayers()
-    {
-        playerProvider = Game.Tanuki.Instance.Providers.Player;
-        steamLobbyProvider = Network.Tanuki.Instance.Providers.SteamLobby;
-    }
-
     public void Execute(IContext context)
     {
         List<Entry> playerEntries = [];
 
-        foreach (Entry entry in playerProvider.PlayerEntries.Values)
+        foreach (Entry entry in Game.Tanuki.Instance.Providers.Player.PlayerEntries.Values)
         {
             if (entry.SteamId == CSteamID.Nil)
                 continue;
@@ -38,6 +29,8 @@ internal sealed class ListPlayers : ICommand
 
     private IEnumerator DisplayPlayers(List<Entry> playerEntries)
     {
+        Network.Providers.SteamLobby steamLobbyProvider = Network.Tanuki.Instance.Providers.SteamLobby;
+
         StringBuilder stringBuilder = new();
 
         foreach (Entry playerEntry in playerEntries)
@@ -76,7 +69,7 @@ internal sealed class ListPlayers : ICommand
         }
 
         stringBuilder.Insert(0, Main.Translate("Commands.ListPlayers.Header", playerEntries.Count));
-        Chat.AddTranslatedMessage(stringBuilder.ToString());
+        Chat.AddMessage(stringBuilder.ToString());
 
         yield break;
     }

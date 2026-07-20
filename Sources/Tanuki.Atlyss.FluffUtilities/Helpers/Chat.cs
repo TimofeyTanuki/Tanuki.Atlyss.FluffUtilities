@@ -6,4 +6,7 @@ internal sealed class Chat
 {
     public static void AddTranslatedMessage(string translationKey, params object[] placeholder) =>
         Core.Tanuki.Instance.Managers.Chat.AddMessage(Main.Translate(translationKey, placeholder));
+
+    public static void AddMessage(string message) =>
+        Core.Tanuki.Instance.Managers.Chat.AddMessage(message);
 }

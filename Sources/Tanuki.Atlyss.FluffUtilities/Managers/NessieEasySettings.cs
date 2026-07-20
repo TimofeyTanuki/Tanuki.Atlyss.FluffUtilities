@@ -132,7 +132,7 @@ internal sealed class NessieEasySettings
 
     private void OnApplySettings()
     {
-        Types.Managers managers = Main.Instance.Managers;
+        Types.Main.Managers managers = Main.Instance.Managers;
 
         if (HasPendingUpdate(ESettingsUpdate.FreeCamera))
             managers.FreeCamera.Reconfigure();
