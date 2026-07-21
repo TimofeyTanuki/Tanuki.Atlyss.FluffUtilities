@@ -4,8 +4,8 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers.GameWorld.Controllers;
 
 public sealed class Time
 {
-    private MapInstance MapInstance => Player._mainPlayer._playerMapInstance;
-    private GameWorldManager GameWorldManager => GameWorldManager._current;
+    private static MapInstance MapInstance => Player._mainPlayer._playerMapInstance;
+    private static GameWorldManager GameWorldManager => GameWorldManager._current;
 
     private bool hostSync = true;
     public int cachedTime;
@@ -30,17 +30,17 @@ public sealed class Time
         if (active)
         {
             Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix -= SimulateLocalDayNightCycle;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplyLocalTimeToMapAfterSync;
+            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplySimulationToMapAfterSync;
             Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix -= CacheHostTimeOnSync;
 
             ApplyHostTimeToMap();
         }
         else
         {
-            CacheSynchronizedTime();
+            CacheSynchronizedVariables();
 
             Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix += SimulateLocalDayNightCycle;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplyLocalTimeToMapAfterSync;
+            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplySimulationToMapAfterSync;
             Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix += CacheHostTimeOnSync;
         }
     }
@@ -84,10 +84,10 @@ public sealed class Time
                 gameWorldManager._worldTime = WorldTime.NIGHT;
         }
 
-        ApplyLocalTimeToMap();
+        ApplySimulationToMap();
     }
 
-    public void ApplyLocalTimeToMap()
+    public void ApplySimulationToMap()
     {
         MapInstance mapInstance = MapInstance;
 
@@ -113,9 +113,11 @@ public sealed class Time
         mapInstance._instanceTime = cachedTime;
     }
 
-    private void CacheSynchronizedTime()
+    private void CacheSynchronizedVariables()
     {
         MapInstance mapInstance = MapInstance;
+
+        System.Console.WriteLine($"{mapInstance._mapName}");
 
         if (!mapInstance)
             return;
@@ -125,7 +127,7 @@ public sealed class Time
         cachedTime = mapInstance._instanceTime;
     }
 
-    private void ApplyLocalTimeToMapAfterSync(MapInstance instance, NetworkReader reader, bool arg3, int arg4) => ApplyLocalTimeToMap();
+    private void ApplySimulationToMapAfterSync(MapInstance instance, NetworkReader reader, bool arg3, int arg4) => ApplySimulationToMap();
 
     private void CacheHostTimeOnSync(MapInstance instance, NetworkReader reader, bool initialState, int initialPosition)
     {

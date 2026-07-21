@@ -118,7 +118,7 @@
       "tp"
     ],
     "Help": "Телепортироваться к игроку.",
-    "Syntax": "<SteamID/NetID/никнейм>"
+    "Syntax": "<SteamID|NetID|никнейм>"
   },
   "Tanuki.Atlyss.FluffUtilities.Commands.Experience": {
     "Names": [
@@ -166,14 +166,20 @@
       "cq"
     ],
     "Help": "Выполнить принятое задание.",
-    "Syntax": "<название/*>"
+    "Syntax": "<название|*>"
   },
-  "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
+  "Tanuki.Atlyss.FluffUtilities.Commands.Time": {
     "Names": [
-      "set-time",
-      "st"
+      "time"
     ],
     "Help": "Установить время.",
     "Syntax": "[время]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Weather": {
+    "Names": [
+      "weather"
+    ],
+    "Help": "Установить состояние погоды.",
+    "Syntax": "[0|1]"
   }
 }

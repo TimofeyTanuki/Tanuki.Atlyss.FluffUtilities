@@ -7,7 +7,7 @@ using Tanuki.Atlyss.FluffUtilities.Helpers;
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
 
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
-internal sealed class TimeSet : ICommand
+internal sealed class Time : ICommand
 {
     Managers.GameWorld.Controllers.Time TimeController => Main.Instance.Managers.GameWorld.TimeController;
 
@@ -19,18 +19,18 @@ internal sealed class TimeSet : ICommand
         {
             if (TimeController.HostSync)
             {
-                Chat.AddTranslatedMessage("Commands.TimeSet.TimeNotSpecified");
+                Chat.AddTranslatedMessage("Commands.Time.TimeNotSpecified");
                 return;
             }
 
             TimeController.SetHostSyncState(true);
-            Chat.AddTranslatedMessage("Commands.TimeSet.FollowingHostTime");
+            Chat.AddTranslatedMessage("Commands.Time.HostSync");
             return;
         }
 
         if (!byte.TryParse(arguments[0], out byte time))
         {
-            Chat.AddTranslatedMessage("Commands.TimeSet.InvalidTime");
+            Chat.AddTranslatedMessage("Commands.Time.InvalidTime");
             return;
         }
 
@@ -40,9 +40,9 @@ internal sealed class TimeSet : ICommand
             if (!Enum.TryParse(arguments[1], true, out clockSetting))
             {
                 Chat.AddTranslatedMessage(
-                    "Commands.TimeSet.Meridiems",
+                    "Commands.Time.Meridiems",
                     string.Join(
-                        Main.Translate("Commands.TimeSet.Meridiems.Separator"),
+                        Main.Translate("Commands.Time.Meridiems.Separator"),
                         Enum.GetNames(typeof(ClockSetting))
                     )
                 );
@@ -60,11 +60,11 @@ internal sealed class TimeSet : ICommand
             time = 12;
 
         if (Player._mainPlayer._isHostPlayer)
-            Chat.AddTranslatedMessage("Commands.TimeSet.Host", time, clockSetting);
+            Chat.AddTranslatedMessage("Commands.Time.Host", time, clockSetting);
         else
         {
             TimeController.SetHostSyncState(false);
-            Chat.AddTranslatedMessage("Commands.TimeSet.Client", time, clockSetting);
+            Chat.AddTranslatedMessage("Commands.Time.Client", time, clockSetting);
         }
 
         GameWorldManager gameWorldManager = GameWorldManager._current;
@@ -74,6 +74,6 @@ internal sealed class TimeSet : ICommand
         gameWorldManager._worldTime = (clockSetting == ClockSetting.AM && time >= 6) || (clockSetting == ClockSetting.PM && time < 8) ? WorldTime.DAY : WorldTime.NIGHT;
         Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(gameWorldManager) = 0f;
 
-        TimeController.ApplyLocalTimeToMap();
+        TimeController.ApplySimulationToMap();
     }
 }

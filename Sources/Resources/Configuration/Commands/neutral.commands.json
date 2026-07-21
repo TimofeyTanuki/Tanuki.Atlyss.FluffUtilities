@@ -118,7 +118,7 @@
       "tp"
     ],
     "Help": "Teleport to a player.",
-    "Syntax": "<SteamID/NetID/nickname>"
+    "Syntax": "<SteamID|NetID|nickname>"
   },
   "Tanuki.Atlyss.FluffUtilities.Commands.Experience": {
     "Names": [
@@ -166,14 +166,20 @@
       "cq"
     ],
     "Help": "Complete accepted quests.",
-    "Syntax": "<name/*>"
+    "Syntax": "<name|*>"
   },
-  "Tanuki.Atlyss.FluffUtilities.Commands.TimeSet": {
+  "Tanuki.Atlyss.FluffUtilities.Commands.Time": {
     "Names": [
-      "set-time",
-      "stime"
+      "time"
     ],
     "Help": "Set the time.",
     "Syntax": "[time]"
+  },
+  "Tanuki.Atlyss.FluffUtilities.Commands.Weather": {
+    "Names": [
+      "weather"
+    ],
+    "Help": "Set the weather state.",
+    "Syntax": "[0|1]"
   }
 }
