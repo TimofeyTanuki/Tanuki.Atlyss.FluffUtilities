@@ -65,5 +65,6 @@ internal sealed class Immortality : ICommand
 
         ShouldAllow = false;
         StatusEntity.Rpc_DisplayBlockHitEffect(StatusEntity, 1, false, DamageStruct._damageType == DamageType.Mind, DamageStruct._colliderHitPoint);
+        // StatusEntity.Rpc_DisplayBlockHitEffect(StatusEntity, 1, false, DamageStruct._colliderHitPoint); // For QA-build
     }
 }

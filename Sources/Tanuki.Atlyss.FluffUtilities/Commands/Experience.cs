@@ -44,6 +44,7 @@ internal sealed class Experience : ICommand
                 NewLevel--;
                 Delta -= NewExperience;
                 NewExperience = (int)GameManager._current._statLogics._experienceCurve.Evaluate(NewLevel);
+                // NewExperience = (int)GameManager._current._statLogics._logicCurveTable._experienceCurve.Evaluate(NewLevel); // For QA-build
             }
 
             NewExperience -= Delta;

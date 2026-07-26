@@ -14,7 +14,7 @@ public sealed class Weather
     public bool HostSync => hostSync;
 
     internal Weather() =>
-        Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnStopClient;
+        Atlyss.Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnStopClient;
 
     private void OnStopClient() =>
         SetHostSyncState(true);
@@ -31,8 +31,8 @@ public sealed class Weather
 
         if (active)
         {
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix -= CacheHostWeatherOnSync;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplySimulationToMapAfterSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix -= CacheHostWeatherOnSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplySimulationToMapAfterSync;
 
             ApplyHostWeatherToMap();
         }
@@ -40,8 +40,8 @@ public sealed class Weather
         {
             CacheSynchronizedVariables();
 
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix += CacheHostWeatherOnSync;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplySimulationToMapAfterSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix += CacheHostWeatherOnSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplySimulationToMapAfterSync;
         }
     }
 

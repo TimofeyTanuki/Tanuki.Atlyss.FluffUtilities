@@ -15,7 +15,7 @@ public sealed class Time
     public bool HostSync => hostSync;
 
     internal Time() =>
-        Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnStopClient;
+        Atlyss.Game.Patches.AtlyssNetworkManager.OnStopClient.OnPrefix += OnStopClient;
 
     public void SetHostSyncState(bool active)
     {
@@ -29,9 +29,9 @@ public sealed class Time
 
         if (active)
         {
-            Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix -= SimulateLocalDayNightCycle;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplySimulationToMapAfterSync;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix -= CacheHostTimeOnSync;
+            Atlyss.Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix -= SimulateLocalDayNightCycle;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix -= ApplySimulationToMapAfterSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix -= CacheHostTimeOnSync;
 
             ApplyHostTimeToMap();
         }
@@ -39,9 +39,9 @@ public sealed class Time
         {
             CacheSynchronizedVariables();
 
-            Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix += SimulateLocalDayNightCycle;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplySimulationToMapAfterSync;
-            Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix += CacheHostTimeOnSync;
+            Atlyss.Game.Patches.GameWorldManager.Server_DayNightCycleRuntime.OnPostfix += SimulateLocalDayNightCycle;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPostfix += ApplySimulationToMapAfterSync;
+            Atlyss.Game.Patches.MapInstance.DeserializeSyncVars.OnPrefix += CacheHostTimeOnSync;
         }
     }
 
@@ -54,7 +54,7 @@ public sealed class Time
         if (gameWorldManager._dayNightCycleInterval <= 0)
             return;
 
-        ref float currentDayNightCycleBuffer = ref Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(gameWorldManager);
+        ref float currentDayNightCycleBuffer = ref Atlyss.Game.Accessors.GameWorldManager._currentDayNightCycleBuffer(gameWorldManager);
 
         if (currentDayNightCycleBuffer < gameWorldManager._dayNightCycleInterval)
         {
