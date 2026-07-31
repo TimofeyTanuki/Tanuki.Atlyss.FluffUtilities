@@ -5,11 +5,13 @@ public sealed class Managers
     private FluffUtilities.Managers.NoClip noClip = null!;
     private FluffUtilities.Managers.FreeCamera freeCamera = null!;
     private FluffUtilities.Managers.GameWorld.Manager gameWorld = null!;
+    private FluffUtilities.Managers.Game.Manager game = null!;
     internal FluffUtilities.Managers.NessieEasySettings NessieEasySettings = null!;
 
     public FluffUtilities.Managers.NoClip NoClip { get => noClip; internal set => noClip = value; }
     public FluffUtilities.Managers.FreeCamera FreeCamera { get => freeCamera; internal set => freeCamera = value; }
     public FluffUtilities.Managers.GameWorld.Manager GameWorld { get => gameWorld; internal set => gameWorld = value; }
+    public FluffUtilities.Managers.Game.Manager Game { get => game; internal set => game = value; }
 
     internal Managers() { }
 }

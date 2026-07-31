@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-public sealed class NoClip(ConfigFile configFile)
+internal sealed class NoClip(ConfigFile configFile)
 {
     private const string SECTION_NAME = "NoClip";
 

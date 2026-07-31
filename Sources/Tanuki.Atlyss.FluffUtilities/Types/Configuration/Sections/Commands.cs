@@ -2,7 +2,7 @@
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-public sealed class Commands(ConfigFile configFile)
+internal sealed class Commands(ConfigFile configFile)
 {
     private const string SECTION_NAME = "Commands";
 

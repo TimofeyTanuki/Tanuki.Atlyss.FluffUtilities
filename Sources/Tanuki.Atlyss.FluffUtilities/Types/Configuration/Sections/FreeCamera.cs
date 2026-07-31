@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-public sealed class FreeCamera(ConfigFile configFile)
+internal sealed class FreeCamera(ConfigFile configFile)
 {
     private const string SECTION_NAME = "FreeCamera";
 

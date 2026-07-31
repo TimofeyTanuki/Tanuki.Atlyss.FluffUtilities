@@ -28,6 +28,7 @@ public sealed class Main : Core.Bases.Plugin
             NoClip = new(),
             FreeCamera = new(),
             GameWorld = new(),
+            Game = new(),
             NessieEasySettings = NessieEasySettings.GetInstance()
         };
     }

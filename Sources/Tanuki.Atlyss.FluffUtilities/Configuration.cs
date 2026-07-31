@@ -9,11 +9,11 @@ internal sealed class Configuration
 
     public Types.Configuration.Sections.Commands Commands;
     public PlayerAppearance PlayerAppearance;
-    public GlobalRaceDisplayParameters GlobalRaceDisplayParameters;
     public FreeCamera FreeCamera;
     public NoClip NoClip;
     public Hotkeys Hotkeys;
     public General General;
+    public RaceDisplayParametersOverride RaceDisplayParametersOverride;
 
     public static void Initialize(ConfigFile configFile)
     {
@@ -27,10 +27,10 @@ internal sealed class Configuration
     {
         Commands = new(configFile);
         PlayerAppearance = new(configFile);
-        GlobalRaceDisplayParameters = new(configFile);
         FreeCamera = new(configFile);
         NoClip = new(configFile);
         Hotkeys = new(configFile);
         General = new(configFile);
+        RaceDisplayParametersOverride = new(configFile);
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-public sealed class Hotkeys(ConfigFile ConfigFile)
+internal sealed class Hotkeys(ConfigFile ConfigFile)
 {
     private const string SECTION_NAME = "Hotkeys";
 
@@ -37,24 +37,4 @@ internal sealed class Hotkeys(ConfigFile ConfigFile)
         PlayerAppearance_ModifyBellySize = new(ref ConfigFile, "BellySize", 25, KeyCode.Keypad2, KeyCode.Keypad5),
         PlayerAppearance_ModifyBottomSize = new(ref ConfigFile, "BottomSize", 25, KeyCode.Keypad1, KeyCode.Keypad3),
         PlayerAppearance_ModifyVoicePitch = new(ref ConfigFile, "VoicePitch", 0.01f, KeyCode.None, KeyCode.None);
-
-    public readonly ConfigEntry<KeyCode>
-        FreeCamera = ConfigFile.Bind(SECTION_NAME, "FreeCamera", KeyCode.End),
-        FreeCamera_Forward = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Forward", KeyCode.W),
-        FreeCamera_Right = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Right", KeyCode.D),
-        FreeCamera_Backward = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Backward", KeyCode.S),
-        FreeCamera_Left = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Left", KeyCode.A),
-        FreeCamera_Up = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Up", KeyCode.Space),
-        FreeCamera_Down = ConfigFile.Bind(SECTION_NAME, "FreeCamera_Down", KeyCode.LeftShift);
-
-    public readonly ConfigEntry<KeyCode>
-        NoClip_Toggle = ConfigFile.Bind(SECTION_NAME, "NoClip_Toggle", KeyCode.Delete),
-        NoClip_AlternativeSpeedKey = ConfigFile.Bind(SECTION_NAME, "NoClip_AlternativeSpeedKey", KeyCode.LeftShift),
-        NoClip_Forward = ConfigFile.Bind(SECTION_NAME, "NoClip_Forward", KeyCode.W),
-        NoClip_Right = ConfigFile.Bind(SECTION_NAME, "NoClip_Right", KeyCode.D),
-        NoClip_Backward = ConfigFile.Bind(SECTION_NAME, "NoClip_Backward", KeyCode.S),
-        NoClip_Left = ConfigFile.Bind(SECTION_NAME, "NoClip_Left", KeyCode.A),
-        NoClip_Up = ConfigFile.Bind(SECTION_NAME, "NoClip_Up", KeyCode.Space),
-        NoClip_Down = ConfigFile.Bind(SECTION_NAME, "NoClip_Down", KeyCode.LeftControl);
-}
 */
