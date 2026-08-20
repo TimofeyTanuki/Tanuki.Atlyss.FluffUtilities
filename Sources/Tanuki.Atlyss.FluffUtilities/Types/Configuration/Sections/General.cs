@@ -1,4 +1,7 @@
 ﻿using BepInEx.Configuration;
+using System;
+using System.Globalization;
+using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
@@ -9,4 +12,7 @@ internal sealed class General(ConfigFile configFile)
     public readonly ConfigEntry<bool> PresenceEffectsOnJoin = configFile.Bind(SECTION_NAME, "PresenceEffectsOnJoin", true);
     public readonly ConfigEntry<bool> OtherPluginUserNotificationOnJoin = configFile.Bind(SECTION_NAME, "OtherPluginUserNotificationOnJoin", true);
     public readonly ConfigEntry<bool> HideUsagePresenceFromNonUserHosts = configFile.Bind(SECTION_NAME, "HideUsagePresenceFromNonUserHosts", false);
+
+    //public readonly ConfigEntry<FloatRange> test = configFile.Bind<FloatRange>(SECTION_NAME, "floatRangeTest", new());
+
 }

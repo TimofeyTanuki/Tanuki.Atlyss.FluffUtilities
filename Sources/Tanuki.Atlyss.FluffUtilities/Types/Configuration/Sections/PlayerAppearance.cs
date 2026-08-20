@@ -2,7 +2,7 @@
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-public class PlayerAppearance(ConfigFile ConfigFile)
+internal sealed class PlayerAppearance(ConfigFile ConfigFile)
 {
     private const string SECTION_NAME = "PlayerAppearance";
 

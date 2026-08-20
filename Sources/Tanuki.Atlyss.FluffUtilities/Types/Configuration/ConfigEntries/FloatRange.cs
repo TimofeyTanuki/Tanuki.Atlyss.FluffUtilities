@@ -1,6 +1,5 @@
 ﻿using BepInEx.Configuration;
 using System;
-using System.Numerics;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
@@ -15,11 +14,7 @@ public sealed class FloatRange : IDisposable
 
     public readonly ConfigEntry<float> Minimum, Maximum;
 
-    public FloatRange(
-        ConfigFile configFile,
-        EntryConfiguration minimum,
-        EntryConfiguration maximum
-    )
+    public FloatRange(ConfigFile configFile, EntryConfiguration minimum, EntryConfiguration maximum)
     {
         Minimum = configFile.Bind(minimum.ConfigDefinition, minimum.DefaultValue, minimum.ConfigDescription);
         Maximum = configFile.Bind(maximum.ConfigDefinition, maximum.DefaultValue, maximum.ConfigDescription);
@@ -48,6 +43,4 @@ public sealed class FloatRange : IDisposable
         Minimum.SettingChanged -= ValidateValues;
         Maximum.SettingChanged -= ValidateValues;
     }
-
-    public Vector2 ValueAsVector2 => new(Minimum.Value, Maximum.Value);
 }
