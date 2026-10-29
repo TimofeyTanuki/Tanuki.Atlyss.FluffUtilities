@@ -1,7 +1,4 @@
 ﻿using BepInEx.Configuration;
-using System;
-using System.Globalization;
-using UnityEngine;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 

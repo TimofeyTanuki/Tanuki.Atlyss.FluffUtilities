@@ -1,6 +1,7 @@
 ﻿using Nessie.ATLYSS.EasySettings;
 using Nessie.ATLYSS.EasySettings.UIElements;
 using System;
+using System.Collections.Generic;
 
 namespace Tanuki.Atlyss.FluffUtilities.Managers;
 
@@ -12,22 +13,14 @@ namespace Tanuki.Atlyss.FluffUtilities.Managers;
 /// </remarks>
 internal sealed class NessieEasySettings
 {
-    [Flags]
-    private enum ESettingsUpdate
-    {
-        None = 0,
-        FreeCamera = 1 << 0,
-        FreeCameraHotkeys = 1 << 1,
-        NoClip = 1 << 2,
-        NoClipHotkeys = 1 << 3
-    }
-
     public const string GUID = "EasySettings";
     private static NessieEasySettings? instance;
 
     public readonly bool IsAvailable = false;
 
-    private ESettingsUpdate pendingUpdates = ESettingsUpdate.None;
+    private readonly HashSet<Action> pendingActions = [];
+
+    public event Action<SettingsTab>? OnModSettingsTabInitialized;
 
     private NessieEasySettings()
     {
@@ -45,8 +38,6 @@ internal sealed class NessieEasySettings
         return instance;
     }
 
-    private void AddPendingUpdate(ESettingsUpdate settingsUpdate) => pendingUpdates |= settingsUpdate;
-    private bool HasPendingUpdate(ESettingsUpdate settingsUpdate) => (pendingUpdates & settingsUpdate) != 0;
 
     /// <summary>
     /// Implements <see cref="AddPendingUpdate(ESettingsUpdate)"/> for classes:
@@ -56,18 +47,21 @@ internal sealed class NessieEasySettings
     /// <item><see cref="AtlyssKeyButton"/></item>
     /// </list>
     /// </summary>
-    private void AddPendingUpdateListener(BaseAtlyssElement element, ESettingsUpdate settingUpdate)
+    /// <remarks>
+    /// <see cref="Action"/> is always called only once, even if it's associated with multiple elements.
+    /// </remarks>
+    internal void AddPendingUpdateListener(BaseAtlyssElement element, Action action)
     {
         switch (element)
         {
             case AtlyssAdvancedSlider advancedSlider:
-                advancedSlider.OnValueChanged.AddListener(_ => AddPendingUpdate(settingUpdate));
+                advancedSlider.OnValueChanged.AddListener(_ => pendingActions.Add(action));
                 break;
             case AtlyssToggle toggle:
-                toggle.OnValueChanged.AddListener(_ => AddPendingUpdate(settingUpdate));
+                toggle.OnValueChanged.AddListener(_ => pendingActions.Add(action));
                 break;
             case AtlyssKeyButton keyButton:
-                keyButton.OnValueChanged.AddListener(_ => AddPendingUpdate(settingUpdate));
+                keyButton.OnValueChanged.AddListener(_ => pendingActions.Add(action));
                 break;
         }
     }
@@ -76,82 +70,19 @@ internal sealed class NessieEasySettings
     {
         SettingsTab settingsTab = Settings.GetOrAddCustomTab(PluginInfo.NAME);
 
-        Types.Configuration.Sections.Hotkeys hotkeysSection = Configuration.Instance.Hotkeys;
-        Types.Configuration.Sections.FreeCamera freeCameraSection = Configuration.Instance.FreeCamera;
-        Types.Configuration.Sections.NoClip noClipSection = Configuration.Instance.NoClip;
-
-        settingsTab.AddHeader("Free camera");
-
-        AddPendingUpdateListener(
-            settingsTab.AddKeyButton("Toggle", hotkeysSection.FreeCamera_Toggle),
-            ESettingsUpdate.FreeCameraHotkeys
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddAdvancedSlider("Base speed", freeCameraSection.BaseSpeed, true),
-            ESettingsUpdate.FreeCamera
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddAdvancedSlider("Speed adjustment scroll multiplier", freeCameraSection.SpeedAdjustmentScrollMultiplier, true),
-            ESettingsUpdate.FreeCamera
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddToggle("Lock character controls", freeCameraSection.LockCharacterControls),
-            ESettingsUpdate.FreeCamera
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddToggle("Smooth look", freeCameraSection.SmoothLook),
-            ESettingsUpdate.FreeCamera
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddAdvancedSlider("Smooth look • Interpolation", freeCameraSection.SmoothLook_Interpolation, true),
-            ESettingsUpdate.FreeCamera
-        );
-
-        settingsTab.AddHeader("No clip");
-
-        AddPendingUpdateListener(
-            settingsTab.AddKeyButton("Toggle", hotkeysSection.NoClip_Toggle),
-            ESettingsUpdate.NoClipHotkeys
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddAdvancedSlider("Speed", noClipSection.Speed, true),
-            ESettingsUpdate.NoClip
-        );
-
-        AddPendingUpdateListener(
-            settingsTab.AddAdvancedSlider("Alternative speed", noClipSection.AlternativeSpeed, true),
-            ESettingsUpdate.NoClip
-        );
+        OnModSettingsTabInitialized?.Invoke(settingsTab);
     }
 
     private void OnApplySettings()
     {
-        Types.Main.Managers managers = Main.Instance.Managers;
 
-        if (HasPendingUpdate(ESettingsUpdate.FreeCamera))
-            managers.FreeCamera.Reconfigure();
+        if (pendingActions.Count == 0)
+            return;
 
-        if (HasPendingUpdate(ESettingsUpdate.NoClip))
-            managers.NoClip.Reconfigure();
+        Action[] actions = [.. pendingActions];
+        pendingActions.Clear();
 
-        if (HasPendingUpdate(ESettingsUpdate.FreeCameraHotkeys))
-        {
-            managers.FreeCamera.DeregisterHotkeys();
-            managers.FreeCamera.RegisterHotkeys();
-        }
-
-        if (HasPendingUpdate(ESettingsUpdate.NoClipHotkeys))
-        {
-            managers.NoClip.DeregisterHotkeys();
-            managers.NoClip.RegisterHotkeys();
-        }
-
-        pendingUpdates = ESettingsUpdate.None;
+        foreach (Action action in actions)
+            action();
     }
 }

@@ -8,35 +8,33 @@ public sealed class Race
 {
     private static GameManager GameManager => GameManager._current;
     private IReadOnlyDictionary<string, ScriptablePlayerRace> CachedRaces => Atlyss.Game.Accessors.GameManager._cachedScriptableRaces(GameManager);
-    private Configuration configuration = Configuration.Instance;
+    private readonly Configuration configuration = Configuration.Instance;
 
-    private RaceDisplayParametersOverrideItem? baseDisplayParametersOverride = null;
+    private RaceParametersOverrideItem? baseDisplayParametersOverride = null;
 
     internal Race()
     {
-        Atlyss.Game.Patches.GameManager.Cache_ScriptableAssets.OnPostfix += OnScriptableAssetsCached;
-        configuration.RaceDisplayParametersOverride.BaseOverrideItem.Enabled.SettingChanged += OnBaseDisplayParametersStateChanged;
+        Atlyss.Game.Patches.GameManager.Cache_ScriptableAssets.OnPostfix += Override;
+        configuration.RaceParameters.BaseOverrideItem.Enabled.SettingChanged += OnBaseDisplayParametersStateChanged;
 
         RefreshBaseDisplayParametersOverride();
+
+        Main.Instance.OnLoaded += OnPluginLoaded;
     }
 
+    private void OnPluginLoaded() => Override();
 
     private void RefreshBaseDisplayParametersOverride() =>
-        baseDisplayParametersOverride = configuration.RaceDisplayParametersOverride.BaseOverrideItem.Enabled.Value ? configuration.RaceDisplayParametersOverride.BaseOverrideItem : null;
+        baseDisplayParametersOverride = configuration.RaceParameters.BaseOverrideItem.Enabled.Value ? configuration.RaceParameters.BaseOverrideItem : null;
 
     private void OnBaseDisplayParametersStateChanged(object sender, EventArgs e) => RefreshBaseDisplayParametersOverride();
 
-    private void OnScriptableAssetsCached()
+    private RaceParametersOverrideItem? GetDisplayParametersOverride(string? raceName)
     {
-
-    }
-
-    private RaceDisplayParametersOverrideItem? GetDisplayParametersOverride(string? raceName)
-    {
-        RaceDisplayParametersOverrideItem? overrideItem = baseDisplayParametersOverride;
+        RaceParametersOverrideItem? overrideItem = baseDisplayParametersOverride;
 
         if (!string.IsNullOrEmpty(raceName))
-            Configuration.Instance.RaceDisplayParametersOverride.OverrideItems.TryGetValue(raceName, out overrideItem);
+            Configuration.Instance.RaceParameters.OverrideItems.TryGetValue(raceName, out overrideItem);
 
         return overrideItem;
     }
@@ -46,7 +44,7 @@ public sealed class Race
         foreach (ScriptablePlayerRace scriptablePlayerRace in CachedRaces.Values)
         {
             CharacterParamsGroup characterParamsGroup = scriptablePlayerRace._raceDisplayParams;
-            RaceDisplayParametersOverrideItem? overrideItem = GetDisplayParametersOverride(scriptablePlayerRace._raceName);
+            RaceParametersOverrideItem? overrideItem = GetDisplayParametersOverride(scriptablePlayerRace._raceName);
 
             if (overrideItem is null)
                 continue;

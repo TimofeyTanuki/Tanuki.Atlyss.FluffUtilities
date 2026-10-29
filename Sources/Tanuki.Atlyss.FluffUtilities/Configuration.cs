@@ -13,7 +13,7 @@ internal sealed class Configuration
     public NoClip NoClip;
     public Hotkeys Hotkeys;
     public General General;
-    public RaceDisplayParametersOverride RaceDisplayParametersOverride;
+    public RaceParametersOverride RaceParameters;
 
     public static void Initialize(ConfigFile configFile)
     {
@@ -31,6 +31,6 @@ internal sealed class Configuration
         NoClip = new(configFile);
         Hotkeys = new(configFile);
         General = new(configFile);
-        RaceDisplayParametersOverride = new(configFile);
+        RaceParameters = new(configFile);
     }
 }
