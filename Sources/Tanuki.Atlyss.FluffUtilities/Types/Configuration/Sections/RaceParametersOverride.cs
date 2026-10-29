@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal sealed class RaceDisplayParametersOverride
+internal sealed class RaceParametersOverride
 {
-    private const string SECTION_NAME = "RaceDisplayParametersOverride";
-    private const string ITEM_SECTION_NAME_BASE = "RaceDisplayParametersOverrideItem";
+    private const string SECTION_NAME = "RaceParametersOverride";
+    private const string ITEM_SECTION_NAME_BASE = "RaceParametersOverrideItem";
     private const string ITEM_SECTION_NAME_TEMPLATE = ITEM_SECTION_NAME_BASE + "_{0}";
 
     private readonly ConfigFile configFile;
@@ -15,11 +15,11 @@ internal sealed class RaceDisplayParametersOverride
 
     public ConfigEntry<bool> SeparateOverridesForEachRace;
 
-    public RaceDisplayParametersOverrideItem BaseOverrideItem;
+    public RaceParametersOverrideItem BaseOverrideItem;
 
-    public Dictionary<string, RaceDisplayParametersOverrideItem> OverrideItems = [];
+    public Dictionary<string, RaceParametersOverrideItem> OverrideItems = [];
 
-    public RaceDisplayParametersOverride(ConfigFile configFile)
+    public RaceParametersOverride(ConfigFile configFile)
     {
         this.configFile = configFile;
 
@@ -38,11 +38,9 @@ internal sealed class RaceDisplayParametersOverride
             GetOrCreateItem(raceName);
     }
 
-    private string GetItemSectionName(string raceName) => string.Format(ITEM_SECTION_NAME_TEMPLATE, raceName);
-
-    public RaceDisplayParametersOverrideItem GetOrCreateItem(string raceName)
+    public RaceParametersOverrideItem GetOrCreateItem(string raceName)
     {
-        if (OverrideItems.TryGetValue(raceName, out RaceDisplayParametersOverrideItem item))
+        if (OverrideItems.TryGetValue(raceName, out RaceParametersOverrideItem item))
             return item;
 
         item = new(string.Format(ITEM_SECTION_NAME_TEMPLATE, raceName), configFile);

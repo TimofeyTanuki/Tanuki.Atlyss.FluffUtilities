@@ -1,13 +1,12 @@
 ﻿using BepInEx.Configuration;
-using Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
 namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.Sections;
 
-internal sealed class RaceDisplayParametersOverrideItem(string sectionName, ConfigFile configFile)
+internal sealed class RaceParametersOverrideItem(string sectionName, ConfigFile configFile)
 {
-    public readonly ConfigEntry<bool> Enabled = configFile.Bind(sectionName, "Enabled", true);
+    public readonly ConfigEntry<bool> Enabled = configFile.Bind(sectionName, "Enabled", false);
 
-    public readonly FloatRange
+    public readonly ConfigEntries.FloatRange
         HeadWidth =
             new(configFile,
                 new(new(sectionName, "HeadWidth_Minimum"), 0),

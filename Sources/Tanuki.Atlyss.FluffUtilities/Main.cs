@@ -1,4 +1,5 @@
 ﻿using Steamworks;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Tanuki.Atlyss.FluffUtilities.Managers;
 
@@ -12,6 +13,8 @@ public sealed class Main : Core.Bases.Plugin
     private static Main instance = null!;
     private Types.Main.Managers managers = null!;
     private bool reloaded = false;
+
+    public event Action? OnInitialized;
 
     public static Main Instance => instance;
     public Types.Main.Managers Managers => managers;
@@ -31,6 +34,8 @@ public sealed class Main : Core.Bases.Plugin
             Game = new(),
             NessieEasySettings = NessieEasySettings.GetInstance()
         };
+
+        OnInitialized?.Invoke();
     }
 
     protected override void Load()
@@ -40,15 +45,7 @@ public sealed class Main : Core.Bases.Plugin
         if (reloaded)
             Config.Reload();
 
-        Configuration configuration = Configuration.Instance;
-
-        managers.NoClip.Reconfigure();
-        managers.FreeCamera.Reconfigure();
-
         Game.Patches.Player.OnStartAuthority.OnPostfix += OnStartAuthority_OnPostfix;
-
-        managers.FreeCamera.RegisterHotkeys();
-        managers.NoClip.RegisterHotkeys();
     }
 
     private void OnStartAuthority_OnPostfix(Player player)
@@ -64,9 +61,9 @@ public sealed class Main : Core.Bases.Plugin
     protected override void Unload()
     {
         managers.FreeCamera.DeregisterHotkeys();
-        managers.NoClip.DeregisterHotkeys();
 
         reloaded = true;
         Game.Patches.Player.OnStartAuthority.OnPostfix -= OnStartAuthority_OnPostfix;
     }
+
 }
