@@ -5,6 +5,7 @@ using System.Text;
 using Tanuki.Atlyss.API.Core.Commands;
 using Tanuki.Atlyss.FluffUtilities.Extensions;
 using Tanuki.Atlyss.FluffUtilities.Helpers;
+using Tanuki.Atlyss.FluffUtilities.Services;
 using Tanuki.Atlyss.Game.Types.Player;
 
 namespace Tanuki.Atlyss.FluffUtilities.Commands;
@@ -12,6 +13,8 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class ListPlayers : ICommand
 {
+    private ClientHello clientHelloService => Main.Instance.Services.ClientInfo;
+
     public void Execute(IContext context)
     {
         List<Entry> playerEntries = [];
@@ -43,9 +46,10 @@ internal sealed class ListPlayers : ICommand
                 playerEntry.Player.isLocalPlayer ?
                     PluginInfo.VERSION
                     :
-                    SteamMatchmaking.GetLobbyMemberData(steamLobbyProvider.SteamId, playerEntry.SteamId, "cc8615a7-47a4-4321-be79-11e36887b64a.ver"); // NOT IMPLEMENTED
-
-            pluginVersion = string.IsNullOrEmpty(pluginVersion) ? string.Empty : Main.Translate("Commands.ListPlayers.FluffUtilities", pluginVersion);
+                    clientHelloService.ClientHelloData.TryGetValue(player, out Packets.ClientHello clientHello) ?
+                        Main.Translate("Commands.ListPlayers.FluffUtilities", clientHello.Version)
+                        :
+                        string.Empty;
 
             string globalNickname =
                 player._nickname != player._globalNickname && !string.IsNullOrEmpty(player._globalNickname) ?

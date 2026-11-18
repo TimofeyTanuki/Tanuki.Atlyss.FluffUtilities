@@ -12,12 +12,14 @@ public sealed class Main : Core.Bases.Plugin
 {
     private static Main instance = null!;
     private Types.Main.Managers managers = null!;
+    private Types.Main.Services services = null!;
     private bool reloaded = false;
 
     public event Action? OnInitialized;
 
     public static Main Instance => instance;
     public Types.Main.Managers Managers => managers;
+    public Types.Main.Services Services => services;
 
     [SuppressMessage("CodeQuality", "IDE0051")]
     private void Awake()
@@ -33,6 +35,11 @@ public sealed class Main : Core.Bases.Plugin
             GameWorld = new(),
             Game = new(),
             NessieEasySettings = NessieEasySettings.GetInstance()
+        };
+
+        services = new()
+        {
+            ClientInfo = new()
         };
 
         OnInitialized?.Invoke();

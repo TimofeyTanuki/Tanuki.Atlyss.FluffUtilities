@@ -50,8 +50,6 @@
   "Commands.Disenchant.FirstEquipmentSlotIsEmpty": "<color=#e67c7c>The first slot (top left) on the equipment page is empty.</color>",
   "Commands.SteamProfile.NicknameNotSpecified": "<color=#e67c7c>Player nickname not specified.</color>",
   "Commands.SteamProfile.PlayerNotFound": "<color=#e67c7c>Player not found.</color>",
-  "General.OtherPluginUserMessage.GlobalNickname": " (@{0})",
-  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1}{2} uses FluffUtilities {3}</color>",
   "Commands.ListQuests.Separator": "<color=#686b66>, </color>",
   "Commands.ListQuests.Search.Match": "<color=#e0b341>{0}</color>",
   "Commands.ListQuests.Search": "<color=#dba87b>List of quests containing \"{0}\" in their name:</color>\n<color=#d1dbba>{1}</color><color=#686b66>.</color>",
@@ -77,5 +75,7 @@
   "Commands.Weather.Host": "<color=#79e0be>The weather state is set to: {0}.</color>",
   "Commands.Weather.Client": "<color=#79e0be>The local weather state is set to: {0}.</color>\n<color=#97b8ad>Use the command without parameters to synchronize with the host.</color>",
   "Commands.Weather.State.Enabled": "<color=#79e07c>enabled</color>",
-  "Commands.Weather.State.Disabled": "<color=#e08779>disabled</color>"
+  "Commands.Weather.State.Disabled": "<color=#e08779>disabled</color>",
+  "Services.ClientHello.JoinMessage.GlobalNickname": " (@{0})",
+  "Services.ClientHello.JoinMessage": "<color=#9878de>[{0}] {1}{2} uses FluffUtilities {3}</color>"
 }

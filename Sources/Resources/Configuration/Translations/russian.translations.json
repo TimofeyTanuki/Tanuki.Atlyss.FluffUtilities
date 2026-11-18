@@ -50,8 +50,6 @@
   "Commands.Disenchant.FirstEquipmentSlotIsEmpty": "<color=#e67c7c>В лапках персонажа отсутствует оружие.</color>",
   "Commands.SteamProfile.NicknameNotSpecified": "<color=#e67c7c>Никнейм игрока не указан.</color>",
   "Commands.SteamProfile.PlayerNotFound": "<color=#e67c7c>Игрок не найден.</color>",
-  "General.OtherPluginUserMessage.GlobalNickname": " (@{0})",
-  "General.OtherPluginUserMessage": "<color=#9878de>[{0}] {1} использует FluffUtilities {2}</color>",
   "Commands.ListQuests.Separator": "<color=#686b66>, </color>",
   "Commands.ListQuests.Search.Match": "<color=#e0b341>{0}</color>",
   "Commands.ListQuests.Search": "<color=#dba87b>Список заданий, содержащих в названии \"{0}\":</color>\n<color=#d1dbba>{1}</color><color=#686b66>.</color>",
@@ -77,5 +75,7 @@
   "Commands.Weather.Host": "<color=#79e0be>Состояние погоды установлено: {0}.</color>",
   "Commands.Weather.Client": "<color=#79e0be>Локальное состояние погоды установлено: {0}.</color>\n<color=#97b8ad>Используйте команду без параметров, чтобы синхронизироваться с хостом.</color>",
   "Commands.Weather.State.Enabled": "<color=#79e07c>включена</color>",
-  "Commands.Weather.State.Disabled": "<color=#e08779>отключена</color>"
+  "Commands.Weather.State.Disabled": "<color=#e08779>отключена</color>",
+  "Services.ClientHello.JoinMessage.GlobalNickname": " (@{0})",
+  "Services.ClientHello.JoinMessage": "<color=#9878de>[{0}] {1} использует FluffUtilities {2}</color>"
 }
