@@ -2,6 +2,5 @@
 
 public sealed class ClientHello : Network.Bases.JsonObjectPacket<ClientHello>
 {
-    public string Version = null!;
-    public string Random = null!;
+    public string Version { get; set; } = null!;
 }

@@ -1,8 +1,7 @@
 ﻿using Steamworks;
-using System;
 using System.Collections.Generic;
-using Tanuki.Atlyss.FluffUtilities.Helpers;
 using Tanuki.Atlyss.FluffUtilities.Extensions;
+using Tanuki.Atlyss.FluffUtilities.Helpers;
 
 namespace Tanuki.Atlyss.FluffUtilities.Services;
 
@@ -28,11 +27,8 @@ public sealed class ClientHello
 
         clientHelloPacket = new()
         {
-            Version = PluginInfo.VERSION,
-            Random = $"{UnityEngine.Random.Range(0, int.MaxValue)}"
+            Version = PluginInfo.VERSION
         };
-
-        Console.WriteLine($"My clientHelloPacket:\nver {clientHelloPacket.Version}\nrand {clientHelloPacket.Random}");
     }
 
     private void SetWaitForFirstLoadState(bool state)
@@ -52,13 +48,11 @@ public sealed class ClientHello
     {
         SetWaitForFirstLoadState(false);
 
-        Console.WriteLine("OnLoadScreenDisable");
+        packetRouter.SendPacketToLobbyChat(clientHelloPacket);
     }
 
     private void OnGameInitialized()
     {
-        Console.WriteLine($"OnGameInitialized");
-
         Game.Tanuki.Instance.Providers.Player.OnPlayerLoaded += SendClientHelloToLoadedPlayer;
         Game.Tanuki.Instance.Providers.Player.OnPlayerRemoved += RemoveClientHello;
     }
@@ -74,7 +68,7 @@ public sealed class ClientHello
         if (!ulong.TryParse(player._steamID, out ulong steamId))
             return;
 
-        packetRouter.SendPacketToUser(new CSteamID(steamId), clientHelloPacket, out EResult _);
+        packetRouter.SendPacketToUser(new(steamId), clientHelloPacket, out EResult _);
     }
 
     private void OnNetworkInitialized()
@@ -86,22 +80,20 @@ public sealed class ClientHello
         network.Managers.Packets.AddHandler<Packets.ClientHello>(HandleClientInfoPacket);
     }
 
-    private void HandleClientInfoPacket(CSteamID sender, Packets.ClientHello clientInfo)
+    private void HandleClientInfoPacket(CSteamID sender, Packets.ClientHello clientHello)
     {
-        if (!Network.Tanuki.Instance.Providers.SteamLobby.OwnerSteamId.Equals(sender))
-            return;
-
         Player? player = Game.Tanuki.Instance.Providers.Player.FindBySteamId(sender);
 
-        if (player is null || !player)
+        if (player is null)
             return;
 
-        clientHelloData[player] = clientInfo;
+        if (player.isLocalPlayer)
+            return;
+
+        clientHelloData[player] = clientHello;
 
         if (waitForFirstLoad)
             return;
-
-        Console.WriteLine($"PID HandleClientInfoPacket: {sender} - {clientInfo.Version} - {clientInfo.Random}");
 
         Chat.AddTranslatedMessage(
             "Services.ClientHello.JoinMessage",
@@ -109,26 +101,23 @@ public sealed class ClientHello
             player._nickname,
             string.IsNullOrEmpty(player._globalNickname) ?
                 string.Empty : Main.Translate("Services.ClientHello.JoinMessage.GlobalNickname", player._globalNickname),
-            clientInfo.Version
+            clientHello.Version
         );
     }
 
     private void OnStartAuthority(Player player)
     {
-        if (!AtlyssNetworkManager._current._soloMode)
+        if (AtlyssNetworkManager._current._soloMode)
             return;
 
-        Network.Tanuki.Instance.Routers.Packet.SendPacketToLobbyChat(clientHelloPacket);
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable.OnPostfix += OnFirstLoad;
     }
 
     private void OnStopClient()
     {
         Game.Patches.LoadSceneManager.Init_LoadScreenDisable.OnPostfix -= OnFirstLoad;
-        Console.WriteLine("PID OnStopClient");
 
         SetWaitForFirstLoadState(true);
-
         clientHelloData.Clear();
     }
 }

@@ -7,5 +7,5 @@ internal sealed class PlayerAppearance(ConfigFile ConfigFile)
     private const string SECTION_NAME = "PlayerAppearance";
 
     public ConfigEntry<bool> AllowRaceParametersBeyondLimits = ConfigFile.Bind(SECTION_NAME, "AllowRaceParametersBeyondLimits", true);
-    public ConfigEntry<bool> HotkeysUpdateCharacterSave = ConfigFile.Bind(SECTION_NAME, "HotkeysUpdateCharacterSave", true);
+    public ConfigEntry<bool> HotkeysAffectCharacterSave = ConfigFile.Bind(SECTION_NAME, "HotkeysUpdateCharacterSave", true);
 }

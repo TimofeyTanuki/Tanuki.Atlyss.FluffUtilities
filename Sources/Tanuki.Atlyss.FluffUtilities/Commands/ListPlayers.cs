@@ -13,7 +13,7 @@ namespace Tanuki.Atlyss.FluffUtilities.Commands;
 [CommandMetadata(EExecutionSide.Client, typeof(Core.Policies.Commands.Caller.Player))]
 internal sealed class ListPlayers : ICommand
 {
-    private ClientHello clientHelloService => Main.Instance.Services.ClientInfo;
+    private ClientHello ClientHelloService => Main.Instance.Services.ClientInfo;
 
     public void Execute(IContext context)
     {
@@ -32,8 +32,6 @@ internal sealed class ListPlayers : ICommand
 
     private IEnumerator DisplayPlayers(List<Entry> playerEntries)
     {
-        Network.Providers.SteamLobby steamLobbyProvider = Network.Tanuki.Instance.Providers.SteamLobby;
-
         StringBuilder stringBuilder = new();
 
         foreach (Entry playerEntry in playerEntries)
@@ -46,10 +44,9 @@ internal sealed class ListPlayers : ICommand
                 playerEntry.Player.isLocalPlayer ?
                     PluginInfo.VERSION
                     :
-                    clientHelloService.ClientHelloData.TryGetValue(player, out Packets.ClientHello clientHello) ?
-                        Main.Translate("Commands.ListPlayers.FluffUtilities", clientHello.Version)
-                        :
-                        string.Empty;
+                    ClientHelloService.ClientHelloData.TryGetValue(player, out Packets.ClientHello clientHello) ? clientHello.Version : string.Empty;
+
+            pluginVersion = string.IsNullOrEmpty(pluginVersion) ? string.Empty : Main.Translate("Commands.ListPlayers.FluffUtilities", pluginVersion);
 
             string globalNickname =
                 player._nickname != player._globalNickname && !string.IsNullOrEmpty(player._globalNickname) ?

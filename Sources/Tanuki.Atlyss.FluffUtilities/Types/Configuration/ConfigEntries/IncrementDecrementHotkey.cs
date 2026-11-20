@@ -1,19 +1,10 @@
-﻿namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
+﻿using BepInEx.Configuration;
+using UnityEngine;
 
-/*
-public sealed class IncrementDecrementHotkey(ConfigFile configFile, string sectionName, )
+namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
+
+public sealed class IncrementDecrementHotkey(ConfigFile configFile, SingleValueEntry<KeyCode> decreaseHotkey, SingleValueEntry<KeyCode> increaseHotkey, SingleValueEntry<float> step)
 {
-
+    public readonly ConfigEntry<KeyCode> Decrease = configFile.Bind(decreaseHotkey.ConfigDefinition, decreaseHotkey.DefaultValue, decreaseHotkey.ConfigDescription), Increase = configFile.Bind(increaseHotkey.ConfigDefinition, increaseHotkey.DefaultValue, increaseHotkey.ConfigDescription);
+    public readonly ConfigEntry<float> Step = configFile.Bind(step.ConfigDefinition, step.DefaultValue, step.ConfigDescription);
 }
-*/
-
-
-/*
-     public class PlayerAppearanceHotkey(ref ConfigFile ConfigFile, string Name, float Step, KeyCode Decrease, KeyCode Increase)
-    {
-        public ConfigEntry<float> Step = ConfigFile.Bind(SECTION_NAME, $"{Name}_Step", Step);
-        public ConfigEntry<KeyCode>
-            Increase = ConfigFile.Bind(SECTION_NAME, $"{Name}_Increase", Increase),
-            Decrease = ConfigFile.Bind(SECTION_NAME, $"{Name}_Decrease", Decrease);
-    }
-*/

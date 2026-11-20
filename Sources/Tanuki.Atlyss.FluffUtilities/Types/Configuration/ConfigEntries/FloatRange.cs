@@ -5,16 +5,9 @@ namespace Tanuki.Atlyss.FluffUtilities.Types.Configuration.ConfigEntries;
 
 public sealed class FloatRange : IDisposable
 {
-    public readonly struct EntryConfiguration(ConfigDefinition configDefinition, float defaultValue, ConfigDescription? configDescription = null)
-    {
-        public readonly ConfigDefinition ConfigDefinition = configDefinition;
-        public readonly float DefaultValue = defaultValue;
-        public readonly ConfigDescription? ConfigDescription = configDescription;
-    }
-
     public readonly ConfigEntry<float> Minimum, Maximum;
 
-    public FloatRange(ConfigFile configFile, EntryConfiguration minimum, EntryConfiguration maximum)
+    public FloatRange(ConfigFile configFile, SingleValueEntry<float> minimum, SingleValueEntry<float> maximum)
     {
         Minimum = configFile.Bind(minimum.ConfigDefinition, minimum.DefaultValue, minimum.ConfigDescription);
         Maximum = configFile.Bind(maximum.ConfigDefinition, maximum.DefaultValue, maximum.ConfigDescription);

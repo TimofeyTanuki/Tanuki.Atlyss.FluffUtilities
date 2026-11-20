@@ -55,7 +55,7 @@ public sealed class Race
             characterParamsGroup._widthRange.Set(overrideItem.Width.Minimum.Value, overrideItem.Width.Maximum.Value);
             characterParamsGroup._torsoRange.Set(overrideItem.TorsoSize.Minimum.Value, overrideItem.TorsoSize.Maximum.Value);
             characterParamsGroup._boobRange.Set(overrideItem.BreastSize.Minimum.Value, overrideItem.BreastSize.Maximum.Value);
-            characterParamsGroup._armRange.Set(overrideItem.ArmsSize.Minimum.Value, overrideItem.ArmsSize.Maximum.Value);
+            characterParamsGroup._armRange.Set(overrideItem.ArmSize.Minimum.Value, overrideItem.ArmSize.Maximum.Value);
             characterParamsGroup._bellyRange.Set(overrideItem.BellySize.Minimum.Value, overrideItem.BellySize.Maximum.Value);
             characterParamsGroup._bottomRange.Set(overrideItem.BottomSize.Minimum.Value, overrideItem.BottomSize.Maximum.Value);
             characterParamsGroup._pitchRange.Set(overrideItem.VoicePitch.Minimum.Value, overrideItem.VoicePitch.Maximum.Value);

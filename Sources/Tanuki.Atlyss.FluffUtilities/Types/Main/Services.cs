@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Tanuki.Atlyss.FluffUtilities.Types.Main;
+﻿namespace Tanuki.Atlyss.FluffUtilities.Types.Main;
 
 public sealed class Services
 {
